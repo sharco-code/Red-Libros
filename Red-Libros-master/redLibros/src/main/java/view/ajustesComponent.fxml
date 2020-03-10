@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="716.0" prefWidth="1076.0" style="-fx-background-color: #f3f3f3;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="controller.AjustesController" prefHeight="716.0" prefWidth="1076.0" style="-fx-background-color: #f3f3f3;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
          <children>
@@ -39,7 +39,7 @@
                                  <children>
                                     <Label text="IP:" textAlignment="RIGHT">
                                        <padding>
-                                          <Insets bottom="20.0" left="20.0" top="20.0" />
+                                          <Insets bottom="21.0" left="21.0" top="21.0" />
                                        </padding>
                                        <font>
                                           <Font name="Arial" size="17.0" />
@@ -47,17 +47,20 @@
                                     </Label>
                                     <Label text="Puerto:" textAlignment="RIGHT">
                                        <padding>
-                                          <Insets bottom="20.0" left="20.0" top="20.0" />
+                                          <Insets bottom="21.0" left="21.0" top="21.0" />
                                        </padding>
                                        <font>
                                           <Font size="17.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER">
                                  <children>
-                                    <TextField promptText="127.0.0.1" style="-fx-background-color: transparent;">
+                                    <TextField promptText="127.0.0.1" style="-fx-background-color: transparent;" fx:id="xTextFieldIP">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
@@ -65,7 +68,7 @@
                                           <Font name="Arial" size="17.0" />
                                        </font>
                                     </TextField>
-                                    <TextField promptText="Puerto" style="-fx-background-color: transparent;">
+                                    <TextField promptText="Puerto" style="-fx-background-color: transparent;" fx:id="xTextFieldPuerto">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
@@ -87,25 +90,28 @@
                                  <children>
                                     <Label text="Usuario:" textAlignment="RIGHT">
                                        <padding>
-                                          <Insets bottom="20.0" left="20.0" top="20.0" />
+                                          <Insets bottom="21.0" left="21.0" top="21.0" />
                                        </padding>
                                        <font>
                                           <Font name="Arial" size="17.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Contraseña:" textAlignment="RIGHT">
+                                    <Label prefHeight="68.0" text="Contraseña:" textAlignment="RIGHT">
                                        <padding>
-                                          <Insets bottom="20.0" left="20.0" top="20.0" />
+                                          <Insets bottom="21.0" left="21.0" top="21.0" />
                                        </padding>
                                        <font>
                                           <Font name="Arial" size="17.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER">
                                  <children>
-                                    <TextField promptText="root" style="-fx-background-color: transparent;">
+                                    <TextField promptText="root" style="-fx-background-color: transparent;" fx:id="xTextFieldUser">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
@@ -113,7 +119,7 @@
                                           <Font name="Arial" size="17.0" />
                                        </font>
                                     </TextField>
-                                    <TextField promptText="1234" style="-fx-background-color: transparent;">
+                                    <TextField promptText="1234" style="-fx-background-color: transparent;" fx:id="xTextFieldPassword">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
@@ -179,12 +185,12 @@
                               </VBox>
                               <VBox alignment="CENTER" style="-fx-background-color: WHITE;">
                                  <children>
-                                    <ChoiceBox prefWidth="150.0">
+                                    <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxFilas">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
                                     </ChoiceBox>
-                                    <ChoiceBox prefWidth="150.0">
+                                    <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxColumnas">
                                        <VBox.margin>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </VBox.margin>
@@ -218,7 +224,7 @@
                               <VBox maxWidth="300.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <HBox prefHeight="50.0" />
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                    <HBox alignment="CENTER" onMouseClicked="#ImportCLICKED" prefHeight="60.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Importar datos">
                                              <font>
@@ -247,7 +253,7 @@
       </HBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
          <children>
-            <HBox alignment="CENTER" maxHeight="20.0" prefHeight="10.0" prefWidth="30.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER" maxHeight="20.0" onMouseClicked="#ApplyCLICKED" prefHeight="10.0" prefWidth="30.0" VBox.vgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Aplicar cambios">
                      <font>
