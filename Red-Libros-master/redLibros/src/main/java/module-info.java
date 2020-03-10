@@ -4,6 +4,7 @@ module proyectoFinal.redLibros {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires fontawesomefx;
+	requires json.simple;
 
 	exports controller;
 	opens controller;
