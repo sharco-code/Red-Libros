@@ -3,3 +3,15 @@
 	-fx-border-width: 0px 0px 0px 0px;
 	-fx-background-color: #34e7e4e0;
 }
+
+.normal_button {
+	-fx-background-color: #1f93ff;
+}
+
+.green_button {
+	-fx-background-color: #33cc33;
+}
+
+.hover_green:hover {
+	-fx-background-color: #66ff66;
+}

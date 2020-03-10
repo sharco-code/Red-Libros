@@ -17,8 +17,8 @@ public class Init extends Application {
 	        primaryStage.setTitle("Red de Libros");
 	        primaryStage.setScene(new Scene(root));
 	        
-	        primaryStage.setMinHeight(550);
-	        primaryStage.setMinWidth(800);
+	        primaryStage.setMinHeight(570);
+	        primaryStage.setMinWidth(1100);
 	        
 	        primaryStage.show();
 	        
