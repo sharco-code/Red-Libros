@@ -5,8 +5,6 @@ module proyectoFinal.redLibros {
 	requires javafx.base;
 	requires fontawesomefx;
 	
-	exports proyectoFinal.redLibros;
-    opens proyectoFinal.redLibros;
     exports app;
     opens app;
     
