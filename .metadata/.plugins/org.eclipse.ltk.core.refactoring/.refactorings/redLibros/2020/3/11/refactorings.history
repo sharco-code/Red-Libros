@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;redLibros&apos;&#x0D;&#x0A;- Original project: &apos;redLibros&apos;&#x0D;&#x0A;- Original element: &apos;redLibros/src/main/java/proyectoFinal.redLibros&apos;" description="Delete element" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;proyectoFinal.redLibros" element2="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;proyectoFinal" elements="2" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1583836809494" subPackages="false" version="1.0"/>
+</session>
