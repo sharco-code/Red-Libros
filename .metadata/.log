@@ -178,3 +178,77 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2020-03-10 11:53:11.065
 !MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.equinox.p2.engine 4 4 2020-03-10 11:56:03.964
+!MESSAGE An error occurred while collecting items to be installed
+!SUBENTRY 1 org.eclipse.equinox.p2.engine 4 0 2020-03-10 11:56:03.964
+!MESSAGE session context was:(profile=E__jee-2019-12_eclipse, phase=org.eclipse.equinox.internal.p2.engine.phases.Collect, operand=, action=).
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ecore,2.21.0.v20200112-0705
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ecore.ui,2.21.0.v20200109-0655
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ui,2.21.0.v20191228-0640
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.common,2.18.0.v20191225-1014
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.ecore,2.21.0.v20200127-1342
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.edit.ui,2.18.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.epp.mpc.core,1.8.1.v20191107-0507
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.epp.mpc.ui,1.8.1.v20191119-1757
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ecore,2.21.0.v20200112-0705
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ecore.ui,2.21.0.v20200109-0655
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ui,2.21.0.v20191228-0640
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.common,2.18.0.v20191225-1014
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.964
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.ecore,2.21.0.v20200127-1342
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.965
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.edit.ui,2.19.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.965
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf,2.21.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:56:03.965
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.epp.mpc,1.8.1.v20191119-1757
+
+!ENTRY org.eclipse.equinox.p2.engine 4 4 2020-03-10 11:58:11.865
+!MESSAGE An error occurred while collecting items to be installed
+!SUBENTRY 1 org.eclipse.equinox.p2.engine 4 0 2020-03-10 11:58:11.865
+!MESSAGE session context was:(profile=E__jee-2019-12_eclipse, phase=org.eclipse.equinox.internal.p2.engine.phases.Collect, operand=, action=).
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ecore,2.21.0.v20200112-0705
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ecore.ui,2.21.0.v20200109-0655
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.codegen.ui,2.21.0.v20191228-0640
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.common,2.18.0.v20191225-1014
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.ecore,2.21.0.v20200127-1342
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.emf.edit.ui,2.18.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.epp.mpc.core,1.8.1.v20191107-0507
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: osgi.bundle,org.eclipse.epp.mpc.ui,1.8.1.v20191119-1757
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ecore,2.21.0.v20200112-0705
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ecore.ui,2.21.0.v20200109-0655
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.codegen.ui,2.21.0.v20191228-0640
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.common,2.18.0.v20191225-1014
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.ecore,2.21.0.v20200127-1342
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf.edit.ui,2.19.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.emf,2.21.0.v20200205-0529
+!SUBENTRY 1 org.eclipse.equinox.p2.artifact.repository 4 0 2020-03-10 11:58:11.865
+!MESSAGE No repository found containing: org.eclipse.update.feature,org.eclipse.epp.mpc,1.8.1.v20191119-1757
