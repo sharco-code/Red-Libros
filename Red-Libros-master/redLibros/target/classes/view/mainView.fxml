@@ -25,20 +25,26 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Libros" fx:id="xLabelTitle">
                            <font>
                               <Font name="Arial" size="20.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
                         </Text>
                      </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="79.0" prefWidth="231.0" style="-fx-background-color: WHITE;">
+                        <HBox alignment="CENTER" prefHeight="79.0" prefWidth="231.0" style="-fx-background-color: WHITE;" fx:id="xHBoxSearch">
                            <children>
-                              <TextField promptText="Buscar por códgo" style="-fx-background-color: transparent;" />
+                              <TextField promptText="Buscar por códgo" style="-fx-background-color: transparent;" fx:id="xTextFieldSearch" />
                               <FontAwesomeIcon iconName="SEARCH" size="1.5em">
                                  <HBox.margin>
                                     <Insets right="30.0" />

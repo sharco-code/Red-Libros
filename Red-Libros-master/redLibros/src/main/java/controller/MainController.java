@@ -9,8 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 
@@ -18,56 +20,75 @@ public class MainController implements Initializable {
 
 	@FXML
     private BorderPane borderpane;
-	
-	@FXML
-	private Text xLabelTitle;
+
+    @FXML
+    private Text xLabelTitle;
+
+    @FXML
+    private HBox xHBoxSearch;
+
+    @FXML
+    private TextField xTextFieldSearch;
 	
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    	loadUI("librosView");
+    	loadUI("librosComponent");
     	this.xLabelTitle.setText("Libros");
+    	showSearch(true);
     }    
 
     @FXML
     private void LibrosCLICKED(MouseEvent event) {
-    	loadUI("librosView");
+    	loadUI("librosComponent");
     	this.xLabelTitle.setText("Libros");
+    	showSearch(true);
     }
 
     @FXML
     private void EntregasCLICKED(MouseEvent event) {
-    	loadUI("entregasView");
+    	loadUI("entregasComponent");
     	this.xLabelTitle.setText("Entegas");
+    	showSearch(true);
     }
 
     @FXML
     private void DevolucionesCLICKED(MouseEvent event) {
-    	loadUI("devolucionesView");
+    	loadUI("devolucionesComponent");
     	this.xLabelTitle.setText("Devoluciones");
+    	showSearch(true);
     }
 
     @FXML
     private void HistorialCLICKED(MouseEvent event) {
-    	loadUI("historialView");
+    	loadUI("historialComponent");
     	this.xLabelTitle.setText("Historial");
+    	showSearch(true);
     }
 
     @FXML
     private void StockCLICKED(MouseEvent event) {
-    	loadUI("stockView");
+    	loadUI("stockComponent");
     	this.xLabelTitle.setText("Stock");
+    	
     }
 
     @FXML
     private void AjustesCLICKED(MouseEvent event) {
-    	loadUI("ajustesView");
+    	loadUI("ajustesComponent");
     	this.xLabelTitle.setText("Ajustes");
+    	showSearch(false);
     }
 
     @FXML
     private void CreditosCLICKED(MouseEvent event) {
-    	loadUI("creditosView");
+    	loadUI("creditosComponent");
     	this.xLabelTitle.setText("Creditos");
+    	showSearch(false);
+    }
+    
+    private void showSearch(boolean x) {
+    	this.xHBoxSearch.setDisable(!x);
+    	this.xHBoxSearch.setVisible(x);
     }
     
     private void loadUI(String ui) {
