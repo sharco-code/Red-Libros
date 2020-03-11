@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 public class Init extends Application {
 
+	private static Stage stage;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -22,12 +24,20 @@ public class Init extends Application {
 	        
 	        primaryStage.show();
 	        
+	        this.stage = primaryStage;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	
+
+	public static Stage getStage() {
+		return stage;
+	}
+
+
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
