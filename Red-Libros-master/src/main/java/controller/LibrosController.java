@@ -29,6 +29,7 @@ public class LibrosController implements Initializable{
 		// TODO Auto-generated method stub
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
 		sesion = factory.getCurrentSession();
+		xTableLibros.getItems().clear();
 		
 		TableColumn precioColumn = new TableColumn("Precio");
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
