@@ -3,6 +3,8 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,6 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import view.Toast;
+import utiles.hibernate.UtilesHibernate;
 import utiles.xml.ModifyXMLFile;
 
 public class AjustesController implements Initializable {
@@ -134,6 +137,9 @@ public class AjustesController implements Initializable {
 		
 		
 		showToast("Cambios aplicados");
+		
+		SessionFactory factory = UtilesHibernate.getSessionFactory();
+		Session sesion = factory.getCurrentSession();
 	}
 
 	private void updateHibernateCfg() throws IOException, ParseException, FileNotFoundException {

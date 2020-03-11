@@ -1,11 +1,15 @@
 package app;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import utiles.hibernate.UtilesHibernate;
 
 public class Init extends Application {
 
@@ -46,6 +50,8 @@ public class Init extends Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
+		
+		
 
 	}
 
