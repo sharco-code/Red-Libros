@@ -1,7 +1,10 @@
 package controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import pojo.Libro;
 import view.Toast;
 import utiles.hibernate.UtilesHibernate;
 import utiles.xml.ModifyXMLFile;
@@ -58,6 +62,8 @@ public class AjustesController implements Initializable {
 	private final String columnas[] = { "1", "2", "3", "4" };
 
 	private final String JSON_URL = System.getProperty("user.dir") + "\\config\\settings.json";
+	
+	
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -138,8 +144,8 @@ public class AjustesController implements Initializable {
 		
 		showToast("Cambios aplicados");
 		
-		SessionFactory factory = UtilesHibernate.getSessionFactory();
-		Session sesion = factory.getCurrentSession();
+		
+		
 	}
 
 	private void updateHibernateCfg() throws IOException, ParseException, FileNotFoundException {
