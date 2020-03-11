@@ -1,4 +1,4 @@
-package excepciones;
+package utiles.excepciones;
 
 public class ConnectionException extends RuntimeException {
 	public ConnectionException() {

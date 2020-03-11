@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import view.Toast;
+import utiles.xml.ModifyXMLFile;
 
 public class AjustesController implements Initializable {
 
@@ -61,7 +62,6 @@ public class AjustesController implements Initializable {
 		this.xChoiceBoxColumnas.setItems(FXCollections.observableArrayList(columnas));
 
 		try {
-			// comprobar si exsite json, si exsite poner los datos en los textfield
 
 			Object object = new JSONParser().parse(new FileReader(JSON_URL));
 			JSONObject jo = (JSONObject) object;
@@ -110,12 +110,15 @@ public class AjustesController implements Initializable {
 		try {
 			
 			writeSettings();
+			updateHibernateCfg();
 			
 		} catch (FileNotFoundException e) {
 			try {
 				
 				createFile();
 				writeSettings();
+				
+				updateHibernateCfg();
 				
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -127,7 +130,29 @@ public class AjustesController implements Initializable {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		String toastMsg = "Cambios aplicados";
+		
+		
+		
+		showToast("Cambios aplicados");
+	}
+
+	private void updateHibernateCfg() throws IOException, ParseException, FileNotFoundException {
+		Object object = new JSONParser().parse(new FileReader(JSON_URL));
+		JSONObject jo = (JSONObject) object;
+
+		String ip = (String) jo.get("ip");
+		String port = (String) jo.get("port");
+		String user = (String) jo.get("user");
+		String password = (String) jo.get("password");
+		
+		ModifyXMLFile.modifyXML(System.getProperty("user.dir") + "\\src\\main\\java\\hibernate.cfg.xml", 
+				ip, 
+				port, 
+				user, 
+				password);
+	}
+
+	private void showToast(String toastMsg) {
 		int toastMsgTime = 1000; //3.5 seconds
 		int fadeInTime = 150; //0.5 seconds
 		int fadeOutTime= 300; //0.5 seconds

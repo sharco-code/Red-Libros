@@ -1,15 +1,15 @@
-package dao;
+package utiles.dao;
 
 import java.io.Serializable;
 import java.util.List;
 
-import excepciones.BusinessException;
+import utiles.excepciones.BusinessException;
 
 public interface InterfaceDaoGenerico <T, ID extends Serializable> {
 	
 	/**
 	 * Persiste el objeto dado.
-	 * Tras la inseción el objeto tendrá actualizado su identificador. 
+	 * Tras la inseciï¿½n el objeto tendrï¿½ actualizado su identificador. 
 	 * @param objeto Objeto a insertar.
 	 * @throws BussinessException si el objeto ya existia
 	 */
@@ -24,7 +24,7 @@ public interface InterfaceDaoGenerico <T, ID extends Serializable> {
 	public void actualizar (T objeto) throws BusinessException;
 	
 	/**
-	 * Graba o actualiza el objeto según convenga: Si existe lo actualiza y si 
+	 * Graba o actualiza el objeto segï¿½n convenga: Si existe lo actualiza y si 
 	 * no existe lo graba.
 	 * @param objeto Objeto del que se toman los datos
 	 * @throws BusinessException
@@ -54,7 +54,7 @@ public interface InterfaceDaoGenerico <T, ID extends Serializable> {
 	
 	/**
 	 * Devuelve una lista con todos los objetos de la base de datos
-	 * @return lista con todos los objetos o una lista vacía si no hay ninguno.
+	 * @return lista con todos los objetos o una lista vacï¿½a si no hay ninguno.
 	 */
 	public List<T> buscarTodos()  throws BusinessException;
 	

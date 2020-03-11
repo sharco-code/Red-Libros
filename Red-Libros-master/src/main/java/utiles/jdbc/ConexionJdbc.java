@@ -1,4 +1,4 @@
-package jdbc;
+package utiles.jdbc;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
-import excepciones.ConnectionException;
+import utiles.excepciones.ConnectionException;
 
 public class ConexionJdbc {
 	private static Connection con;

@@ -1,4 +1,4 @@
-package excepciones;
+package utiles.excepciones;
 
 public class BusinessException extends Exception {
 	public BusinessException() {

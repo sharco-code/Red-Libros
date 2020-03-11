@@ -1,9 +1,9 @@
-package dao;
+package utiles.dao;
 
 import java.io.Serializable;
 import java.util.List;
 
-import excepciones.BusinessException;
+import utiles.excepciones.BusinessException;
 
 public class DaoGenerico <T, ID extends Serializable > implements InterfaceDaoGenerico<T, ID>{
 
