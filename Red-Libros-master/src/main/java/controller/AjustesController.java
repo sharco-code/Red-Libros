@@ -64,14 +64,11 @@ public class AjustesController implements Initializable {
 	         
 	         String ip = (String) jsonObj.get("ip");
 	         String port = (String) jsonObj.get("port");
-	         
 	         String user = (String) jsonObj.get("user");
 	         String password = (String) jsonObj.get("password");
 	         
 	         this.xTextFieldIP.setText(ip);
 	         this.xTextFieldPuerto.setText(port);
-	         
-
 	         this.xTextFieldUser.setText(user);
 	         this.xTextFieldPassword.setText(password);
 	         
