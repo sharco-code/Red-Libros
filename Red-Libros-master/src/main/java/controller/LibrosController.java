@@ -29,6 +29,15 @@ public class LibrosController implements Initializable{
 		// TODO Auto-generated method stub
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
 		sesion = factory.getCurrentSession();
+		
+		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+	        if (newSelection != null) {
+	            System.out.println(newSelection.getNombre());
+	            
+	        }
+        });
+		
+		
 		xTableLibros.getItems().clear();
 		
 		TableColumn precioColumn = new TableColumn("Precio");
