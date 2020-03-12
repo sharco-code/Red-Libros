@@ -15,3 +15,7 @@
 .hover_green:hover {
 	-fx-background-color: #66ff66;
 }
+
+.hover_bluetext:hover {
+	-fx-fill: #4db8ff;
+}

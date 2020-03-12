@@ -156,12 +156,6 @@ public class AjustesController implements Initializable {
 		String port = (String) jo.get("port");
 		String user = (String) jo.get("user");
 		String password = (String) jo.get("password");
-		
-		ModifyXMLFile.modifyXML(System.getProperty("user.dir") + "\\src\\main\\java\\hibernate.cfg.xml", 
-				ip, 
-				port, 
-				user, 
-				password);
 	}
 
 	private void showToast(String toastMsg) {

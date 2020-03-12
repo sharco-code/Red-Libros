@@ -11,13 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 
 public class MainController implements Initializable {
-
+	
 	@FXML
     private BorderPane borderpane;
 
@@ -30,14 +31,21 @@ public class MainController implements Initializable {
     @FXML
     private TextField xTextFieldSearch;
 	
+    public LibrosController librosController;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+    	//LibrosController librosController = new LibrosController(borderpane);
+    	
     	loadUI("librosComponent");
     	this.xLabelTitle.setText("Libros");
     	showSearch(true);
+    	
+    	
     }    
 
-    @FXML
+	@FXML
     private void LibrosCLICKED(MouseEvent event) {
     	loadUI("librosComponent");
     	this.xLabelTitle.setText("Libros");
@@ -92,6 +100,19 @@ public class MainController implements Initializable {
     }
     
     private void loadUI(String ui) {
+    	/*
+    	FXMLLoader root = null;
+    	try {
+			root = FXMLLoader.load(getClass().getResource("/view/"+ui+".fxml"));
+			
+			LibrosController l = new LibrosController("aaa");
+			root.setController(l);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	borderpane.setCenter(root);
+    	*/
     	Parent root = null;
     	try {
 			root = FXMLLoader.load(getClass().getResource("/view/"+ui+".fxml"));
@@ -100,5 +121,6 @@ public class MainController implements Initializable {
 		}
     	borderpane.setCenter(root);
     }
+    
     
 }
