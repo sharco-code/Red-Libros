@@ -15,10 +15,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
+
+
 public class LibrosController implements Initializable{
 
+	@FXML
+    private AnchorPane anchorpane;
+	
 	@FXML
     private TableView<Libro> xTableLibros;
 	
