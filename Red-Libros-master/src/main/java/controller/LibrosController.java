@@ -1,7 +1,9 @@
 package controller;
 
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,16 +13,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
 
 
-public class LibrosController implements Initializable{
+public class LibrosController{
 
 	@FXML
     private AnchorPane anchorpane;
@@ -28,13 +33,13 @@ public class LibrosController implements Initializable{
 	@FXML
     private TableView<Libro> xTableLibros;
 	
-	Session sesion;
+	private Session session;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+	public void reload() throws SQLException, Exception {
+		
+		System.out.println("reload");
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
-		sesion = factory.getCurrentSession();
+		session = factory.getCurrentSession();
 		
 		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 	        if (newSelection != null) {
@@ -42,7 +47,6 @@ public class LibrosController implements Initializable{
 	            
 	        }
         });
-		
 		
 		xTableLibros.getItems().clear();
 		
@@ -56,17 +60,14 @@ public class LibrosController implements Initializable{
         xTableLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         
-        sesion.beginTransaction();
-		Query q = sesion.createQuery("SELECT e FROM Libro e");
+        session.beginTransaction();
+		Query q = session.createQuery("SELECT e FROM Libro e");
         List<Libro> lst = q.getResultList();
-        sesion.getTransaction().commit();
+        session.getTransaction().commit();
         
         
-        try {
         	xTableLibros.getItems().addAll(lst);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		
+
 	}
+
 }

@@ -7,6 +7,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import pojo.Alumno;
 import pojo.Contenido;
@@ -17,21 +18,18 @@ import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 import org.hibernate.SessionFactory;
 
 public class UtilesHibernate {
 	private static SessionFactory sessionFactory = null;
-	static {
-		try {
-			/*
-			Configuration configuration = new Configuration().configure();
-			sessionFactory = configuration.configure().buildSessionFactory();
-			*/
-			
-			try {
+
+	public static SessionFactory getSessionFactory() throws FileNotFoundException, IOException, ParseException {
+
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
                 
@@ -66,17 +64,7 @@ public class UtilesHibernate {
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-			
-		} catch (Throwable ex) {
-			// TODO: handle exception
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
-	public static SessionFactory getSessionFactory() {
+
 		return sessionFactory;
 	}
 

@@ -63,8 +63,6 @@ public class AjustesController implements Initializable {
 
 	private final String JSON_URL = System.getProperty("user.dir") + "\\config\\settings.json";
 	
-	
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		this.xChoiceBoxFilas.setItems(FXCollections.observableArrayList(filas));

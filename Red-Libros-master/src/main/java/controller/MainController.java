@@ -2,8 +2,11 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import utiles.hibernate.UtilesHibernate;
 
 
 public class MainController implements Initializable {
@@ -30,26 +35,49 @@ public class MainController implements Initializable {
 
     @FXML
     private TextField xTextFieldSearch;
-	
-    public LibrosController librosController;
+    
+    private LibrosController librosController;
+    private AnchorPane librosAnchorPane;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    	//LibrosController librosController = new LibrosController(borderpane);
     	
-    	loadUI("librosComponent");
-    	this.xLabelTitle.setText("Libros");
-    	showSearch(true);
+    	loadUI("mainComponent");
+    	this.xLabelTitle.setText("");
+    	showSearch(false);
     	
+    	this.librosController = new LibrosController();
     	
     }    
 
 	@FXML
     private void LibrosCLICKED(MouseEvent event) {
-    	loadUI("librosComponent");
-    	this.xLabelTitle.setText("Libros");
-    	showSearch(true);
+
+		try {
+			SessionFactory factory = UtilesHibernate.getSessionFactory();
+			Session session = factory.getCurrentSession();
+			
+			System.out.println("xd");
+			FXMLLoader librosloader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
+        	librosloader.setController(librosController);
+        	this.librosAnchorPane = (AnchorPane) librosloader.load();
+			
+        	librosController.reload();
+        	
+			Parent root = librosAnchorPane;
+        	borderpane.setCenter(root);
+        	
+		}  catch (Exception e) {
+			showErrorComponent();
+		}
+    	
+    	
+    }
+	
+	private void showErrorComponent() {
+    	loadUI("errorComponent");
+    	this.xLabelTitle.setText("Error");
+    	showSearch(false);
     }
 
     @FXML
@@ -99,20 +127,8 @@ public class MainController implements Initializable {
     	this.xHBoxSearch.setVisible(x);
     }
     
+
     private void loadUI(String ui) {
-    	/*
-    	FXMLLoader root = null;
-    	try {
-			root = FXMLLoader.load(getClass().getResource("/view/"+ui+".fxml"));
-			
-			LibrosController l = new LibrosController("aaa");
-			root.setController(l);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	borderpane.setCenter(root);
-    	*/
     	Parent root = null;
     	try {
 			root = FXMLLoader.load(getClass().getResource("/view/"+ui+".fxml"));
