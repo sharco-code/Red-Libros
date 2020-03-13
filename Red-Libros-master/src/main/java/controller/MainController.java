@@ -43,7 +43,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	
     	loadUI("mainComponent");
-    	this.xLabelTitle.setText("");
+    	this.xLabelTitle.setText("Inicio");
     	showSearch(false);
     	
     	this.librosController = new LibrosController();

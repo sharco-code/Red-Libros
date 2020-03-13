@@ -19,3 +19,7 @@
 .hover_bluetext:hover {
 	-fx-fill: #4db8ff;
 }
+.background {
+	-fx-background-image: url("../../../images/main-background2.jpg");
+	-fx-background-size: cover;
+}
