@@ -37,7 +37,6 @@ public class LibrosController{
 
 	public void reload() throws SQLException, Exception {
 		
-		System.out.println("reload");
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
 		session = factory.getCurrentSession();
 		

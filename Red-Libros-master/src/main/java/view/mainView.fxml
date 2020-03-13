@@ -223,9 +223,6 @@
                </children>
             </VBox>
          </left>
-         <center>
-            <VBox style="-fx-background-color: #f3f3f3;" BorderPane.alignment="CENTER" />
-         </center>
       </BorderPane>
    </children>
 </AnchorPane>

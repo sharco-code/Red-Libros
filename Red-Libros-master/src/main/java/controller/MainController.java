@@ -52,12 +52,12 @@ public class MainController implements Initializable {
 
 	@FXML
     private void LibrosCLICKED(MouseEvent event) {
-
+		this.xLabelTitle.setText("Libros");
+    	showSearch(true);
 		try {
 			SessionFactory factory = UtilesHibernate.getSessionFactory();
 			Session session = factory.getCurrentSession();
 			
-			System.out.println("xd");
 			FXMLLoader librosloader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
         	librosloader.setController(librosController);
         	this.librosAnchorPane = (AnchorPane) librosloader.load();
