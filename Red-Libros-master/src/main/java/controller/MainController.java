@@ -63,9 +63,14 @@ public class MainController implements Initializable {
         	this.librosAnchorPane = (AnchorPane) librosloader.load();
 			
         	librosController.reload();
-        	
 			Parent root = librosAnchorPane;
         	borderpane.setCenter(root);
+        	xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        	    if(newValue != null) {
+        	    	librosController.filtrar(newValue);
+        	    }
+        	});
+        	
         	
 		}  catch (Exception e) {
 			showErrorComponent();
@@ -137,6 +142,9 @@ public class MainController implements Initializable {
 		}
     	borderpane.setCenter(root);
     }
+
+    
+    
     
     
 }

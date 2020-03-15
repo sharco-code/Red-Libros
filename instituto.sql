@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `instituto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `instituto` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `instituto`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: instituto
 -- ------------------------------------------------------
--- Server version	5.7.23-log
+-- Server version	8.0.18
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `instituto`;
 
 DROP TABLE IF EXISTS `alumnos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alumnos` (
   `id` varchar(10) NOT NULL,
   `NIA` varchar(10) DEFAULT NULL,
@@ -110,7 +110,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `contenido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contenido` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `curso` varchar(10) NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE `contenido` (
   `nombre_val` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `curso_rel` (`curso`),
-  CONSTRAINT `contenidoCurso` FOREIGN KEY (`curso`) REFERENCES `cursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `contenidoCurso` FOREIGN KEY (`curso`) REFERENCES `cursos` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1261 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -140,7 +140,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cursos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cursos` (
   `id` varchar(10) NOT NULL,
   `codigo` varchar(15) NOT NULL,
@@ -171,7 +171,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ejemplares`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ejemplares` (
   `id` varchar(100) NOT NULL,
   `codigo` varchar(100) NOT NULL,
@@ -200,7 +200,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `grupos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grupos` (
   `id` varchar(10) NOT NULL,
   `codigo` varchar(10) NOT NULL,
@@ -233,7 +233,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `historial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `historial` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_ejemplar` varchar(100) DEFAULT NULL,
@@ -267,7 +267,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `libros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `libros` (
   `id` varchar(50) NOT NULL,
   `codigo` varchar(50) NOT NULL,
@@ -278,7 +278,9 @@ CREATE TABLE `libros` (
   `obsoleto` tinyint(1) NOT NULL,
   `precio` double NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_asignatura_rel` (`id_contenido`)
+  KEY `id_asignatura_rel` (`id_contenido`),
+  CONSTRAINT `FKcm1qqb36e0drbcm0nwlauab29` FOREIGN KEY (`id_contenido`) REFERENCES `contenido` (`id`),
+  CONSTRAINT `libroIDContenido` FOREIGN KEY (`id_contenido`) REFERENCES `contenido` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -298,7 +300,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `matricula`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `matricula` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `curso_escolar` int(11) NOT NULL,
@@ -319,7 +321,7 @@ CREATE TABLE `matricula` (
   KEY `id_contenido_rel` (`contenido`),
   KEY `matrilculaCurso_idx` (`curso`),
   CONSTRAINT `FKpmmj4cfy7r1lepuxysx08ffl3` FOREIGN KEY (`contenido`) REFERENCES `contenido` (`id`),
-  CONSTRAINT `matriCulaContenido` FOREIGN KEY (`contenido`) REFERENCES `contenido` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `matriCulaContenido` FOREIGN KEY (`contenido`) REFERENCES `contenido` (`id`),
   CONSTRAINT `matrilculaCurso` FOREIGN KEY (`curso`) REFERENCES `cursos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `matrilculaIDAlumno` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -343,4 +345,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-11 13:30:56
+-- Dump completed on 2020-03-15 16:55:17

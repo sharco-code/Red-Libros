@@ -159,21 +159,21 @@ public class Alumno implements Serializable {
 	private String turno;
 
 	//bi-directional many-to-one association to Curso
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="curso")
 	private Curso cursoBean;
 
 	//bi-directional many-to-one association to Grupo
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="grupo")
 	private Grupo grupoBean;
 
 	//bi-directional many-to-one association to Historial
-	@OneToMany(mappedBy="alumno")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="alumno")
 	private List<Historial> historials;
 
 	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="alumno")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="alumno")
 	private List<Matricula> matriculas;
 
 	public Alumno() {

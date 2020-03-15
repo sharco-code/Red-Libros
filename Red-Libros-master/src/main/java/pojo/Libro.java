@@ -20,8 +20,9 @@ public class Libro implements Serializable {
 
 	private String codigo;
 
-	@Column(name="id_contenido")
-	private int idContenido;
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="id_contenido")
+	private Contenido contenido;
 
 	private String isbn;
 
@@ -34,7 +35,7 @@ public class Libro implements Serializable {
 	private int unidades;
 
 	//bi-directional many-to-one association to Ejemplare
-	@OneToMany(mappedBy="libro")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="libro")
 	private List<Ejemplare> ejemplares;
 
 	public Libro() {
@@ -42,6 +43,14 @@ public class Libro implements Serializable {
 
 	public String getId() {
 		return this.id;
+	}
+
+	public Contenido getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(Contenido contenido) {
+		this.contenido = contenido;
 	}
 
 	public void setId(String id) {
@@ -56,13 +65,6 @@ public class Libro implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public int getIdContenido() {
-		return this.idContenido;
-	}
-
-	public void setIdContenido(int idContenido) {
-		this.idContenido = idContenido;
-	}
 
 	public String getIsbn() {
 		return this.isbn;

@@ -43,7 +43,7 @@ public class Grupo implements Serializable {
 	private String tutorSec;
 
 	//bi-directional many-to-one association to Alumno
-	@OneToMany(mappedBy="grupoBean")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="grupoBean")
 	private List<Alumno> alumnos;
 
 	public Grupo() {

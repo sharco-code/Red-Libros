@@ -25,12 +25,12 @@ public class Ejemplare implements Serializable {
 	private byte prestado;
 
 	//bi-directional many-to-one association to Libro
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="id_libro")
 	private Libro libro;
 
 	//bi-directional many-to-one association to Historial
-	@OneToMany(mappedBy="ejemplare")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="ejemplare")
 	private List<Historial> historials;
 
 	public Ejemplare() {

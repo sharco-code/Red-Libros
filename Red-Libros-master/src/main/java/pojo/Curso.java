@@ -36,15 +36,15 @@ public class Curso implements Serializable {
 	private String nombreVal;
 
 	//bi-directional many-to-one association to Alumno
-	@OneToMany(mappedBy="cursoBean")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="cursoBean")
 	private List<Alumno> alumnos;
 
 	//bi-directional many-to-one association to Contenido
-	@OneToMany(mappedBy="cursoBean")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="cursoBean")
 	private List<Contenido> contenidos;
 
 	//bi-directional many-to-one association to Matricula
-	@OneToMany(mappedBy="cursoBean")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="cursoBean")
 	private List<Matricula> matriculas;
 
 	public Curso() {
