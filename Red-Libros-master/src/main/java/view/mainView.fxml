@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,7 +17,7 @@
          <top>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0fbcf9;">
+                  <HBox alignment="CENTER" onMouseClicked="#NameCLICKED" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Red de Libros" textAlignment="CENTER">
                            <font>
@@ -24,6 +25,10 @@
                            </font>
                         </Text>
                      </children>
+                     <styleClass>
+                        <String fx:value="hover_main" />
+                        <String fx:value="main_color" />
+                     </styleClass>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: WHITE;">
                      <children>

@@ -61,11 +61,11 @@ public class LibrosController implements Initializable {
 	        	try {
 	        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
 	        		
-	        		LibroDetalleController libroController = new LibroDetalleController();
-	    			loader.setController(libroController);
+	        		LibroDetalleController libroDetalleController = new LibroDetalleController();
+	    			loader.setController(libroDetalleController);
 	    			//root = FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
 	    			root = loader.load();
-	    			libroController.setLibro(newSelection);
+	    			libroDetalleController.setLibro(newSelection);
 	    			anchorpane.getChildren().clear();
 	    			anchorpane.getChildren().add(root);
 	    		} catch (IOException e) {

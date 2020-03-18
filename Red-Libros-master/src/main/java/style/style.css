@@ -23,3 +23,9 @@
 	-fx-background-image: url("../../../images/main-background2.jpg");
 	-fx-background-size: cover;
 }
+.main_color {
+	-fx-background-color:  #0fbcf9;
+}
+.hover_main:hover {
+	-fx-background-color: #26c6ff;
+}

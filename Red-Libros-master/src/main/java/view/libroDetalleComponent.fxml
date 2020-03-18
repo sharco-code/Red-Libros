@@ -5,186 +5,282 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane depthTest="ENABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="200.0">
+      <VBox layoutX="10.0" layoutY="10.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox>
+            <VBox prefHeight="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER">
                            <children>
-                              <Label text="Codigo del libro" />
+                              <Label prefWidth="60.0" text="Nombre:">
+                                 <font>
+                                    <Font name="Arial" size="15.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox HBox.hgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="xTextFieldCodigo" />
+                              <TextField promptText="Lengua" style="-fx-background-color: WHITE;" fx:id="xTextFieldNombre">
+                                 <font>
+                                    <Font name="Arial Bold" size="30.0" />
+                                 </font>
+                              </TextField>
                            </children>
                         </VBox>
                      </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                     </padding>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Nombre" />
+                              <VBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label contentDisplay="CENTER" prefWidth="60.0" text="Código:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <TextField prefWidth="200.0" promptText="000" style="-fx-background-color: WHITE;" fx:id="xTextFieldCodigo">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <TextField fx:id="xTextFieldNombre" />
-                           </children>
-                        </VBox>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
                      </children>
-                  </HBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="ISBN" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <TextField fx:id="xTextFieldISBN" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </HBox>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="300.0">
-                     <children>
-                        <VBox>
-                           <children>
-                              <Label text="Curso escolar" />
-                           </children>
-                        </VBox>
-                        <VBox>
-                           <children>
-                              <ComboBox fx:id="xComboBoxCursoEscolar" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </HBox>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <HBox>
-                     <children>
-                        <VBox>
-                           <children>
-                              <Label text="Curso" />
-                           </children>
-                        </VBox>
-                        <VBox>
-                           <children>
-                              <ComboBox fx:id="xComboBoxCurso" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                     </padding>
                   </HBox>
                   <HBox>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Asignatura" />
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label prefWidth="60.0" text="ISBN:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <TextField prefWidth="200.0" promptText="000-0000000000" style="-fx-background-color: WHITE;" fx:id="xTextFieldISBN">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="220.0">
-                           <children>
-                              <ComboBox fx:id="xComboBoxAsignatura" />
-                           </children>
-                        </VBox>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Separator HBox.hgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Separator>
                      </children>
                   </HBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
                   <HBox>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox>
                            <children>
-                              <Label text="Unidades totales" />
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Curso escolar:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <ComboBox prefWidth="200.0" fx:id="xComboBoxCursoEscolar" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <TextField fx:id="xTextFieldUnidadesTotales" />
-                           </children>
-                        </VBox>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
                      </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label prefWidth="50.0" text="Curso:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <ComboBox prefWidth="200.0" fx:id="xComboBoxCurso" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label prefWidth="80.0" text="Asignatura:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="220.0">
+                                 <children>
+                                    <ComboBox prefWidth="200.0" fx:id="xComboBoxAsignatura" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label prefWidth="120.0" text="Unidades totales:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <TextField prefWidth="50.0" promptText="10" style="-fx-background-color: transparent;" fx:id="xTextFieldUnidadesTotales">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label prefWidth="50.0" text="Precio:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <TextField prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldPrecio">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="Precio" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Obsoleto" fx:id="xCheckBoxObsoleto">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <TextField fx:id="xTextFieldPrecio" />
-                           </children>
-                        </VBox>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
                      </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                   </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <VBox VBox.vgrow="ALWAYS">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <CheckBox mnemonicParsing="false" text="Obsoleto" fx:id="xCheckBoxObsoleto" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </HBox>
+                  <ListView VBox.vgrow="ALWAYS" fx:id="xListViewEjemplar" />
                </children>
-            </HBox>
+            </VBox>
          </children>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" />
          </padding>
       </VBox>
-      <VBox prefHeight="200.0">
-         <children>
-            <ListView prefHeight="200.0" fx:id="xListViewEjemplar" />
-         </children>
-      </VBox>
    </children>
-</VBox>
+</AnchorPane>

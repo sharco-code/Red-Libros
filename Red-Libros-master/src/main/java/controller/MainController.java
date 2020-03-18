@@ -78,7 +78,12 @@ public class MainController implements Initializable {
     	
     	
     }
-	
+	@FXML
+    void NameCLICKED(MouseEvent event) {
+		loadUI("mainComponent");
+    	this.xLabelTitle.setText("Inicio");
+    	showSearch(false);
+    }
 	private void showErrorComponent() {
     	loadUI("errorComponent");
     	this.xLabelTitle.setText("Error");
