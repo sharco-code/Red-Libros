@@ -37,7 +37,12 @@ public class MainController implements Initializable {
     private TextField xTextFieldSearch;
     
     private LibrosController librosController;
+    private EntregasController entregasController;
+    private DevolucionesController devolucionesController;
+    
     private AnchorPane librosAnchorPane;
+    private AnchorPane entregasAnchorPane;
+    private AnchorPane devolucionesAnchorPane;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,6 +52,8 @@ public class MainController implements Initializable {
     	showSearch(false);
     	
     	this.librosController = new LibrosController();
+    	this.entregasController = new EntregasController();
+    	this.devolucionesController = new DevolucionesController();
     	
     }    
 
@@ -92,16 +99,60 @@ public class MainController implements Initializable {
 
     @FXML
     private void EntregasCLICKED(MouseEvent event) {
-    	loadUI("entregasComponent");
-    	this.xLabelTitle.setText("Entegas");
+    	/*
+    	this.xLabelTitle.setText("Entregas");
     	showSearch(true);
+		try {
+			
+			SessionFactory factory = UtilesHibernate.getSessionFactory();
+			Session session = factory.getCurrentSession();
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/entregasComponent.fxml"));
+        	loader.setController(entregasController);
+        	this.entregasAnchorPane = (AnchorPane) loader.load();
+			
+        	entregasController.reload();
+			Parent root = entregasAnchorPane;
+        	borderpane.setCenter(root);
+        	xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        	    if(newValue != null) {
+        	    	entregasController.filtrar(newValue);
+        	    }
+        	});
+        	
+        	
+		}  catch (Exception e) {
+			showErrorComponent();
+		}
+		*/
     }
 
     @FXML
     private void DevolucionesCLICKED(MouseEvent event) {
-    	loadUI("devolucionesComponent");
     	this.xLabelTitle.setText("Devoluciones");
     	showSearch(true);
+		try {
+			SessionFactory factory = UtilesHibernate.getSessionFactory();
+			Session session = factory.getCurrentSession();
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/devolucionesComponent.fxml"));
+        	loader.setController(devolucionesController);
+        	this.devolucionesAnchorPane = (AnchorPane) loader.load();
+			
+        	devolucionesController.reload();
+			Parent root = devolucionesAnchorPane;
+        	borderpane.setCenter(root);
+        	xTextFieldSearch.setPromptText("Nombre");
+        	xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        	    if(newValue != null) {
+        	    	devolucionesController.filtrar(newValue);
+        	    }
+        	});
+        	
+        	
+		}  catch (Exception e) {
+			showErrorComponent();
+		}
     }
 
     @FXML

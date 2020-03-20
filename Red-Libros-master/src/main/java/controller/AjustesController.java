@@ -30,6 +30,7 @@ import java.io.PrintWriter;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -58,6 +59,9 @@ public class AjustesController implements Initializable {
 	@FXML
 	private ChoiceBox<String> xChoiceBoxColumnas;
 
+	@FXML
+	private AnchorPane anchorpane;
+	
 	private final String filas[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 	private final String columnas[] = { "1", "2", "3", "4" };
 
