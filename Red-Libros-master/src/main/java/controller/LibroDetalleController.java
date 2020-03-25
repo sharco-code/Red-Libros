@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.simple.parser.ParseException;
 
+import dao.CursoDAO;
+import dao.LibroDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -60,28 +62,17 @@ public class LibroDetalleController implements Initializable{
     private CheckBox xCheckBoxObsoleto;
     
     
-    
     private List<Curso> listaCursos = new ArrayList<>();
-    
-    private Session session;
     
     private boolean nuevoLibro = true;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		SessionFactory factory;
 		try {
-			factory = UtilesHibernate.getSessionFactory();
-			session = factory.getCurrentSession();
-			
-			session.beginTransaction();
-			Query q = session.createQuery("SELECT e FROM Curso e");
-			listaCursos = q.getResultList();
+			listaCursos = CursoDAO.getCursos();
 			
 			
-			//Si pones esta linea peta
-	        //session.getTransaction().commit();
 			
 			xComboBoxCurso.setDisable(true);
 			xComboBoxAsignatura.setDisable(true);
@@ -96,14 +87,8 @@ public class LibroDetalleController implements Initializable{
 	        setListenerComboBoxCursoEscolar();
 	        
 	        
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
@@ -197,14 +182,9 @@ public class LibroDetalleController implements Initializable{
 	
 	public void setLibro(Libro libroViejo)  {
 		
-		SessionFactory factory;
 		try {
-			factory = UtilesHibernate.getSessionFactory();
-			session = factory.getCurrentSession();
-			
-			session.beginTransaction();
 			nuevoLibro = false;
-			Libro libro = session.get(Libro.class, libroViejo.getId());
+			Libro libro = LibroDAO.getLibro(libroViejo.getId());
 			
 			xTextFieldCodigo.setText(libro.getCodigo());
 			xTextFieldISBN.setText(libro.getIsbn());
@@ -251,14 +231,8 @@ public class LibroDetalleController implements Initializable{
 			}
 	        
 	        
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		

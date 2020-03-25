@@ -62,8 +62,8 @@ public class MainController implements Initializable {
 		this.xLabelTitle.setText("Libros");
     	showSearch(true);
 		try {
-			SessionFactory factory = UtilesHibernate.getSessionFactory();
-			Session session = factory.getCurrentSession();
+			//SessionFactory factory = UtilesHibernate.getSessionFactory();
+			//Session session = factory.getCurrentSession();
 			
 			FXMLLoader librosloader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
         	librosloader.setController(librosController);
@@ -132,8 +132,8 @@ public class MainController implements Initializable {
     	this.xLabelTitle.setText("Devoluciones");
     	showSearch(true);
 		try {
-			SessionFactory factory = UtilesHibernate.getSessionFactory();
-			Session session = factory.getCurrentSession();
+			//SessionFactory factory = UtilesHibernate.getSessionFactory();
+			//Session session = factory.getCurrentSession();
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/devolucionesComponent.fxml"));
         	loader.setController(devolucionesController);

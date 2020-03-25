@@ -20,6 +20,8 @@ import org.hibernate.SessionFactory;
 import org.json.simple.parser.ParseException;
 
 import app.Init;
+import dao.AlumnoDAO;
+import dao.CursoDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,7 +48,6 @@ public class DevolucionesController implements Initializable {
 	@FXML
     private TableView<Alumno> xTableMain;
 	
-	private Session session;
 	
 	private List<Alumno> listaAlumnos = new ArrayList<>();
 	
@@ -64,16 +65,8 @@ public class DevolucionesController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		SessionFactory factory;
 		try {
-			factory = UtilesHibernate.getSessionFactory();
-			session = factory.getCurrentSession();
+			listaCursos = CursoDAO.getCursos();
 			
-			session.beginTransaction();
-			Query q = session.createQuery("SELECT e FROM Curso e");
-			listaCursos = q.getResultList();
-			
-			
-			//Si pones esta linea peta
-	        //session.getTransaction().commit();
 			
 			xComboBoxCurso.setDisable(true);
 	        
@@ -86,14 +79,8 @@ public class DevolucionesController implements Initializable {
 	        setListenerComboBoxCursoEscolar();
 	        
 	        
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
@@ -150,23 +137,14 @@ public class DevolucionesController implements Initializable {
 
 	private void setListenerComboBoxCurso() {
 		xComboBoxCurso.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			/*
-			if (newSelection != null) {
-		    	
-		    	xComboBoxAsignatura.getItems().clear();
-		    	xComboBoxAsignatura.getItems().addAll(((Curso)newSelection).getContenidos());
-		    	xComboBoxAsignatura.setDisable(false);
-		    }else {
-		    	xComboBoxAsignatura.setDisable(true);
-		    }
-		    */
+			listaAlumnos = AlumnoDAO.getAlumnos()
+					.stream()
+					.filter(alumno -> alumno.getCursoBean() == newSelection).collect(Collectors.toList());
 		});
 	}
 	
 	public void reload() throws SQLException, Exception {
 		
-		SessionFactory factory = UtilesHibernate.getSessionFactory();
-		session = factory.getCurrentSession();
 		
 		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 	        if (newSelection != null) {
@@ -194,8 +172,8 @@ public class DevolucionesController implements Initializable {
 		
 		xTableMain.getItems().clear();
 		
-		 TableColumn apellido1Column = new TableColumn("Apellido1");
-	        apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
+		TableColumn apellido1Column = new TableColumn("Apellido1");
+        apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
 	        
 		TableColumn apellido2Column = new TableColumn("Apellido2");
 		apellido2Column.setCellValueFactory(new PropertyValueFactory("apellido2"));
@@ -216,10 +194,8 @@ public class DevolucionesController implements Initializable {
 	}
 
 	private void getAlumnos() {
-		session.beginTransaction();
-		Query q = session.createQuery("SELECT e FROM Alumno e");
-        listaAlumnos = q.getResultList();
-        session.getTransaction().commit();
+		
+        listaAlumnos = AlumnoDAO.getAlumnos();
 	}
 
 	public void filtrar(String newValue) {

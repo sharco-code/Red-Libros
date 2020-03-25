@@ -27,6 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
+import dao.LibroDAO;
 
 
 public class LibrosController implements Initializable {
@@ -37,7 +38,6 @@ public class LibrosController implements Initializable {
 	@FXML
     private TableView<Libro> xTableLibros;
 	
-	private Session session;
 	
 	private List<Libro> listaLibros = new ArrayList<>();
 	
@@ -52,8 +52,6 @@ public class LibrosController implements Initializable {
 
 	public void reload() throws SQLException, Exception {
 		
-		SessionFactory factory = UtilesHibernate.getSessionFactory();
-		session = factory.getCurrentSession();
 		
 		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 	        if (newSelection != null) {
@@ -95,10 +93,7 @@ public class LibrosController implements Initializable {
 	}
 
 	private void getLibros() {
-		session.beginTransaction();
-		Query q = session.createQuery("SELECT e FROM Libro e");
-        listaLibros = q.getResultList();
-        session.getTransaction().commit();
+        listaLibros = LibroDAO.getLibros();
 	}
 
 	public void filtrar(String newValue) {
