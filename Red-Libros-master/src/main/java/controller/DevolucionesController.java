@@ -19,9 +19,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.simple.parser.ParseException;
 
-import app.Init;
+import app.Main;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,8 +30,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -61,8 +65,37 @@ public class DevolucionesController implements Initializable {
 	
 	private List<Curso> listaCursos = new ArrayList<>();
 	
+	 @FXML
+    private RadioButton xRadioButtonNIA;
+
+    @FXML
+    private RadioButton xRadioButtonEXPEDIENTE;
+
+    @FXML
+    private TextField xTextFieldSearch;
+
+    private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
+    
+    @FXML
+    void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
+    	this.xRadioButtonNIA.setSelected(false);
+    	this.xTextFieldSearch.setPromptText("Buscar por Expediente");
+    	radioButton_Selected = 2;
+    }
+
+    @FXML
+    void xRadioButtonNIA_Action(ActionEvent event) {
+    	this.xRadioButtonEXPEDIENTE.setSelected(false);
+
+    	this.xTextFieldSearch.setPromptText("Buscar por NIA");
+    	radioButton_Selected = 1;
+    }
+	    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		
+		
 		SessionFactory factory;
 		try {
 			listaCursos = CursoDAO.getCursos();

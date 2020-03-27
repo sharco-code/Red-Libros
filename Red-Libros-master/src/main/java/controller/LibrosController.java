@@ -15,30 +15,34 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import app.Init;
+import app.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
 import dao.LibroDAO;
 
 
 public class LibrosController implements Initializable {
-
-	@FXML
-    private AnchorPane anchorpane;
 	
 	@FXML
     private TableView<Libro> xTableLibros;
 	
+	 @FXML
+	 private TextField xTextFieldSearch;
 	
+	 @FXML
+	 private VBox xVBoxMAIN;
+	 
 	private List<Libro> listaLibros = new ArrayList<>();
 	
 	private List<Libro> librosFiltrados = new ArrayList<>();
@@ -46,7 +50,11 @@ public class LibrosController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		this.xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    if(newValue != null) {
+    	    	filtrar(newValue);
+    	    }
+    	});
 		
 	}
 
@@ -56,6 +64,7 @@ public class LibrosController implements Initializable {
 		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 	        if (newSelection != null) {
 	        	Parent root = null;
+	        	
 	        	try {
 	        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
 	        		
@@ -64,11 +73,14 @@ public class LibrosController implements Initializable {
 	    			//root = FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
 	    			root = loader.load();
 	    			libroDetalleController.setLibro(newSelection);
-	    			anchorpane.getChildren().clear();
-	    			anchorpane.getChildren().add(root);
+
+	    			this.xVBoxMAIN.getChildren().clear();
+	    			this.xVBoxMAIN.getChildren().add(root);
+
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
+	    		
 	            
 	        }
         });

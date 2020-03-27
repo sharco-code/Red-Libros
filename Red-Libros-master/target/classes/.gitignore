@@ -1,5 +1,4 @@
-/module-info.class
-/service/
+/META-INF/
 /controller/
-/model/
+/view/
 /dao/

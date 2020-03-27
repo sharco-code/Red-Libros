@@ -20,8 +20,6 @@ module proyectoFinal.redLibros {
 	exports utiles.excepciones;
 	opens utiles.excepciones;
 	
-	exports utiles.jdbc;
-	opens utiles.jdbc;
 	
 	exports utiles.hibernate;
 	opens utiles.hibernate;

@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import app.Init;
+import app.Main;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -120,7 +120,7 @@ public class AjustesController implements Initializable {
 		int toastMsgTime = 1000; //3.5 seconds
 		int fadeInTime = 150; //0.5 seconds
 		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeText(Init.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 
 	private void writeSettings() throws FileNotFoundException, IOException, ParseException {

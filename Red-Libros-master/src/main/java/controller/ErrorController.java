@@ -4,35 +4,38 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class ErrorController {
-
+	
 	 @FXML
-	private AnchorPane AnchorPane;
+	 private VBox xVBoxMAIN;
 	
 	@FXML
     void ajustesCLICKED(MouseEvent event) {
 		System.out.println("ajustes clicked");
-		Parent root = null;
+		
+    	
+    	
+    	
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ajustesComponent.fxml"));
+    		VBox anchorPane = (VBox) loader.load();
     		
-    		//LibroDetalleController libroDetalleController = new LibroDetalleController();
-			//loader.setController(libroDetalleController);
-			//root = FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
-			root = loader.load();
+    		VBox.setVgrow(anchorPane, Priority.ALWAYS);
 			
-			AnchorPane.getChildren().clear();
-			AnchorPane.getChildren().setAll(root);
+    		this.xVBoxMAIN.getChildren().clear();
+    		this.xVBoxMAIN.setPadding(new Insets(0, 0, 0, 0));
+			this.xVBoxMAIN.getChildren().add(anchorPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
     }
 	
 }

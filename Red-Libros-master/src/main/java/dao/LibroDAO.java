@@ -23,10 +23,6 @@ public class LibroDAO {
 	private static Session session;
 	
 	
-	
-
-
-	
 	private static void getLibrosDDBB() throws FileNotFoundException, IOException, ParseException {
 		if(session == null) {
 			SessionFactory factory = UtilesHibernate.getSessionFactory();

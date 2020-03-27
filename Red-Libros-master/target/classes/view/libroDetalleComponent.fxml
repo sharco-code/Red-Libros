@@ -274,7 +274,7 @@
             </VBox>
             <VBox VBox.vgrow="ALWAYS">
                <children>
-                  <ListView VBox.vgrow="ALWAYS" fx:id="xListViewEjemplar" />
+                  <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" fx:id="xListViewEjemplar" />
                </children>
             </VBox>
          </children>

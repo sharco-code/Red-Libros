@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import utiles.hibernate.UtilesHibernate;
 
-public class Init extends Application {
+public class Main extends Application {
 
 	private static Stage stage;
 	
