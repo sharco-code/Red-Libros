@@ -22,6 +22,9 @@ import org.json.simple.parser.ParseException;
 import app.Main;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +34,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -176,6 +180,7 @@ public class DevolucionesController implements Initializable {
 		});
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void reload() throws SQLException, Exception {
 		
 		
@@ -205,12 +210,15 @@ public class DevolucionesController implements Initializable {
 		
 		xTableMain.getItems().clear();
 		
-		TableColumn apellido1Column = new TableColumn("Apellido1");
+
+		TableColumn apellido1Column = new TableColumn("Primer apellido");
         apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
-	        
-		TableColumn apellido2Column = new TableColumn("Apellido2");
-		apellido2Column.setCellValueFactory(new PropertyValueFactory("apellido2"));
+	    
+        apellido1Column.setMaxWidth(900);
         
+		TableColumn apellido2Column = new TableColumn("Segundo apellido");
+		apellido2Column.setCellValueFactory(new PropertyValueFactory("apellido2"));
+        apellido2Column.setMaxWidth(900);
         
         TableColumn nombreColumn = new TableColumn("Nombre");
         nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
@@ -218,6 +226,9 @@ public class DevolucionesController implements Initializable {
         xTableMain.getColumns().addAll(apellido1Column,apellido2Column,nombreColumn);
         xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
+		
+		
+		
         
         getAlumnos();
         
