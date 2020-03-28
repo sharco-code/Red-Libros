@@ -4,11 +4,11 @@
     -fx-background-color: transparent;
 }
 
-.table-view .filler, .tree-table-view .filler, .table-view .column-header,
+.table-view, .tree-table-view, .table-view .column-header,
 .tree-table-view .column-header {
     -fx-size: 30;
     -fx-border-style: null;
-    -fx-border-color: -swatch-grey;
+
     -fx-border-width: 0 0 2 0;
     -fx-background-color: transparent;
 }

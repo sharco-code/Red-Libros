@@ -83,6 +83,8 @@ public class DevolucionesController implements Initializable {
     @FXML
     void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
     	this.xRadioButtonNIA.setSelected(false);
+    	this.xTextFieldSearch.setText("");
+    	
     	this.xTextFieldSearch.setPromptText("Buscar por Expediente");
     	radioButton_Selected = 2;
     }
@@ -90,7 +92,8 @@ public class DevolucionesController implements Initializable {
     @FXML
     void xRadioButtonNIA_Action(ActionEvent event) {
     	this.xRadioButtonEXPEDIENTE.setSelected(false);
-
+    	this.xTextFieldSearch.setText("");
+    	
     	this.xTextFieldSearch.setPromptText("Buscar por NIA");
     	radioButton_Selected = 1;
     }
@@ -98,8 +101,6 @@ public class DevolucionesController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		
-		
 		SessionFactory factory;
 		try {
 			listaCursos = CursoDAO.getCursos();

@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import app.Main;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -126,12 +130,45 @@ public class MainController implements Initializable {
     
     @FXML
     void LibrosCLICKED(MouseEvent event) {
-    	
+
     	/*
     	Estaría guay que esto salier mientras carga
     	showToast("Conectando a BBDD");
-    	 */
+    	 
+		------------------------------ intento 1
+    	ToastThread toastThread = new ToastThread("Conectando a BBDD");
+    	Thread a = toastThread;
+    	a.start();
     	
+ 
+    	----------------------------- intento 2
+    	Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {           
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work                       
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {                          
+                            @Override
+                            public void run() {
+                                try{
+                                	showToast("Conectando a BBDD");
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();                      
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+        */
     	
     	this.xVBoxCENTER.getChildren().clear();
     	try {

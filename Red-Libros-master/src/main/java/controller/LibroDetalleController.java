@@ -25,6 +25,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import pojo.Contenido;
 import pojo.Curso;
@@ -61,6 +64,8 @@ public class LibroDetalleController implements Initializable{
     @FXML
     private CheckBox xCheckBoxObsoleto;
     
+    @FXML
+    private ListView<?> xListViewEjemplar;
     
     private List<Curso> listaCursos = new ArrayList<>();
     
@@ -68,6 +73,7 @@ public class LibroDetalleController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		// TODO Auto-generated method stub
 		try {
 			listaCursos = CursoDAO.getCursos();
@@ -91,9 +97,121 @@ public class LibroDetalleController implements Initializable{
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+		this.xComboBoxAsignatura.setDisable(true);
+    	this.xCheckBoxObsoleto.setDisable(true);
+    	this.xComboBoxCursoEscolar.setDisable(true);
+    	this.xComboBoxCurso.setDisable(true);
+    	this.xCheckBoxObsoleto.setDisable(true);
+    	this.xListViewEjemplar.setDisable(true);
 	}
+	
+	@FXML
+    private HBox xButtonEDITAR;
 
+    @FXML
+    private HBox xButtonGUARDAR;
+
+    @FXML
+    private HBox xButtonBORRAR;
+	
+    private boolean isButtonGuardarEnabled = false;
+    
+	@FXML
+    void BorrarCLICKED(MouseEvent event) {
+
+    }
+
+    @FXML
+    void EditarCLICKED(MouseEvent event) {
+
+    	
+    	isButtonGuardarEnabled = true;
+    	this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
+    	this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
+    	
+    	this.xComboBoxAsignatura.setDisable(false);
+    	this.xCheckBoxObsoleto.setDisable(false);
+    	this.xComboBoxCursoEscolar.setDisable(false);
+    	this.xComboBoxCurso.setDisable(false);
+    	
+    	this.xTextFieldCodigo.setEditable(true);
+    	
+    	this.xTextFieldISBN.setEditable(true);
+    	
+    	this.xTextFieldNombre.setEditable(true);
+    	this.xTextFieldUnidadesTotales.setEditable(true);
+    	this.xTextFieldPrecio.setEditable(true);
+    	
+    	this.xTextFieldPrecio.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: WHITE;");
+    	
+    	this.xButtonEDITAR.setDisable(true);
+    	this.xButtonEDITAR.setStyle("-fx-background-color: GRAY;");
+    }
+    
+    @FXML
+    void EditarENTERED(MouseEvent event) {
+    	if(!isButtonGuardarEnabled) {
+    		this.xButtonEDITAR.setStyle("-fx-background-color:#0fbcf9; ");
+    	}
+    }
+
+    @FXML
+    void EditarEXITED(MouseEvent event) {
+    	if(!isButtonGuardarEnabled) {
+    		this.xButtonEDITAR.setStyle("-fx-background-color:#1f93ff; ");
+    	}
+    }
+
+    
+    @FXML
+    void GuardarCLICKED(MouseEvent event) {
+
+    	
+    	isButtonGuardarEnabled = false;
+    	this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
+    	this.xButtonGUARDAR.setStyle("-fx-background-color: GRAY;");
+    	
+    	this.xComboBoxAsignatura.setDisable(true);
+    	this.xCheckBoxObsoleto.setDisable(true);
+    	this.xComboBoxCursoEscolar.setDisable(true);
+    	this.xComboBoxCurso.setDisable(true);
+    	this.xTextFieldCodigo.setEditable(true);
+    	this.xTextFieldISBN.setEditable(true);
+    	this.xTextFieldNombre.setEditable(true);
+    	this.xTextFieldUnidadesTotales.setEditable(true);
+    	this.xTextFieldPrecio.setEditable(true);
+    	
+    	this.xTextFieldPrecio.setStyle("-fx-background-color: TRANSPARENT;");
+    	this.xTextFieldCodigo.setStyle("-fx-background-color: TRANSPARENT;");
+    	this.xTextFieldISBN.setStyle("-fx-background-color: TRANSPARENT;");
+    	this.xTextFieldNombre.setStyle("-fx-background-color: TRANSPARENT;");
+    	this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: TRANSPARENT;");
+    	
+    	this.xButtonEDITAR.setStyle("-fx-background-color: #1f93ff;");
+    	this.xButtonEDITAR.setDisable(false);
+    }
+    
+    @FXML
+    void GuardarENTERED(MouseEvent event) {
+    	if(isButtonGuardarEnabled) {
+    		this.xButtonGUARDAR.setStyle("-fx-background-color: #66ff66;");
+    	}
+    	
+    }
+
+    @FXML
+    void GuardarEXITED(MouseEvent event) {
+    	if(isButtonGuardarEnabled) {
+    		this.xButtonGUARDAR.setStyle("-fx-background-color: #33cc33;");
+    	}
+    	
+    	
+    }
+    
 	private void setMostrarComboBoxAsignatura() {
 		Callback<ListView<Contenido>, ListCell<Contenido>> cellFactory = new Callback<ListView<Contenido>, ListCell<Contenido>>() {
 

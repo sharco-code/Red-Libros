@@ -50,6 +50,7 @@ public class EntregasController implements Initializable {
 		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void reload() throws SQLException, Exception {
 		
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
@@ -94,6 +95,7 @@ public class EntregasController implements Initializable {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getLibros() {
 		session.beginTransaction();
 		Query q = session.createQuery("SELECT e FROM Libro e");

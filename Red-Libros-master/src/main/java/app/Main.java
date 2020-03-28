@@ -1,7 +1,5 @@
 package app;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,12 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import utiles.hibernate.UtilesHibernate;
 
 public class Main extends Application {
 
 	private static Stage stage;
 	
+	@SuppressWarnings({ "exports", "static-access" })
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -40,6 +38,7 @@ public class Main extends Application {
 	
 	
 
+	@SuppressWarnings("exports")
 	public static Stage getStage() {
 		return stage;
 	}
@@ -48,11 +47,7 @@ public class Main extends Application {
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		launch(args);
-		
-		
-
 	}
 
 }

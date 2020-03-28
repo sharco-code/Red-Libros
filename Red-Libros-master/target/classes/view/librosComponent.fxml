@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -21,21 +22,28 @@
                   <Insets left="50.0" />
                </HBox.margin>
             </Text>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT">
                <children>
-                  <HBox alignment="CENTER" prefHeight="79.0" prefWidth="231.0" style="-fx-background-color: WHITE;" fx:id="xHBoxSearch">
+                  <VBox alignment="CENTER_LEFT" prefHeight="90.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                      <children>
-                        <TextField promptText="Buscar por códgo" style="-fx-background-color: #ededed;" fx:id="xTextFieldSearch">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin></TextField>
-                        <FontAwesomeIcon iconName="SEARCH" size="1.5em">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </FontAwesomeIcon>
+                        <RadioButton mnemonicParsing="false" onAction="#xRadioButtonNOMBRE_Action" selected="true" text="Nombre" fx:id="xRadioButtonNOMBRE" />
+                        <RadioButton mnemonicParsing="false" onAction="#xRadioButtonCODIGO_Action" prefWidth="90.0" text="Código" fx:id="xRadioButtonCODIGO" />
                      </children>
-                  </HBox>
+                  </VBox>
+                  <TextField promptText="Buscar por nombre" style="-fx-background-color: #ededed;" fx:id="xTextFieldSearch">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <FontAwesomeIcon iconName="SEARCH" size="1.5em">
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
                </children>
             </HBox>
          </children>

@@ -7,11 +7,18 @@
 .normal_button {
 	-fx-background-color: #1f93ff;
 }
-
+.red_button {
+	-fx-background-color: #ff0808;
+}
+.red_button_hover:hover {
+	-fx-background-color: #ff7369;
+}
 .green_button {
 	-fx-background-color: #33cc33;
 }
-
+.gray_button {
+	-fx-background-color: GRAY;
+}
 .hover_green:hover {
 	-fx-background-color: #66ff66;
 }
