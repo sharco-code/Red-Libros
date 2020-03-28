@@ -12,6 +12,7 @@ import app.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +46,7 @@ public class MainController implements Initializable {
     @FXML
     void AjustesCLICKED(MouseEvent event) {
     	this.xVBoxCENTER.getChildren().clear();
+    	this.xVBoxCENTER.setPadding(new Insets(0, 0, 0, 0));
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ajustesComponent.fxml"));
     		VBox vbox = (VBox) loader.load();
@@ -59,7 +61,6 @@ public class MainController implements Initializable {
 
     @FXML
     void CreditosCLICKED(MouseEvent event) {
-    	System.out.println("creditos");
     	this.xVBoxCENTER.getChildren().clear();
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/creditosComponent.fxml"));
