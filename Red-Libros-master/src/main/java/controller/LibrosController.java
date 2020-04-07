@@ -17,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pojo.Libro;
 import dao.LibroDAO;
@@ -143,5 +145,39 @@ public class LibrosController implements Initializable {
 		xTableLibros.getItems().addAll(librosFiltrados);
 
 	}
+	
+	@FXML
+    private HBox xButtonADD;
 
+    @FXML
+    void AddCLICKED(MouseEvent event) {
+    	Parent root = null;
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
+
+			LibroDetalleController libroDetalleController = new LibroDetalleController();
+			loader.setController(libroDetalleController);
+			// root =
+			// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
+			root = loader.load();
+			libroDetalleController.setNuevoLibro();
+			libroDetalleController.setLibrosController(this);
+			this.xVBoxMAIN.getChildren().clear();
+			this.xVBoxMAIN.getChildren().add(root);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void AddENTERED(MouseEvent event) {
+
+    }
+
+    @FXML
+    void AddEXITED(MouseEvent event) {
+
+    }
 }

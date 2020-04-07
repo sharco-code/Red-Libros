@@ -19,6 +19,7 @@ import org.json.simple.parser.ParseException;
 import dao.CursoDAO;
 import dao.LibroDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -28,6 +29,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import pojo.Contenido;
 import pojo.Curso;
@@ -36,7 +40,10 @@ import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
 
 public class LibroDetalleController implements Initializable{
-
+	
+	@FXML
+	private VBox xVBoxMAIN;
+	
     @FXML
     private TextField xTextFieldCodigo;
 
@@ -69,8 +76,45 @@ public class LibroDetalleController implements Initializable{
     
     private List<Curso> listaCursos = new ArrayList<>();
     
-    private boolean nuevoLibro = true;
+    @FXML
+    private Text xButtonBorrarTEXT;
+    
+    private boolean isNuevoLibro = false;
 
+    private LibrosController librosController;
+    
+    public void setLibrosController( LibrosController librosController) {
+    	this.librosController = librosController;
+    }
+    
+    public void setNuevoLibro() {
+    	this.isNuevoLibro = true;
+    	this.xButtonBorrarTEXT.setText("Cancelar");
+    	this.xButtonEDITAR.setVisible(false);
+    	isButtonGuardarEnabled = true;
+    	this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
+    	this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
+    	this.xComboBoxAsignatura.setDisable(false);
+    	this.xCheckBoxObsoleto.setDisable(false);
+    	this.xComboBoxCursoEscolar.setDisable(false);
+    	this.xComboBoxCurso.setDisable(false);
+    	
+    	this.xTextFieldCodigo.setEditable(true);
+    	
+    	this.xTextFieldISBN.setEditable(true);
+    	
+    	this.xTextFieldNombre.setEditable(true);
+    	this.xTextFieldUnidadesTotales.setEditable(true);
+    	this.xTextFieldPrecio.setEditable(true);
+    	
+    	this.xTextFieldPrecio.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
+    	this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: WHITE;");
+    	
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -118,7 +162,32 @@ public class LibroDetalleController implements Initializable{
     
 	@FXML
     void BorrarCLICKED(MouseEvent event) {
+		//Si es nuevo libro: cancelar y vuelve atras
+		if(isNuevoLibro)  {
+			this.xVBoxMAIN.getChildren().clear();
+	    	try {
 
+	    		
+	    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
+	    		loader.setController(this.librosController);
+	    		VBox vbox = (VBox) loader.load();
+	    		
+	    		
+	    		VBox.setVgrow(vbox, Priority.ALWAYS);
+				
+				this.xVBoxMAIN.getChildren().add(vbox);
+
+				this.librosController.reload();
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
+			
+			
+		} else {
+			//Si es ver un libro ya existente: borrar
+			
+		}
     }
 
     @FXML
@@ -301,7 +370,7 @@ public class LibroDetalleController implements Initializable{
 	public void setLibro(Libro libroViejo)  {
 		
 		try {
-			nuevoLibro = false;
+			isNuevoLibro = false;
 			Libro libro = LibroDAO.getLibro(libroViejo.getId());
 			
 			xTextFieldCodigo.setText(libro.getCodigo());
