@@ -131,7 +131,7 @@
                         </VBox>
                         <VBox>
                            <children>
-                              <ComboBox prefWidth="200.0" promptText="Selecciona el curso escolar" fx:id="xComboBoxCursoEscolar" />
+                              <ComboBox disable="true" prefWidth="200.0" promptText="Selecciona el curso escolar" fx:id="xComboBoxCursoEscolar" />
                            </children>
                         </VBox>
                      </children>
@@ -159,7 +159,7 @@
                         </VBox>
                         <VBox alignment="CENTER">
                            <children>
-                              <ComboBox prefWidth="200.0" promptText="Selecciona el curso" fx:id="xComboBoxCurso" />
+                              <ComboBox disable="true" prefWidth="200.0" promptText="Selecciona el curso" fx:id="xComboBoxCurso" />
                            </children>
                         </VBox>
                      </children>
@@ -180,7 +180,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="220.0">
                            <children>
-                              <ComboBox prefWidth="200.0" promptText="Selecciona la asignatura" fx:id="xComboBoxAsignatura" />
+                              <ComboBox disable="true" prefWidth="200.0" promptText="Selecciona la asignatura" fx:id="xComboBoxAsignatura" />
                            </children>
                         </VBox>
                      </children>

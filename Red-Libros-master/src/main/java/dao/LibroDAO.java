@@ -57,6 +57,42 @@ public class LibroDAO {
 		Libro libro = session.get(Libro.class, id);
 		return libro;
 	}
+	
+	public static void updateLibro(Libro libro) throws FileNotFoundException, IOException, ParseException {
+		SessionFactory factory = UtilesHibernate.getSessionFactory();
+		session = factory.getCurrentSession();
+		session.beginTransaction();
+
+		session.merge(libro);
+		
+		session.getTransaction().commit();
+		
+		//despues de cerrar hay que volver a abrir si no peta?... esto hay que arrreglarlo, intentando que no hayan dos sesiones aviertas
+		session = factory.getCurrentSession();
+		session.beginTransaction();
+
+	}
+	
+	public static void deleteLibro(Libro libro) throws FileNotFoundException, IOException, ParseException {
+		SessionFactory factory = UtilesHibernate.getSessionFactory();
+		session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.delete(libro);
+		
+		session.getTransaction().commit();
+
+	}
+	
+	public static void addLibro(Libro libro)  throws FileNotFoundException, IOException, ParseException {
+		SessionFactory factory = UtilesHibernate.getSessionFactory();
+		session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.save(libro);
+		
+		session.getTransaction().commit();
+	}
 
 
 }

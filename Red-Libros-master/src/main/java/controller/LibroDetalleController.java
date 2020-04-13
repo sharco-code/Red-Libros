@@ -41,6 +41,8 @@ import utiles.hibernate.UtilesHibernate;
 
 public class LibroDetalleController implements Initializable{
 	
+	private Libro libro = null;
+	
 	@FXML
 	private VBox xVBoxMAIN;
 	
@@ -115,6 +117,12 @@ public class LibroDetalleController implements Initializable{
     	
     }
     
+    public void disableComboBoxes() {
+    	this.xComboBoxAsignatura.setDisable(true);
+		this.xComboBoxCurso.setDisable(true);
+		this.xComboBoxCursoEscolar.setDisable(true);
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -162,8 +170,9 @@ public class LibroDetalleController implements Initializable{
     
 	@FXML
     void BorrarCLICKED(MouseEvent event) {
-		//Si es nuevo libro: cancelar y vuelve atras
+		
 		if(isNuevoLibro)  {
+			//Si es nuevo libro: cancelar y vuelve atras
 			this.xVBoxMAIN.getChildren().clear();
 	    	try {
 
@@ -187,6 +196,25 @@ public class LibroDetalleController implements Initializable{
 		} else {
 			//Si es ver un libro ya existente: borrar
 			
+			//ventana de confirmacion
+			this.xVBoxMAIN.getChildren().clear();
+	    	try {
+	    		//le paso el libro por si tiene que volver, para actualizarlo o para borrarlo
+	    		ConfirmacionController confirmacionController = new ConfirmacionController();
+	    		confirmacionController.setLibro(this.libro);
+	    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/confirmacionComponent.fxml"));
+	    		loader.setController(confirmacionController);
+	    		VBox vbox = (VBox) loader.load();
+	    		
+	    		
+	    		VBox.setVgrow(vbox, Priority.ALWAYS);
+				
+				this.xVBoxMAIN.getChildren().add(vbox);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
 		}
     }
 
@@ -238,7 +266,62 @@ public class LibroDetalleController implements Initializable{
     
     @FXML
     void GuardarCLICKED(MouseEvent event) {
+    	//Si es añadir o actualizar uno existente
+    	if(isNuevoLibro) {
+    		
+    		this.libro = new Libro();
+    		this.libro.setCodigo(xTextFieldCodigo.getText());
+			this.libro.setIsbn(xTextFieldISBN.getText());
+			this.libro.setNombre(xTextFieldNombre.getText());
+			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
+			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
+			//this.libro.setContenido(this.x);
+			//this.libro.setEjemplares(xListViewEjemplar);
+			try {
+				LibroDAO.addLibro(this.libro);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    	} else {
+ 
+    		try {
 
+    			
+    			this.libro.setCodigo(xTextFieldCodigo.getText());
+    			this.libro.setIsbn(xTextFieldISBN.getText());
+    			this.libro.setNombre(xTextFieldNombre.getText());
+    			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
+    			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
+    			//this.libro.setContenido(this.x);
+    			//this.libro.setEjemplares(xListViewEjemplar);
+    			if(this.xCheckBoxObsoleto.isSelected()==true) {
+    				this.libro.setObsoleto((byte)1);
+    			} else {
+    				this.libro.setObsoleto((byte)0);
+    			}
+    			
+
+    			
+				LibroDAO.updateLibro(this.libro);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     	
     	isButtonGuardarEnabled = false;
     	this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
@@ -371,7 +454,7 @@ public class LibroDetalleController implements Initializable{
 		
 		try {
 			isNuevoLibro = false;
-			Libro libro = LibroDAO.getLibro(libroViejo.getId());
+			this.libro = LibroDAO.getLibro(libroViejo.getId());
 			
 			xTextFieldCodigo.setText(libro.getCodigo());
 			xTextFieldISBN.setText(libro.getIsbn());

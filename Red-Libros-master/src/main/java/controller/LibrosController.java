@@ -94,6 +94,7 @@ public class LibrosController implements Initializable {
 					this.xVBoxMAIN.getChildren().clear();
 					this.xVBoxMAIN.getChildren().add(root);
 
+					libroDetalleController.disableComboBoxes();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -163,9 +164,11 @@ public class LibrosController implements Initializable {
 			root = loader.load();
 			libroDetalleController.setNuevoLibro();
 			libroDetalleController.setLibrosController(this);
+			
 			this.xVBoxMAIN.getChildren().clear();
 			this.xVBoxMAIN.getChildren().add(root);
 
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
