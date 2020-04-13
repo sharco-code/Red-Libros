@@ -30,6 +30,7 @@ public class CursoDAO {
 		}
 		Query q = session.createQuery("SELECT e FROM Curso e");
 		listaCursos = q.getResultList();
+		session.getTransaction().commit();
 	}
 		
 		

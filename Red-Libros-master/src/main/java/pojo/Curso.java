@@ -40,7 +40,7 @@ public class Curso implements Serializable {
 	private List<Alumno> alumnos;
 
 	//bi-directional many-to-one association to Contenido
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="cursoBean")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="cursoBean")
 	private List<Contenido> contenidos;
 
 	//bi-directional many-to-one association to Matricula

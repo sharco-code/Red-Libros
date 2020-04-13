@@ -29,6 +29,7 @@ public class UtilesHibernate {
 	private static SessionFactory sessionFactory = null;
 
 	public static SessionFactory getSessionFactory() throws FileNotFoundException, IOException, ParseException {
+				if(sessionFactory != null) return sessionFactory;
 
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();

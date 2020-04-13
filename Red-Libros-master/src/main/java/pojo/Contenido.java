@@ -28,7 +28,7 @@ public class Contenido implements Serializable {
 	private String nombreVal;
 
 	//bi-directional many-to-one association to Curso
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="curso")
 	private Curso cursoBean;
 

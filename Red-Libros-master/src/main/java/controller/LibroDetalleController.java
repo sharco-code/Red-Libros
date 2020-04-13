@@ -462,8 +462,6 @@ public class LibroDetalleController implements Initializable{
 			xTextFieldPrecio.setText(""+libro.getPrecio());
 			xTextFieldUnidadesTotales.setText(""+libro.getUnidades());
 			
-			
-			
 			xComboBoxCursoEscolar.getSelectionModel()
 				.select(xComboBoxCursoEscolar.getItems().indexOf(libro.getContenido()
 								.getCursoBean()

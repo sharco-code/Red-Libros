@@ -33,6 +33,7 @@ public class LibroDAO {
 		}
 		Query q = session.createQuery("SELECT e FROM Libro e");
         listaLibros = q.getResultList();
+        session.getTransaction().commit();
 	}
 	
 	
@@ -55,6 +56,7 @@ public class LibroDAO {
 		session = factory.getCurrentSession();
 		session.beginTransaction();
 		Libro libro = session.get(Libro.class, id);
+		session.getTransaction().commit();
 		return libro;
 	}
 	
@@ -76,6 +78,7 @@ public class LibroDAO {
 	public static void deleteLibro(Libro libro) throws FileNotFoundException, IOException, ParseException {
 		SessionFactory factory = UtilesHibernate.getSessionFactory();
 		session = factory.getCurrentSession();
+
 		session.beginTransaction();
 		
 		session.delete(libro);

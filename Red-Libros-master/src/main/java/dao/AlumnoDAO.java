@@ -33,6 +33,7 @@ public class AlumnoDAO {
 		
 		Query q = session.createQuery("SELECT e FROM Alumno e");
 		listaAlumnos = q.getResultList();
+		session.getTransaction().commit();
 	}
 		
 		

@@ -1,4 +1,10 @@
-/META-INF/
 /controller/
 /dao/
+/model/
+/module-info.class
+/pojo/
+/service/
+/utiles/
 /view/
+/app/
+/style/
