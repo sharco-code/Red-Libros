@@ -84,6 +84,9 @@ public class LibroDAO {
 		session.delete(libro);
 		
 		session.getTransaction().commit();
+		
+		session = factory.getCurrentSession();
+		session.beginTransaction();
 
 	}
 	
