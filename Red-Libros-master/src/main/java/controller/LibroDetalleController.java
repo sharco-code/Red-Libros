@@ -270,6 +270,7 @@ public class LibroDetalleController implements Initializable{
     	if(isNuevoLibro) {
     		
     		this.libro = new Libro();
+    		this.libro.setId(xTextFieldCodigo.getText());
     		this.libro.setCodigo(xTextFieldCodigo.getText());
 			this.libro.setIsbn(xTextFieldISBN.getText());
 			this.libro.setNombre(xTextFieldNombre.getText());
