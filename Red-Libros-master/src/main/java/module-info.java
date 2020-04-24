@@ -10,6 +10,7 @@ module proyectoFinal.redLibros {
 	requires java.sql;
 	requires java.persistence;
 	requires commons.dbcp2;
+	requires java.logging;
 	
 	exports utiles.xml;
 	opens utiles.xml;

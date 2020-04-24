@@ -40,6 +40,7 @@ import view.Toast;
 import utiles.hibernate.UtilesHibernate;
 import utiles.xml.ModifyXMLFile;
 import service.SettingsService;
+
 public class AjustesController implements Initializable {
 
 	@FXML
@@ -62,34 +63,34 @@ public class AjustesController implements Initializable {
 
 	@FXML
 	private AnchorPane anchorpane;
-	
+
 	private final String filas[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 	private final String columnas[] = { "1", "2", "3", "4" };
 
-	
-	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		this.xChoiceBoxFilas.setItems(FXCollections.observableArrayList(filas));
 		this.xChoiceBoxColumnas.setItems(FXCollections.observableArrayList(columnas));
 		Options options;
-		
+
 		try {
 
 			options = SettingsService.getOptions();
-			
+
 			this.xTextFieldIP.setText(options.getIp());
 			this.xTextFieldPuerto.setText(options.getPort());
 			this.xTextFieldUser.setText(options.getUser());
 			this.xTextFieldPassword.setText(options.getPassword());
-			
-			if(options.getColumnas()!=null) {
-				this.xChoiceBoxColumnas.getSelectionModel().select(this.xChoiceBoxColumnas.getItems().indexOf(options.getColumnas()));
+
+			if (options.getColumnas() != null) {
+				this.xChoiceBoxColumnas.getSelectionModel()
+						.select(this.xChoiceBoxColumnas.getItems().indexOf(options.getColumnas()));
 			}
-			if(options.getFilas()!=null) {
-				this.xChoiceBoxFilas.getSelectionModel().select(this.xChoiceBoxFilas.getItems().indexOf(options.getFilas()));
+			if (options.getFilas() != null) {
+				this.xChoiceBoxFilas.getSelectionModel()
+						.select(this.xChoiceBoxFilas.getItems().indexOf(options.getFilas()));
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -98,11 +99,9 @@ public class AjustesController implements Initializable {
 
 	}
 
-	
-
 	@FXML
 	void ApplyCLICKED(MouseEvent event) {
-		
+
 		try {
 			writeSettings();
 			showToast("Cambios aplicados");
@@ -110,30 +109,22 @@ public class AjustesController implements Initializable {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		
-		
+
 	}
 
-	
 	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
+		int toastMsgTime = 1000; // 3.5 seconds
+		int fadeInTime = 150; // 0.5 seconds
+		int fadeOutTime = 300; // 0.5 seconds
 		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 
 	private void writeSettings() throws FileNotFoundException, IOException, ParseException {
-		SettingsService.writeSettings(
-				new Options(
-						this.xTextFieldIP.getText(),
-						this.xTextFieldPuerto.getText(),
-						this.xTextFieldUser.getText(),
-						this.xTextFieldPassword.getText(),
-						this.xChoiceBoxColumnas.getSelectionModel().getSelectedItem(),
-						this.xChoiceBoxFilas.getSelectionModel().getSelectedItem()));
+		SettingsService.writeSettings(new Options(this.xTextFieldIP.getText(), this.xTextFieldPuerto.getText(),
+				this.xTextFieldUser.getText(), this.xTextFieldPassword.getText(),
+				this.xChoiceBoxColumnas.getSelectionModel().getSelectedItem(),
+				this.xChoiceBoxFilas.getSelectionModel().getSelectedItem()));
 
-	
 	}
 
 	@FXML
