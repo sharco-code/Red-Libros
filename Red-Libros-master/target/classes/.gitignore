@@ -1,4 +1,8 @@
-/META-INF/
-/pojo/
 /controller/
 /dao/
+/model/
+/pojo/
+/service/
+/utiles/
+/view/
+/META-INF/

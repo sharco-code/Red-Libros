@@ -80,6 +80,9 @@ public class DevolucionesController implements Initializable {
 
     private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
     
+    private CursoDAO cursoDAO = new CursoDAO();
+    private AlumnoDAO alumnoDAO = new AlumnoDAO();
+    
     @FXML
     void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
     	this.xRadioButtonNIA.setSelected(false);
@@ -103,7 +106,7 @@ public class DevolucionesController implements Initializable {
 
 		SessionFactory factory;
 		try {
-			listaCursos = CursoDAO.getCursos();
+			listaCursos = cursoDAO.getAll();
 			
 			
 			xComboBoxCurso.setDisable(true);
@@ -175,7 +178,7 @@ public class DevolucionesController implements Initializable {
 
 	private void setListenerComboBoxCurso() {
 		xComboBoxCurso.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			listaAlumnos = AlumnoDAO.getAlumnos()
+			listaAlumnos = alumnoDAO.getAll()
 					.stream()
 					.filter(alumno -> alumno.getCursoBean() == newSelection).collect(Collectors.toList());
 		});
@@ -240,7 +243,7 @@ public class DevolucionesController implements Initializable {
 
 	private void getAlumnos() {
 		
-        listaAlumnos = AlumnoDAO.getAlumnos();
+        listaAlumnos = alumnoDAO.getAll();
 	}
 
 	public void filtrar(String newValue) {

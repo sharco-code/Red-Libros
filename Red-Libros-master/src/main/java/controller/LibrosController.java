@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import org.json.simple.parser.ParseException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +70,7 @@ public class LibrosController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		this.xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				filtrar(newValue);
@@ -120,8 +125,13 @@ public class LibrosController implements Initializable {
 
 	}
 
+	private LibroDAO libroDAO = new LibroDAO();
+	
 	private void getLibros() {
-		listaLibros = LibroDAO.getLibros();
+			
+		
+		listaLibros = libroDAO.getAll();
+			
 	}
 
 	private void filtrar(String newValue) {

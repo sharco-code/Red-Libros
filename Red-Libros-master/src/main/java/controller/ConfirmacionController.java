@@ -39,7 +39,9 @@ public class ConfirmacionController {
 
     @FXML
     private HBox xButtonCANCEL;
-
+    
+    private LibroDAO libroDAO = new LibroDAO();
+    
     @FXML
     void CancelCLICKED(MouseEvent event) {
     	this.xVBoxMAIN.getChildren().clear();
@@ -66,18 +68,8 @@ public class ConfirmacionController {
 
     @FXML
     void OkCLICKED(MouseEvent event) {
-    	try {
-			LibroDAO.deleteLibro(this.libro);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			libroDAO.delete(this.libro);
+
     	showToast("Libro borrado");
     	
     	this.xVBoxMAIN.getChildren().clear();
