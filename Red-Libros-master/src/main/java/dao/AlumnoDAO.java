@@ -23,7 +23,7 @@ import org.hibernate.criterion.Example;
 
 /**
  * Home object for domain model class Alumno.
- * @see output.Alumno
+ * @see pojo.Alumno
  * @author Hibernate Tools
  */
 public class AlumnoDAO {
@@ -64,6 +64,9 @@ public class AlumnoDAO {
 	}
 	
 	public void persist(Alumno transientInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "persisting Alumno instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
@@ -75,6 +78,9 @@ public class AlumnoDAO {
 	}
 
 	public void attachDirty(Alumno instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching dirty Alumno instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
@@ -86,6 +92,9 @@ public class AlumnoDAO {
 	}
 
 	public void attachClean(Alumno instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching clean Alumno instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
@@ -97,6 +106,9 @@ public class AlumnoDAO {
 	}
 
 	public void delete(Alumno persistentInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "deleting Alumno instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
@@ -108,6 +120,9 @@ public class AlumnoDAO {
 	}
 
 	public Alumno merge(Alumno detachedInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "merging Alumno instance");
 		try {
 			Alumno result = (Alumno) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -125,7 +140,7 @@ public class AlumnoDAO {
 		}
 		logger.log(Level.INFO, "getting Alumno instance with id: " + id);
 		try {
-			Alumno instance = (Alumno) sessionFactory.getCurrentSession().get("output.Alumno", id);
+			Alumno instance = (Alumno) sessionFactory.getCurrentSession().get("pojo.Alumno", id);
 			if (instance == null) {
 				logger.log(Level.INFO, "get successful, no instance found");
 			} else {
@@ -144,7 +159,7 @@ public class AlumnoDAO {
 		}
 		logger.log(Level.INFO, "finding Alumno instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession().createCriteria("output.Alumno")
+			List results = sessionFactory.getCurrentSession().createCriteria("pojo.Alumno")
 					.add(Example.create(instance)).list();
 			logger.log(Level.INFO, "find by example successful, result size: " + results.size());
 			return results;

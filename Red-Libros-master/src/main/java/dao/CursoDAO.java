@@ -54,6 +54,9 @@ public class CursoDAO {
 		}
 	}
 	public void persist(Curso transientInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "persisting Curso instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
@@ -65,6 +68,9 @@ public class CursoDAO {
 	}
 
 	public void attachDirty(Curso instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching dirty Curso instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
@@ -76,6 +82,9 @@ public class CursoDAO {
 	}
 
 	public void attachClean(Curso instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching clean Curso instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
@@ -87,6 +96,9 @@ public class CursoDAO {
 	}
 
 	public void delete(Curso persistentInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "deleting Curso instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
@@ -98,6 +110,9 @@ public class CursoDAO {
 	}
 
 	public Curso merge(Curso detachedInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "merging Curso instance");
 		try {
 			Curso result = (Curso) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -115,7 +130,7 @@ public class CursoDAO {
 		}
 		logger.log(Level.INFO, "getting Curso instance with id: " + id);
 		try {
-			Curso instance = (Curso) sessionFactory.getCurrentSession().get("output.Curso", id);
+			Curso instance = (Curso) sessionFactory.getCurrentSession().get("pojo.Curso", id);
 			if (instance == null) {
 				logger.log(Level.INFO, "get successful, no instance found");
 			} else {
@@ -134,7 +149,7 @@ public class CursoDAO {
 		}
 		logger.log(Level.INFO, "finding Curso instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession().createCriteria("output.Curso")
+			List results = sessionFactory.getCurrentSession().createCriteria("pojo.Curso")
 					.add(Example.create(instance)).list();
 			logger.log(Level.INFO, "find by example successful, result size: " + results.size());
 			return results;

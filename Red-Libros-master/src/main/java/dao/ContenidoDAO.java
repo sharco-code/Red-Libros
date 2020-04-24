@@ -18,9 +18,7 @@ public class ContenidoDAO {
 
 	protected SessionFactory getSessionFactory() {
 		try {	
-			SessionFactory s =  UtilesHibernate.getSessionFactory();
-			s.getCurrentSession().beginTransaction();
-			return s;
+			return UtilesHibernate.getSessionFactory();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Could not locate SessionFactory in JNDI", e);
 			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
@@ -28,6 +26,9 @@ public class ContenidoDAO {
 	}
 
 	public void persist(Contenido transientInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "persisting Contenido instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
@@ -39,6 +40,9 @@ public class ContenidoDAO {
 	}
 
 	public void attachDirty(Contenido instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching dirty Contenido instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
@@ -50,6 +54,9 @@ public class ContenidoDAO {
 	}
 
 	public void attachClean(Contenido instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching clean Contenido instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
@@ -61,6 +68,9 @@ public class ContenidoDAO {
 	}
 
 	public void delete(Contenido persistentInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "deleting Contenido instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
@@ -72,6 +82,9 @@ public class ContenidoDAO {
 	}
 
 	public Contenido merge(Contenido detachedInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "merging Contenido instance");
 		try {
 			Contenido result = (Contenido) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,10 +97,13 @@ public class ContenidoDAO {
 	}
 
 	public Contenido findById(java.lang.Integer id) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "getting Contenido instance with id: " + id);
 		try {
 			
-			Contenido instance = (Contenido) sessionFactory.getCurrentSession().get("output.Contenido", id);
+			Contenido instance = (Contenido) sessionFactory.getCurrentSession().get("pojo.Contenido", id);
 			if (instance == null) {
 				logger.log(Level.INFO, "get successful, no instance found");
 			} else {
@@ -101,9 +117,12 @@ public class ContenidoDAO {
 	}
 
 	public List findByExample(Contenido instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "finding Contenido instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession().createCriteria("output.Contenido")
+			List results = sessionFactory.getCurrentSession().createCriteria("pojo.Contenido")
 					.add(Example.create(instance)).list();
 			logger.log(Level.INFO, "find by example successful, result size: " + results.size());
 			return results;

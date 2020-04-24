@@ -56,6 +56,9 @@ public class LibroDAO {
 	}
 	
 	public void persist(Libro transientInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "persisting Libro instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
@@ -67,6 +70,9 @@ public class LibroDAO {
 	}
 
 	public void attachDirty(Libro instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching dirty Libro instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
@@ -78,6 +84,9 @@ public class LibroDAO {
 	}
 
 	public void attachClean(Libro instance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "attaching clean Libro instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
@@ -89,6 +98,9 @@ public class LibroDAO {
 	}
 
 	public void delete(Libro persistentInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "deleting Libro instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
@@ -100,6 +112,9 @@ public class LibroDAO {
 	}
 
 	public Libro merge(Libro detachedInstance) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
 		logger.log(Level.INFO, "merging Libro instance");
 		try {
 			Libro result = (Libro) sessionFactory.getCurrentSession().merge(detachedInstance);

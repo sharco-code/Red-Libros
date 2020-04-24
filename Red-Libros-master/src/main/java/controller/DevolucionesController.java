@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -47,130 +46,128 @@ import pojo.Alumno;
 import pojo.Curso;
 import utiles.hibernate.UtilesHibernate;
 
-
 public class DevolucionesController implements Initializable {
 
 	@FXML
-    private AnchorPane anchorpane;
-	
+	private AnchorPane anchorpane;
+
 	@FXML
-    private TableView<Alumno> xTableMain;
-	
-	
+	private TableView<Alumno> xTableMain;
+
 	private List<Alumno> listaAlumnos = new ArrayList<>();
-	
+
 	private List<Alumno> alumnosFiltrados = new ArrayList<>();
-	
+
 	@FXML
-    private ComboBox<Curso> xComboBoxCurso;
-	
+	private ComboBox<Curso> xComboBoxCurso;
+
 	@FXML
-    private ComboBox<Integer> xComboBoxCursoEscolar;
-	
+	private ComboBox<Integer> xComboBoxCursoEscolar;
+
 	private List<Curso> listaCursos = new ArrayList<>();
-	
-	 @FXML
-    private RadioButton xRadioButtonNIA;
 
-    @FXML
-    private RadioButton xRadioButtonEXPEDIENTE;
+	@FXML
+	private RadioButton xRadioButtonNIA;
 
-    @FXML
-    private TextField xTextFieldSearch;
+	@FXML
+	private RadioButton xRadioButtonEXPEDIENTE;
 
-    private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
-    
-    private CursoDAO cursoDAO = new CursoDAO();
-    private AlumnoDAO alumnoDAO = new AlumnoDAO();
-    
-    @FXML
-    void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
-    	this.xRadioButtonNIA.setSelected(false);
-    	this.xTextFieldSearch.setText("");
-    	
-    	this.xTextFieldSearch.setPromptText("Buscar por Expediente");
-    	radioButton_Selected = 2;
-    }
+	@FXML
+	private TextField xTextFieldSearch;
 
-    @FXML
-    void xRadioButtonNIA_Action(ActionEvent event) {
-    	this.xRadioButtonEXPEDIENTE.setSelected(false);
-    	this.xTextFieldSearch.setText("");
-    	
-    	this.xTextFieldSearch.setPromptText("Buscar por NIA");
-    	radioButton_Selected = 1;
-    }
-	    
+	private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
+
+	private CursoDAO cursoDAO = new CursoDAO();
+	private AlumnoDAO alumnoDAO = new AlumnoDAO();
+
+	@FXML
+	void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
+		this.xRadioButtonNIA.setSelected(false);
+		this.xTextFieldSearch.setText("");
+
+		this.xTextFieldSearch.setPromptText("Buscar por Expediente");
+		radioButton_Selected = 2;
+	}
+
+	@FXML
+	void xRadioButtonNIA_Action(ActionEvent event) {
+		this.xRadioButtonEXPEDIENTE.setSelected(false);
+		this.xTextFieldSearch.setText("");
+
+		this.xTextFieldSearch.setPromptText("Buscar por NIA");
+		radioButton_Selected = 1;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		SessionFactory factory;
 		try {
 			listaCursos = cursoDAO.getAll();
-			
-			
+
 			xComboBoxCurso.setDisable(true);
-	        
-	        rellenarCursoEscolar();
-	        
-	        
-	        setMostrarComboBoxCurso();
-	        
-	        setListenerComboBoxCurso();
-	        setListenerComboBoxCursoEscolar();
-	        
-	        
+
+			rellenarCursoEscolar();
+
+			setMostrarComboBoxCurso();
+
+			setListenerComboBoxCurso();
+			setListenerComboBoxCursoEscolar();
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	private void setListenerComboBoxCursoEscolar() {
-		xComboBoxCursoEscolar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-		    if (newSelection != null) {
-		    	xComboBoxCurso.getItems().clear();
-		    	xComboBoxCurso.setDisable(false);
-		        for(Curso curso:listaCursos) {
-		        	if(curso.getCursoEscolar() == newSelection) {
-		        		xComboBoxCurso.getItems().add(curso);
-		        	}
-		        } 
-		    }
-		});
+		xComboBoxCursoEscolar.getSelectionModel().selectedItemProperty()
+				.addListener((obs, oldSelection, newSelection) -> {
+					if (newSelection != null) {
+						xComboBoxCurso.getItems().clear();
+						xComboBoxCurso.setDisable(false);
+						for (Curso curso : listaCursos) {
+							if (curso.getCursoEscolar() == newSelection) {
+								xComboBoxCurso.getItems().add(curso);
+							}
+						}
+					}
+				});
 	}
 
 	private void rellenarCursoEscolar() {
 		HashSet<Integer> listaYears = new HashSet<>();
-		for(Curso curso: listaCursos) {
+		for (Curso curso : listaCursos) {
 			listaYears.add(curso.getCursoEscolar());
 		}
 		Iterator<Integer> it = listaYears.iterator();
-		
+
 		xComboBoxCursoEscolar.getItems().clear();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			int year = it.next();
 			xComboBoxCursoEscolar.getItems().add(year);
 		}
 	}
+
 	private void setMostrarComboBoxCurso() {
 		Callback<ListView<Curso>, ListCell<Curso>> cellFactory = new Callback<ListView<Curso>, ListCell<Curso>>() {
 
-		    @Override
-		    public ListCell<Curso> call(ListView<Curso> l) {
-		        return new ListCell<Curso>() {
+			@Override
+			public ListCell<Curso> call(ListView<Curso> l) {
+				return new ListCell<Curso>() {
 
-		            @Override
-		            protected void updateItem(Curso item, boolean empty) {
-		                super.updateItem(item, empty);
-		                if (item == null || empty) {
-		                    setGraphic(null);
-		                } else {
-		                    setText(item.getAbreviatura()+" - "+item.getNombreCas());
-		                }
-		            }
-		        } ;
-		    }
+					@Override
+					protected void updateItem(Curso item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							setText(item.getAbreviatura() + " - " + item.getNombreCas());
+						}
+					}
+				};
+			}
 		};
 		xComboBoxCurso.setButtonCell(cellFactory.call(null));
 		xComboBoxCurso.setCellFactory(cellFactory);
@@ -178,85 +175,70 @@ public class DevolucionesController implements Initializable {
 
 	private void setListenerComboBoxCurso() {
 		xComboBoxCurso.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			listaAlumnos = alumnoDAO.getAll()
-					.stream()
-					.filter(alumno -> alumno.getCursoBean() == newSelection).collect(Collectors.toList());
+			listaAlumnos = alumnoDAO.getAll().stream().filter(alumno -> alumno.getCursoBean() == newSelection)
+					.collect(Collectors.toList());
 		});
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void reload() throws SQLException, Exception {
-		
-		
+
 		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-	        if (newSelection != null) {
-	        	/*
-	        	Parent root = null;
-	        	try {
-	        		
-	        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
-	        		
-	        		AlumnoDetalleController alumnoDetalleController = new AlumnoDetalleController();
-	    			loader.setController(alumnoDetalleController);
-	    			//root = FXMLLoader.load(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
-	    			root = loader.load();
-	    			alumnoDetalleController.setAlumno(newSelection);
-	    			anchorpane.getChildren().clear();
-	    			anchorpane.getChildren().add(root);
-	    			
-	    		} catch (IOException e) {
-	    			e.printStackTrace();
-	    		}
-	    		*/
-	            
-	        }
-        });
-		
+			if (newSelection != null) {
+				/*
+				 * Parent root = null; try {
+				 * 
+				 * FXMLLoader loader = new
+				 * FXMLLoader(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
+				 * 
+				 * AlumnoDetalleController alumnoDetalleController = new
+				 * AlumnoDetalleController(); loader.setController(alumnoDetalleController);
+				 * //root =
+				 * FXMLLoader.load(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
+				 * root = loader.load(); alumnoDetalleController.setAlumno(newSelection);
+				 * anchorpane.getChildren().clear(); anchorpane.getChildren().add(root);
+				 * 
+				 * } catch (IOException e) { e.printStackTrace(); }
+				 */
+
+			}
+		});
+
 		xTableMain.getItems().clear();
-		
 
 		TableColumn apellido1Column = new TableColumn("Primer apellido");
-        apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
-	    
-        apellido1Column.setMaxWidth(900);
-        
+		apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
+
+		apellido1Column.setMaxWidth(900);
+
 		TableColumn apellido2Column = new TableColumn("Segundo apellido");
 		apellido2Column.setCellValueFactory(new PropertyValueFactory("apellido2"));
-        apellido2Column.setMaxWidth(900);
-        
-        TableColumn nombreColumn = new TableColumn("Nombre");
-        nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
-        
-        xTableMain.getColumns().addAll(apellido1Column,apellido2Column,nombreColumn);
-        xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
-		
-		
-		
-        
-        getAlumnos();
-        
-        
-    	xTableMain.getItems().addAll(listaAlumnos);
+		apellido2Column.setMaxWidth(900);
+
+		TableColumn nombreColumn = new TableColumn("Nombre");
+		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
+
+		xTableMain.getColumns().addAll(apellido1Column, apellido2Column, nombreColumn);
+		xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		getAlumnos();
+
+		xTableMain.getItems().addAll(listaAlumnos);
 
 	}
 
 	private void getAlumnos() {
-		
-        listaAlumnos = alumnoDAO.getAll();
+
+		listaAlumnos = alumnoDAO.getAll();
 	}
 
 	public void filtrar(String newValue) {
 		// TODO Auto-generated method stub
-		alumnosFiltrados = listaAlumnos.stream()
-				.filter(alumno -> alumno.getNombre().contains(newValue))
+		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getNombre().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableMain.getItems().clear();
 		xTableMain.getItems().addAll(alumnosFiltrados);
-		
-		
-	}
 
-	
+	}
 
 }

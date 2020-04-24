@@ -88,6 +88,7 @@ public class LibroDetalleController implements Initializable {
 
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
+	private ContenidoDAO contenidoDAO = new ContenidoDAO();
 	//private ContenidoDAO contenidoDAO = new ContenidoDAO();
 
 	public void setLibrosController(LibrosController librosController) {
@@ -264,7 +265,7 @@ public class LibroDetalleController implements Initializable {
 	void GuardarCLICKED(MouseEvent event) {
 		// Si es añadir o actualizar uno existente
 		if (isNuevoLibro) {
-			/*
+			
 			this.libro = new Libro();
 			this.libro.setId(xTextFieldCodigo.getText());
 			this.libro.setCodigo(xTextFieldCodigo.getText());
@@ -273,11 +274,10 @@ public class LibroDetalleController implements Initializable {
 			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
 			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
 
-			this.libro.setContenido(
-					contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
+			this.libro.setContenido( contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
 
 			libroDAO.merge(this.libro);
-			 */
+			 
 		} else {
 
 			this.libro.setCodigo(xTextFieldCodigo.getText());
@@ -285,8 +285,9 @@ public class LibroDetalleController implements Initializable {
 			this.libro.setNombre(xTextFieldNombre.getText());
 			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
 			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
-			// this.libro.setContenido(this.x);
-			// this.libro.setEjemplares(xListViewEjemplar);
+			
+			this.libro.setContenido( contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
+
 			if (this.xCheckBoxObsoleto.isSelected() == true) {
 				this.libro.setObsoleto((byte) 1);
 			} else {
