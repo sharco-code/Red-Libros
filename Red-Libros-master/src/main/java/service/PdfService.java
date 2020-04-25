@@ -46,26 +46,41 @@ public class PdfService {
 		}
 	}
 
-	public void createPDF(List<Image> codigosBarra) throws FileNotFoundException, DocumentException {
+	public void createPDF(List<Image> codigosBarra,String ruta) throws FileNotFoundException, DocumentException {
 		setColumnRows();
 		Document document = new Document(PageSize.A4, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, PADDING_BOTTOM);
-		PdfWriter.getInstance(document, new FileOutputStream("iTextTable.pdf"));
+		PdfWriter.getInstance(document, new FileOutputStream(ruta+"//barcodes.pdf"));
 	
 		document.open();
 		
 		
 		
-		if(codigosBarra.size() <= (this.columns*this.rows)) {
-			PdfPTable table = new PdfPTable(this.pointColumnWidths);
-			
-			for (Image image : codigosBarra) {
-				addCell(table,image);
-			} 
-			document.add(table);
-		}
+		PdfPTable table = new PdfPTable(this.pointColumnWidths);
+		for (Image image : codigosBarra) {
+			if(table.getRows().size() >= this.rows) {
+				document.add(table);
+				document.newPage();
+				table = new PdfPTable(this.pointColumnWidths);
+			}
+			addCell(table,image);
+		} 
 		
+		int huecosLibres = ((this.columns*this.rows)/ this.columns)+1;
+		rellenarHuecos(table, huecosLibres);
+		document.add(table);
+		
+
 		document.close();
 		
+	}
+
+	private void rellenarHuecos(PdfPTable table, int huecosLibres) {
+		PdfPCell cell = new PdfPCell();
+		for (int i = 0; i < huecosLibres; i++) {
+		    cell.setBorder(0);
+		    cell.setFixedHeight(50f);
+			table.addCell(cell);
+		}
 	}
 	
 	private void addCell(PdfPTable table,Image codigo) {
