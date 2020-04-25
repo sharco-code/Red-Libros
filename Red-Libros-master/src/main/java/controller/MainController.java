@@ -80,9 +80,11 @@ public class MainController implements Initializable {
 
     @FXML
     void DevolucionesCLICKED(MouseEvent event) {
+    	
     	this.xVBoxCENTER.getChildren().clear();
     	try {
-
+    		this.devolucionesController = new DevolucionesController();
+    		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/devolucionesComponent.fxml"));
     		loader.setController(this.devolucionesController);
     		VBox vbox = (VBox) loader.load();
@@ -102,7 +104,14 @@ public class MainController implements Initializable {
 
     @FXML
     void EntregasCLICKED(MouseEvent event) {
-    	this.xVBoxCENTER.getChildren().clear();
+    	try {
+    		this.entregasController = new EntregasController();
+        	this.xVBoxCENTER.getChildren().clear();
+		} catch (Exception e) {
+			showErrorComponent();
+			e.printStackTrace();
+		}
+    	
     }
 
     @FXML
@@ -132,7 +141,7 @@ public class MainController implements Initializable {
     void LibrosCLICKED(MouseEvent event) {
 
     	/*
-    	EstarÃ­a guay que esto salier mientras carga
+    	Estaría guay que esto salier mientras carga
     	showToast("Conectando a BBDD");
     	 
 		------------------------------ intento 1
@@ -170,9 +179,10 @@ public class MainController implements Initializable {
         service.start();
         */
     	
-    	this.xVBoxCENTER.getChildren().clear();
     	try {
-
+    		this.librosController = new LibrosController();
+        	
+        	this.xVBoxCENTER.getChildren().clear();
     		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
     		loader.setController(this.librosController);
@@ -214,9 +224,9 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		this.librosController = new LibrosController();
-    	this.entregasController = new EntregasController();
-    	this.devolucionesController = new DevolucionesController();
+		
+    	
+    	
 		this.errorController = new ErrorController();
 		
 		try {
