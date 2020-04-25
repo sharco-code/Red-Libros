@@ -11,6 +11,9 @@ module proyectoFinal.redLibros {
 	requires java.persistence;
 	requires commons.dbcp2;
 	requires java.logging;
+	requires java.desktop;
+	requires itextpdf;
+	requires barcode4j;
 	
 	exports utiles.xml;
 	opens utiles.xml;
