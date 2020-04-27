@@ -94,7 +94,6 @@ public class LibroDetalleController implements Initializable {
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private ContenidoDAO contenidoDAO = new ContenidoDAO();
-	private EjemplarDAO ejemplarDAO = new EjemplarDAO();
 	//private ContenidoDAO contenidoDAO = new ContenidoDAO();
 
 	public void setLibrosController(LibrosController librosController) {
@@ -205,7 +204,7 @@ public class LibroDetalleController implements Initializable {
 
 		List<Ejemplare> listaEjemplares = new ArrayList<>();
 		
-		listaEjemplares = ejemplarDAO.getAllByIdLibro( libro.getId() );
+		listaEjemplares = libro.getEjemplares();
 		
 		xTableViewEjemplar.getItems().addAll(listaEjemplares);
 	}
