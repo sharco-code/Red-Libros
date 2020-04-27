@@ -108,7 +108,11 @@ public class LibrosController implements Initializable {
 		});
 
 		xTableLibros.getItems().clear();
-
+		
+		TableColumn codigoColumn = new TableColumn("Codigo");
+		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+		codigoColumn.setMaxWidth(450);
+		
 		TableColumn precioColumn = new TableColumn("Precio");
 		precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
 		precioColumn.setMaxWidth(400);
@@ -116,7 +120,7 @@ public class LibrosController implements Initializable {
 		TableColumn nombreColumn = new TableColumn("Nombre");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
 
-		xTableLibros.getColumns().addAll(nombreColumn, precioColumn);
+		xTableLibros.getColumns().addAll(codigoColumn, nombreColumn, precioColumn);
 		xTableLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		getLibros();

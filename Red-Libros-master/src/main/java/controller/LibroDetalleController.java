@@ -18,15 +18,20 @@ import org.json.simple.parser.ParseException;
 
 import dao.ContenidoDAO;
 import dao.CursoDAO;
+import dao.EjemplarDAO;
 import dao.LibroDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -75,7 +80,7 @@ public class LibroDetalleController implements Initializable {
 	private CheckBox xCheckBoxObsoleto;
 
 	@FXML
-	private ListView<?> xListViewEjemplar;
+	private TableView<Ejemplare> xTableViewEjemplar;
 
 	private List<Curso> listaCursos = new ArrayList<>();
 
@@ -89,6 +94,7 @@ public class LibroDetalleController implements Initializable {
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private ContenidoDAO contenidoDAO = new ContenidoDAO();
+	private EjemplarDAO ejemplarDAO = new EjemplarDAO();
 	//private ContenidoDAO contenidoDAO = new ContenidoDAO();
 
 	public void setLibrosController(LibrosController librosController) {
@@ -157,7 +163,8 @@ public class LibroDetalleController implements Initializable {
 		this.xComboBoxCursoEscolar.setDisable(true);
 		this.xComboBoxCurso.setDisable(true);
 		this.xCheckBoxObsoleto.setDisable(true);
-		this.xListViewEjemplar.setDisable(true);
+		
+		
 	}
 
 	@FXML
@@ -170,7 +177,39 @@ public class LibroDetalleController implements Initializable {
 	private HBox xButtonBORRAR;
 
 	private boolean isButtonGuardarEnabled = false;
+	
+	
+	void reloadEjemplares() {
+		xTableViewEjemplar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null) {
+				//al seleccionar uno
 
+			}
+		});
+
+		xTableViewEjemplar.getItems().clear();
+		
+		TableColumn codigoColumn = new TableColumn("Codigo");
+		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+		codigoColumn.setMaxWidth(450);
+		
+		TableColumn estadoColumn = new TableColumn("Estado");
+		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
+		estadoColumn.setMaxWidth(400);
+
+		TableColumn prestadoColumn = new TableColumn("Prestado");
+		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
+
+		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
+		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		List<Ejemplare> listaEjemplares = new ArrayList<>();
+		
+		listaEjemplares = ejemplarDAO.getAllByIdLibro( libro.getId() );
+		
+		xTableViewEjemplar.getItems().addAll(listaEjemplares);
+	}
+	
 	@FXML
 	void BorrarCLICKED(MouseEvent event) {
 
@@ -468,6 +507,7 @@ public class LibroDetalleController implements Initializable {
 				xCheckBoxObsoleto.setSelected(true);
 			}
 
+			reloadEjemplares();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
