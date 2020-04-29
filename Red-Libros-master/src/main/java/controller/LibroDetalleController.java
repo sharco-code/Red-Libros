@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Desktop;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -201,7 +202,7 @@ public class LibroDetalleController implements Initializable {
 			for (int i = 0; i < libro.getEjemplares().size(); i++) {
 				ImageIO.write(barcodeService.generateImage(libro.getEjemplares().get(i).getCodigo()), "png", baos);
 				codigos.add(com.itextpdf.text.Image.getInstance(baos.toByteArray()));
-				baos.flush();
+				baos.reset();
 			}
 
 		} catch (Exception e) {
@@ -213,6 +214,20 @@ public class LibroDetalleController implements Initializable {
 		try {
 			pdfService.createPDF(codigos,ruta);
 			showToast("PDF generado corectamente");
+			System.out.println(ruta+"\\barcodes.pdf");
+			File pdfFile = new File(ruta+"\\barcodes.pdf");
+			if (pdfFile.exists()) {
+
+				if (Desktop.isDesktopSupported()) {
+					Desktop.getDesktop().open(pdfFile);
+				} else {
+					System.out.println("Awt Desktop is not supported!");
+				}
+
+			} else {
+				System.out.println("File is not exists!");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToast("No se ha podido generar el PDF");
@@ -221,7 +236,6 @@ public class LibroDetalleController implements Initializable {
 	
 	@FXML
     void ImprimirCLICKED(MouseEvent event) {
-		System.out.println("aaaaaa");
 		DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("src"));
         
