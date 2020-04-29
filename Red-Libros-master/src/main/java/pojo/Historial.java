@@ -37,7 +37,7 @@ public class Historial implements Serializable {
 	private String observaciones;
 
 	//bi-directional many-to-one association to Alumno
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_alumno")
 	private Alumno alumno;
 

@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
 import org.hibernate.Hibernate;
@@ -16,6 +19,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.json.simple.parser.ParseException;
 
+import app.Main;
 import dao.ContenidoDAO;
 import dao.CursoDAO;
 import dao.EjemplarDAO;
@@ -24,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -32,18 +37,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 import pojo.Contenido;
 import pojo.Curso;
 import pojo.Ejemplare;
 import pojo.Libro;
+import service.BarcodeService;
+import service.PdfService;
 import utiles.hibernate.UtilesHibernate;
+import view.Toast;
 
 public class LibroDetalleController implements Initializable {
 
@@ -177,12 +188,73 @@ public class LibroDetalleController implements Initializable {
 
 	private boolean isButtonGuardarEnabled = false;
 	
+	@FXML
+    private HBox xButtonIMPRIMIR;
 	
+	void imprimir(String ruta) {
+		PdfService pdfService = new PdfService();
+		BarcodeService barcodeService = new BarcodeService();
+		
+		List<com.itextpdf.text.Image> codigos = new ArrayList<>();
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			for (int i = 0; i < libro.getEjemplares().size(); i++) {
+				ImageIO.write(barcodeService.generateImage(libro.getEjemplares().get(i).getCodigo()), "png", baos);
+				codigos.add(com.itextpdf.text.Image.getInstance(baos.toByteArray()));
+				baos.flush();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			pdfService.createPDF(codigos,ruta);
+			showToast("PDF generado corectamente");
+		} catch (Exception e) {
+			e.printStackTrace();
+			showToast("No se ha podido generar el PDF");
+		} 
+	}
+	
+	@FXML
+    void ImprimirCLICKED(MouseEvent event) {
+		System.out.println("aaaaaa");
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("src"));
+        
+        File selectedDirectory = directoryChooser.showDialog(Main.getStage());
+        if(selectedDirectory==null) {
+        	return;
+        }
+        imprimir(selectedDirectory.getAbsolutePath());
+		
+		
+        
+    }
+
+    @FXML
+    void ImprimirENTERED(MouseEvent event) {
+
+    }
+
+    @FXML
+    void ImprimirEXITED(MouseEvent event) {
+    	
+    }
+	
+	@FXML
+    private ImageView xImageView;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
+		BarcodeService barcodeService = new BarcodeService();
 		xTableViewEjemplar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
-				//al seleccionar uno
 
+				this.xImageView.setImage(barcodeService.convertToFxImage(barcodeService.generateImage( newSelection.getCodigo() )));
 			}
 		});
 
@@ -198,6 +270,7 @@ public class LibroDetalleController implements Initializable {
 
 		TableColumn prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
+		
 
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -463,6 +536,13 @@ public class LibroDetalleController implements Initializable {
 		}
 	}
 
+	private void showToast(String toastMsg) {
+		int toastMsgTime = 1000; // 3.5 seconds
+		int fadeInTime = 150; // 0.5 seconds
+		int fadeOutTime = 300; // 0.5 seconds
+		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+	}
+	
 	public void setLibro(Libro libroViejo) {
 
 		try {

@@ -36,3 +36,9 @@
 .hover_main:hover {
 	-fx-background-color: #26c6ff;
 }
+.hover_print:hover {
+	-fx-background-color:  #fccb3a;
+}
+.print_button {
+	-fx-background-color:  #dea600;
+}
