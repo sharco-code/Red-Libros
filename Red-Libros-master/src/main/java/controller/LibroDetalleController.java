@@ -114,6 +114,7 @@ public class LibroDetalleController implements Initializable {
 
 	public void setNuevoLibro() {
 		this.isNuevoLibro = true;
+		this.xButtonIMPRIMIR.setVisible(false);
 		this.xButtonBorrarTEXT.setText("Cancelar");
 		this.xButtonEDITAR.setVisible(false);
 		isButtonGuardarEnabled = true;
@@ -129,15 +130,14 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldISBN.setEditable(true);
 
 		this.xTextFieldNombre.setEditable(true);
-		this.xTextFieldUnidadesTotales.setEditable(true);
 		this.xTextFieldPrecio.setEditable(true);
 
 		this.xTextFieldPrecio.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
-		this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: WHITE;");
-
+		
+		this.xTextFieldUnidadesTotales.setText("0");
 	}
 
 	public void disableComboBoxes() {
@@ -146,9 +146,54 @@ public class LibroDetalleController implements Initializable {
 		this.xComboBoxCursoEscolar.setDisable(true);
 	}
 
+	@FXML
+    private HBox xButtonAddEjemplar;
+
+    @FXML
+    private HBox xButtonDeleteEjemplar;
+    
+    @FXML
+    void xButtonAddEjemplarCLICKED(MouseEvent event) {
+    	Ejemplare newEjemplare = new Ejemplare();
+    	
+    	newEjemplare.setEstado(0);
+    	newEjemplare.setLibro(this.libro);
+    	newEjemplare.setPrestado(new Byte("0"));
+    	newEjemplare.setId( (libro.getEjemplares().size()+1)+""  );
+    	newEjemplare.setCodigo("00000"+newEjemplare.getId() );
+    	
+    	this.libro.addEjemplare(newEjemplare);
+    	
+    	this.libro.setUnidades(this.libro.getUnidades()+1);
+    	this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades()+"");
+    	
+    	this.libroDAO.merge(this.libro);
+    	
+    	showToast("Ejemplar añadido");
+    	
+    	//this.xTableViewEjemplar.re
+    	reloadEjemplares();
+    }
+
+    @FXML
+    void xButtonDeleteEjemplarCLICKED(MouseEvent event) {
+    	if(this.xTableViewEjemplar.getSelectionModel().getSelectedItem()==null) {
+    		showToast("Debes seleccionar un\nejemplar para borrarlo");
+    	} else {
+    		
+    		this.libro.removeEjemplare(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
+    		
+    		this.libro.setUnidades(this.libro.getUnidades()-1);
+        	this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades()+"");
+    		
+    		this.libroDAO.merge(this.libro);
+    		showToast("Ejemplar borrado");
+    	}
+    	
+    }
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		// TODO Auto-generated method stub
 		try {
 			listaCursos = cursoDAO.getAll();
@@ -359,14 +404,12 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldISBN.setEditable(true);
 
 		this.xTextFieldNombre.setEditable(true);
-		this.xTextFieldUnidadesTotales.setEditable(true);
 		this.xTextFieldPrecio.setEditable(true);
 
 		this.xTextFieldPrecio.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
-		this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: WHITE;");
 
 		this.xButtonEDITAR.setDisable(true);
 		this.xButtonEDITAR.setStyle("-fx-background-color: GRAY;");
@@ -434,14 +477,12 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldCodigo.setEditable(true);
 		this.xTextFieldISBN.setEditable(true);
 		this.xTextFieldNombre.setEditable(true);
-		this.xTextFieldUnidadesTotales.setEditable(true);
 		this.xTextFieldPrecio.setEditable(true);
 
 		this.xTextFieldPrecio.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldCodigo.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldNombre.setStyle("-fx-background-color: TRANSPARENT;");
-		this.xTextFieldUnidadesTotales.setStyle("-fx-background-color: TRANSPARENT;");
 
 		this.xButtonEDITAR.setStyle("-fx-background-color: #1f93ff;");
 		this.xButtonEDITAR.setDisable(false);

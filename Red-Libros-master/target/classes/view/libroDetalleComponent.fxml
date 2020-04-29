@@ -260,7 +260,7 @@
                      <children>
                         <VBox HBox.hgrow="ALWAYS">
                            <children>
-                              <TableView prefHeight="200.0" prefWidth="200.0" stylesheets="@../style/table_style_small.css" VBox.vgrow="ALWAYS" fx:id="xTableViewEjemplar" />
+                              <TableView stylesheets="@../style/table_style_small.css" VBox.vgrow="ALWAYS" fx:id="xTableViewEjemplar" />
                               <HBox alignment="CENTER_LEFT">
                                  <children>
                                     <VBox alignment="CENTER">
@@ -281,6 +281,43 @@
                                           </TextField>
                                        </children>
                                     </VBox>
+                                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <HBox alignment="CENTER" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onMouseClicked="#xButtonAddEjemplarCLICKED" prefWidth="30.0" fx:id="xButtonAddEjemplar">
+                                                   <children>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="1.8em">
+                                                         <HBox.margin>
+                                                            <Insets />
+                                                         </HBox.margin>
+                                                      </FontAwesomeIcon>
+                                                   </children>
+                                                   <styleClass>
+                                                      <String fx:value="hover_green" />
+                                                      <String fx:value="green_button" />
+                                                   </styleClass>
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onMouseClicked="#xButtonDeleteEjemplarCLICKED" prefWidth="30.0" fx:id="xButtonDeleteEjemplar">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" iconName="TRASH_ALT" size="1.8em">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </FontAwesomeIcon>
+                                             </children>
+                                             <styleClass>
+                                                <String fx:value="red_button_hover" />
+                                                <String fx:value="red_button" />
+                                             </styleClass>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </HBox>
                            </children>
@@ -300,7 +337,6 @@
                                     <ImageView fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" fx:id="xImageView" />
                                  </children>
                               </VBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
                            </children>
                         </VBox>
                      </children>
