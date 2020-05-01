@@ -354,7 +354,6 @@ public class LibroDetalleController implements Initializable {
 		BarcodeService barcodeService = new BarcodeService();
 		xTableViewEjemplar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
-
 				this.xImageView.setImage(
 						barcodeService.convertToFxImage(barcodeService.generateImage(newSelection.getCodigo())));
 			}
@@ -366,15 +365,24 @@ public class LibroDetalleController implements Initializable {
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
 		codigoColumn.setMaxWidth(450);
 
-		TableColumn estadoColumn = new TableColumn("Estado");
+		TableColumn<EjemplarTabla,String> estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
 		estadoColumn.setCellFactory(ComboBoxTableCell.<EjemplarTabla,String>forTableColumn(new DefaultStringConverter(),this.listaEstados));
-		
+		estadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
+			String newValue = e.getNewValue();
+			int index = e.getTablePosition().getRow();
+			e.getTableView().getItems().get( index ).setEstado(newValue);
+		});
 		estadoColumn.setMaxWidth(400);
 
-		TableColumn prestadoColumn = new TableColumn("Prestado");
+		TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
 		prestadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaPrestado));
+		prestadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
+			String newValue = e.getNewValue();
+			int index = e.getTablePosition().getRow();
+			e.getTableView().getItems().get( index ).setPrestado(newValue);
+		});
 
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -510,10 +518,7 @@ public class LibroDetalleController implements Initializable {
 				this.libro.setObsoleto((byte) 0);
 			}
 			
-			//HAY QUE HACER ESTO MAS EFICIENTE
-			
-			
-			
+			//CAMBIAR DE ejemplarTAbla a ejemplare
 			
 			for(EjemplarTabla ejemplarTabla:this.xTableViewEjemplar.getItems()) {
 				for(Ejemplare ejemplarLibro:this.libro.getEjemplares()) {
