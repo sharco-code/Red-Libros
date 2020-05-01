@@ -113,6 +113,8 @@ public class LibroDetalleController implements Initializable {
 	}
 
 	public void setNuevoLibro() {
+		this.xButtonAddEjemplar.setVisible(false);
+		this.xButtonDeleteEjemplar.setVisible(false);
 		this.isNuevoLibro = true;
 		this.xButtonIMPRIMIR.setVisible(false);
 		this.xButtonBorrarTEXT.setText("Cancelar");
