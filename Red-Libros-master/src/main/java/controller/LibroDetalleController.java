@@ -106,7 +106,7 @@ public class LibroDetalleController implements Initializable {
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private ContenidoDAO contenidoDAO = new ContenidoDAO();
-	//private ContenidoDAO contenidoDAO = new ContenidoDAO();
+	private EjemplarDAO ejemplarDAO = new EjemplarDAO();
 
 	public void setLibrosController(LibrosController librosController) {
 		this.librosController = librosController;
@@ -136,7 +136,7 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
-		
+
 		this.xTextFieldUnidadesTotales.setText("0");
 	}
 
@@ -147,51 +147,61 @@ public class LibroDetalleController implements Initializable {
 	}
 
 	@FXML
-    private HBox xButtonAddEjemplar;
+	private HBox xButtonAddEjemplar;
 
-    @FXML
-    private HBox xButtonDeleteEjemplar;
-    
-    @FXML
-    void xButtonAddEjemplarCLICKED(MouseEvent event) {
-    	Ejemplare newEjemplare = new Ejemplare();
-    	
-    	newEjemplare.setEstado(0);
-    	newEjemplare.setLibro(this.libro);
-    	newEjemplare.setPrestado(new Byte("0"));
-    	newEjemplare.setId( (libro.getEjemplares().size()+1)+""  );
-    	newEjemplare.setCodigo("00000"+newEjemplare.getId() );
-    	
-    	this.libro.addEjemplare(newEjemplare);
-    	
-    	this.libro.setUnidades(this.libro.getUnidades()+1);
-    	this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades()+"");
-    	
-    	this.libroDAO.merge(this.libro);
-    	
-    	showToast("Ejemplar añadido");
-    	
-    	//this.xTableViewEjemplar.re
-    	reloadEjemplares();
-    }
+	@FXML
+	private HBox xButtonDeleteEjemplar;
 
-    @FXML
-    void xButtonDeleteEjemplarCLICKED(MouseEvent event) {
-    	if(this.xTableViewEjemplar.getSelectionModel().getSelectedItem()==null) {
-    		showToast("Debes seleccionar un\nejemplar para borrarlo");
-    	} else {
-    		
-    		this.libro.removeEjemplare(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
-    		
-    		this.libro.setUnidades(this.libro.getUnidades()-1);
-        	this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades()+"");
-    		
-    		this.libroDAO.merge(this.libro);
-    		showToast("Ejemplar borrado");
-    	}
-    	
-    }
-	
+	@FXML
+	void xButtonAddEjemplarCLICKED(MouseEvent event) {
+		Ejemplare newEjemplare = new Ejemplare();
+
+		newEjemplare.setEstado(0);
+		newEjemplare.setPrestado(new Byte("0"));
+		int id = 0;
+		for (int i = 0; i < libro.getEjemplares().size(); i++) {
+			String[] x = libro.getEjemplares().get(i).getId().split("-");
+			
+			if( Integer.parseInt(x[1]) > id ) id = Integer.parseInt(x[1]);
+		}
+		id++;
+		newEjemplare.setId( libro.getId()+"-"+id );
+		newEjemplare.setCodigo(libro.getId()+"-"+id  );
+
+		this.libro.setUnidades(this.libro.getUnidades() + 1);
+		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
+		
+		this.libro.addEjemplare(newEjemplare);
+
+		this.libroDAO.merge(this.libro);
+		
+		showToast("Ejemplar añadido");
+
+		reloadEjemplares();
+	}
+
+	@FXML
+	void xButtonDeleteEjemplarCLICKED(MouseEvent event) {
+		if (this.xTableViewEjemplar.getSelectionModel().getSelectedItem() == null) {
+			showToast("Debes seleccionar un\nejemplar para borrarlo");
+		} else {
+			System.out.println(this.libro.getId());
+			this.libro.removeEjemplare(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
+
+			this.libro.setUnidades(this.libro.getUnidades() - 1);
+			this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
+
+
+			this.libroDAO.merge(this.libro);
+			this.ejemplarDAO.delete(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
+			showToast("Ejemplar borrado");
+			
+			reloadEjemplares();
+		}
+		
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -219,8 +229,7 @@ public class LibroDetalleController implements Initializable {
 		this.xComboBoxCursoEscolar.setDisable(true);
 		this.xComboBoxCurso.setDisable(true);
 		this.xCheckBoxObsoleto.setDisable(true);
-		
-		
+
 	}
 
 	@FXML
@@ -233,14 +242,14 @@ public class LibroDetalleController implements Initializable {
 	private HBox xButtonBORRAR;
 
 	private boolean isButtonGuardarEnabled = false;
-	
+
 	@FXML
-    private HBox xButtonIMPRIMIR;
-	
+	private HBox xButtonIMPRIMIR;
+
 	void imprimir(String ruta) {
 		PdfService pdfService = new PdfService();
 		BarcodeService barcodeService = new BarcodeService();
-		
+
 		List<com.itextpdf.text.Image> codigos = new ArrayList<>();
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -254,13 +263,12 @@ public class LibroDetalleController implements Initializable {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		
+
 		try {
-			pdfService.createPDF(codigos,ruta);
+			pdfService.createPDF(codigos, ruta);
 			showToast("PDF generado corectamente");
-			System.out.println(ruta+"\\barcodes.pdf");
-			File pdfFile = new File(ruta+"\\barcodes.pdf");
+			System.out.println(ruta + "\\barcodes.pdf");
+			File pdfFile = new File(ruta + "\\barcodes.pdf");
 			if (pdfFile.exists()) {
 
 				if (Desktop.isDesktopSupported()) {
@@ -272,75 +280,78 @@ public class LibroDetalleController implements Initializable {
 			} else {
 				System.out.println("File is not exists!");
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToast("No se ha podido generar el PDF");
-		} 
+		}
 	}
-	
+
 	@FXML
-    void ImprimirCLICKED(MouseEvent event) {
+	void ImprimirCLICKED(MouseEvent event) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File("src"));
-        
-        File selectedDirectory = directoryChooser.showDialog(Main.getStage());
-        if(selectedDirectory==null) {
-        	return;
-        }
-        imprimir(selectedDirectory.getAbsolutePath());
-		
-		
-        
-    }
+		directoryChooser.setInitialDirectory(new File("src"));
 
-    @FXML
-    void ImprimirENTERED(MouseEvent event) {
+		File selectedDirectory = directoryChooser.showDialog(Main.getStage());
+		if (selectedDirectory == null) {
+			return;
+		}
+		imprimir(selectedDirectory.getAbsolutePath());
 
-    }
+	}
 
-    @FXML
-    void ImprimirEXITED(MouseEvent event) {
-    	
-    }
-	
 	@FXML
-    private ImageView xImageView;
-	
+	void ImprimirENTERED(MouseEvent event) {
+
+	}
+
+	@FXML
+	void ImprimirEXITED(MouseEvent event) {
+
+	}
+
+	@FXML
+	private ImageView xImageView;
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
+		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
+		// elemenots que hay, si no saldrán duplicados
+		xTableViewEjemplar.getItems().clear();
+		xTableViewEjemplar.getColumns().clear();
+
 		BarcodeService barcodeService = new BarcodeService();
 		xTableViewEjemplar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 
-				this.xImageView.setImage(barcodeService.convertToFxImage(barcodeService.generateImage( newSelection.getCodigo() )));
+				this.xImageView.setImage(
+						barcodeService.convertToFxImage(barcodeService.generateImage(newSelection.getCodigo())));
 			}
 		});
 
 		xTableViewEjemplar.getItems().clear();
-		
+
 		TableColumn codigoColumn = new TableColumn("Codigo");
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
 		codigoColumn.setMaxWidth(450);
-		
+
 		TableColumn estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
 		estadoColumn.setMaxWidth(400);
 
 		TableColumn prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
-		
 
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		List<Ejemplare> listaEjemplares = new ArrayList<>();
-		
+
 		listaEjemplares = libro.getEjemplares();
-		
+
 		xTableViewEjemplar.getItems().addAll(listaEjemplares);
 	}
-	
+
 	@FXML
 	void BorrarCLICKED(MouseEvent event) {
 
@@ -433,7 +444,7 @@ public class LibroDetalleController implements Initializable {
 	void GuardarCLICKED(MouseEvent event) {
 		// Si es aÃ±adir o actualizar uno existente
 		if (isNuevoLibro) {
-			
+
 			this.libro = new Libro();
 			this.libro.setId(xTextFieldCodigo.getText());
 			this.libro.setCodigo(xTextFieldCodigo.getText());
@@ -442,10 +453,11 @@ public class LibroDetalleController implements Initializable {
 			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
 			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
 
-			this.libro.setContenido( contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
+			this.libro.setContenido(
+					contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
 
 			libroDAO.merge(this.libro);
-			 
+
 		} else {
 
 			this.libro.setCodigo(xTextFieldCodigo.getText());
@@ -453,8 +465,9 @@ public class LibroDetalleController implements Initializable {
 			this.libro.setNombre(xTextFieldNombre.getText());
 			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
 			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
-			
-			this.libro.setContenido( contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
+
+			this.libro.setContenido(
+					contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
 
 			if (this.xCheckBoxObsoleto.isSelected() == true) {
 				this.libro.setObsoleto((byte) 1);
@@ -597,7 +610,7 @@ public class LibroDetalleController implements Initializable {
 		int fadeOutTime = 300; // 0.5 seconds
 		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
-	
+
 	public void setLibro(Libro libroViejo) {
 
 		try {

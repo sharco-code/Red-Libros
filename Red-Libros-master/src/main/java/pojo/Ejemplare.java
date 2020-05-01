@@ -25,7 +25,7 @@ public class Ejemplare implements Serializable {
 	private byte prestado;
 
 	//bi-directional many-to-one association to Libro
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_libro")
 	private Libro libro;
 
