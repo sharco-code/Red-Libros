@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -160,15 +161,21 @@ public class LibroDetalleController implements Initializable {
 
 		newEjemplare.setEstado(0);
 		newEjemplare.setPrestado(new Byte("0"));
+
+		
 		int id = 0;
 		for (int i = 0; i < libro.getEjemplares().size(); i++) {
-			String[] x = libro.getEjemplares().get(i).getId().split("-");
+			String[] x = libro.getEjemplares().get(i).getId().split(libro.getId());
 			
 			if( Integer.parseInt(x[1]) > id ) id = Integer.parseInt(x[1]);
 		}
 		id++;
-		newEjemplare.setId( libro.getId()+"-"+id );
-		newEjemplare.setCodigo(libro.getId()+"-"+id  );
+		Formatter obj = new Formatter();
+
+        String numeroCeros = String.valueOf(obj.format("%03d", id));
+        
+		newEjemplare.setId( libro.getId()+numeroCeros );
+		newEjemplare.setCodigo(libro.getId()+numeroCeros  );
 
 		this.libro.setUnidades(this.libro.getUnidades() + 1);
 		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
