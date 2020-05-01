@@ -49,5 +49,33 @@ public class EjemplarTablaService {
 			return "No prestado";
 		}
 	}
+	
+	public Byte convertToEstadoLibro(String estado) {
+		switch (estado) {
+		case "Perfecto":
+			return 0;
+		case "Regular":
+			return 1;
+		case "Mal":
+			return 2;
+		default:
+			return 0;
+		}
+		
+		
+	}
+	
+	public Byte convertToPrestadoLibro(String prestado) {
+		switch (prestado) {
+		case "No prestado":
+			return 0;
+		case "Prestado":
+			return 1;
+		default:
+			return 0;
+		}
+	}
+	
+	
 
 }

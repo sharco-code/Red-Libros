@@ -109,6 +109,8 @@ public class LibroDetalleController implements Initializable {
 	private boolean isNuevoLibro = false;
 
 	private LibrosController librosController;
+	
+	private EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
 
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
@@ -203,20 +205,20 @@ public class LibroDetalleController implements Initializable {
 		if (this.xTableViewEjemplar.getSelectionModel().getSelectedItem() == null) {
 			showToast("Debes seleccionar un\nejemplar para borrarlo");
 		} else {
-			/*
+			
 			System.out.println(this.libro.getId());
-			this.libro.removeEjemplare(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
+			this.libro.removeEjemplare(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
 
 			this.libro.setUnidades(this.libro.getUnidades() - 1);
 			this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
 
 
 			this.libroDAO.merge(this.libro);
-			this.ejemplarDAO.delete(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
+			this.ejemplarDAO.delete(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
 			showToast("Ejemplar borrado");
 			
 			reloadEjemplares();
-			*/
+			
 		}
 		
 
@@ -344,7 +346,7 @@ public class LibroDetalleController implements Initializable {
 	void reloadEjemplares() {
 		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
 		// elemenots que hay, si no saldrán duplicados
-		EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
+		
 		
 		xTableViewEjemplar.getItems().clear();
 		xTableViewEjemplar.getColumns().clear();
@@ -366,7 +368,8 @@ public class LibroDetalleController implements Initializable {
 
 		TableColumn estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
-		estadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaEstados));
+		estadoColumn.setCellFactory(ComboBoxTableCell.<EjemplarTabla,String>forTableColumn(new DefaultStringConverter(),this.listaEstados));
+		
 		estadoColumn.setMaxWidth(400);
 
 		TableColumn prestadoColumn = new TableColumn("Prestado");
@@ -506,6 +509,22 @@ public class LibroDetalleController implements Initializable {
 			} else {
 				this.libro.setObsoleto((byte) 0);
 			}
+			
+			//HAY QUE HACER ESTO MAS EFICIENTE
+			
+			
+			
+			
+			for(EjemplarTabla ejemplarTabla:this.xTableViewEjemplar.getItems()) {
+				for(Ejemplare ejemplarLibro:this.libro.getEjemplares()) {
+					if(ejemplarTabla.getId().equals(ejemplarLibro.getId())) {
+						ejemplarLibro.setEstado(ejemplarTablaService.convertToEstadoLibro(ejemplarTabla.getEstado()));
+						ejemplarLibro.setPrestado(ejemplarTablaService.convertToPrestadoLibro(ejemplarTabla.getPrestado()));
+						ejemplarDAO.merge(ejemplarLibro);
+					}
+				}
+			}
+			
 
 			libroDAO.merge(this.libro);
 
