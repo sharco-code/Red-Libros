@@ -26,6 +26,8 @@ import dao.ContenidoDAO;
 import dao.CursoDAO;
 import dao.EjemplarDAO;
 import dao.LibroDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,6 +40,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,11 +52,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
+import javafx.util.converter.DefaultStringConverter;
+import model.EjemplarTabla;
 import pojo.Contenido;
 import pojo.Curso;
 import pojo.Ejemplare;
 import pojo.Libro;
 import service.BarcodeService;
+import service.EjemplarTablaService;
 import service.PdfService;
 import utiles.hibernate.UtilesHibernate;
 import view.Toast;
@@ -93,7 +99,7 @@ public class LibroDetalleController implements Initializable {
 	private CheckBox xCheckBoxObsoleto;
 
 	@FXML
-	private TableView<Ejemplare> xTableViewEjemplar;
+	private TableView<EjemplarTabla> xTableViewEjemplar;
 
 	private List<Curso> listaCursos = new ArrayList<>();
 
@@ -108,6 +114,9 @@ public class LibroDetalleController implements Initializable {
 	private CursoDAO cursoDAO = new CursoDAO();
 	private ContenidoDAO contenidoDAO = new ContenidoDAO();
 	private EjemplarDAO ejemplarDAO = new EjemplarDAO();
+	
+	private ObservableList<String> listaEstados =  FXCollections.observableArrayList();
+	private ObservableList<String> listaPrestado =  FXCollections.observableArrayList();
 
 	public void setLibrosController(LibrosController librosController) {
 		this.librosController = librosController;
@@ -194,6 +203,7 @@ public class LibroDetalleController implements Initializable {
 		if (this.xTableViewEjemplar.getSelectionModel().getSelectedItem() == null) {
 			showToast("Debes seleccionar un\nejemplar para borrarlo");
 		} else {
+			/*
 			System.out.println(this.libro.getId());
 			this.libro.removeEjemplare(this.xTableViewEjemplar.getSelectionModel().getSelectedItem());
 
@@ -206,6 +216,7 @@ public class LibroDetalleController implements Initializable {
 			showToast("Ejemplar borrado");
 			
 			reloadEjemplares();
+			*/
 		}
 		
 
@@ -215,6 +226,13 @@ public class LibroDetalleController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		try {
+			this.listaEstados.add("Perfecto");
+			this.listaEstados.add("Regular");
+			this.listaEstados.add("Mal");
+			
+			this.listaPrestado.add("No prestado");
+			this.listaPrestado.add("Prestado");
+			
 			listaCursos = cursoDAO.getAll();
 
 			xComboBoxCurso.setDisable(true);
@@ -326,6 +344,8 @@ public class LibroDetalleController implements Initializable {
 	void reloadEjemplares() {
 		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
 		// elemenots que hay, si no saldrán duplicados
+		EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
+		
 		xTableViewEjemplar.getItems().clear();
 		xTableViewEjemplar.getColumns().clear();
 
@@ -346,19 +366,22 @@ public class LibroDetalleController implements Initializable {
 
 		TableColumn estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
+		estadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaEstados));
 		estadoColumn.setMaxWidth(400);
 
 		TableColumn prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
+		prestadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaPrestado));
 
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		xTableViewEjemplar.setEditable(true);
 
 		List<Ejemplare> listaEjemplares = new ArrayList<>();
 
 		listaEjemplares = libro.getEjemplares();
 
-		xTableViewEjemplar.getItems().addAll(listaEjemplares);
+		xTableViewEjemplar.getItems().addAll(ejemplarTablaService.converToEjemplarTabla(listaEjemplares));
 	}
 
 	@FXML

@@ -37,6 +37,9 @@ module proyectoFinal.redLibros {
     exports app;
     opens app;
     
+    exports model;
+    opens model;
+    
     opens view;
       
 }
