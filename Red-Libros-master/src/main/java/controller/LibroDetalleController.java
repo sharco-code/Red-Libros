@@ -227,6 +227,7 @@ public class LibroDetalleController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		try {
 			this.listaEstados.add("Perfecto");
 			this.listaEstados.add("Regular");
@@ -341,7 +342,14 @@ public class LibroDetalleController implements Initializable {
 
 	@FXML
 	private ImageView xImageView;
-
+	
+	@SuppressWarnings({ "rawtypes" })
+	private TableColumn codigoColumn = new TableColumn("Codigo");
+	@SuppressWarnings("unchecked")
+	private TableColumn<EjemplarTabla,String> estadoColumn = new TableColumn("Estado");
+	@SuppressWarnings("unchecked")
+	private TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
 		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
@@ -361,11 +369,10 @@ public class LibroDetalleController implements Initializable {
 
 		xTableViewEjemplar.getItems().clear();
 
-		TableColumn codigoColumn = new TableColumn("Codigo");
+		codigoColumn = new TableColumn("Codigo");
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-		codigoColumn.setMaxWidth(850);
 
-		TableColumn<EjemplarTabla,String> estadoColumn = new TableColumn("Estado");
+		estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
 		estadoColumn.setCellFactory(ComboBoxTableCell.<EjemplarTabla,String>forTableColumn(new DefaultStringConverter(),this.listaEstados));
 		estadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
@@ -373,9 +380,8 @@ public class LibroDetalleController implements Initializable {
 			int index = e.getTablePosition().getRow();
 			e.getTableView().getItems().get( index ).setEstado(newValue);
 		});
-		estadoColumn.setMaxWidth(400);
 
-		TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
+		prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
 		prestadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaPrestado));
 		prestadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
@@ -383,11 +389,14 @@ public class LibroDetalleController implements Initializable {
 			int index = e.getTablePosition().getRow();
 			e.getTableView().getItems().get( index ).setPrestado(newValue);
 		});
-
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewEjemplar.setEditable(true);
 
+		
+		estadoColumn.setEditable(false);
+		prestadoColumn.setEditable(false);
+		
 		List<Ejemplare> listaEjemplares = new ArrayList<>();
 
 		listaEjemplares = libro.getEjemplares();
@@ -443,7 +452,10 @@ public class LibroDetalleController implements Initializable {
 
 	@FXML
 	void EditarCLICKED(MouseEvent event) {
-
+		
+		estadoColumn.setEditable(true);
+		prestadoColumn.setEditable(true);
+		
 		isButtonGuardarEnabled = true;
 		this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
 		this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
@@ -502,7 +514,9 @@ public class LibroDetalleController implements Initializable {
 			libroDAO.merge(this.libro);
 
 		} else {
-
+			estadoColumn.setEditable(false);
+			prestadoColumn.setEditable(false);
+			
 			this.libro.setCodigo(xTextFieldCodigo.getText());
 			this.libro.setIsbn(xTextFieldISBN.getText());
 			this.libro.setNombre(xTextFieldNombre.getText());
