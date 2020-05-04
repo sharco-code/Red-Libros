@@ -342,7 +342,7 @@ public class LibroDetalleController implements Initializable {
 
 		TableColumn codigoColumn = new TableColumn("Codigo");
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-		codigoColumn.setMaxWidth(450);
+		codigoColumn.setMaxWidth(850);
 
 		TableColumn estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
