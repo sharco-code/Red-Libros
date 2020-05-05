@@ -46,6 +46,7 @@ public class MainController implements Initializable {
     private EntregasController entregasController;
     private DevolucionesController devolucionesController;
     private ErrorController errorController;
+    private StockController stockController;
     
     @FXML
     void AjustesCLICKED(MouseEvent event) {
@@ -218,7 +219,26 @@ public class MainController implements Initializable {
 
     @FXML
     void StockCLICKED(MouseEvent event) {
-    	this.xVBoxCENTER.getChildren().clear();
+    	try {
+    		this.stockController = new StockController();
+        	
+        	this.xVBoxCENTER.getChildren().clear();
+    		
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/stockComponent.fxml"));
+    		loader.setController(this.stockController);
+    		VBox vbox = (VBox) loader.load();
+    		
+    		
+    		VBox.setVgrow(vbox, Priority.ALWAYS);
+			
+			this.xVBoxCENTER.getChildren().add(vbox);
+
+			this.stockController.reload();
+		} catch (Exception e) {
+			showErrorComponent();
+			e.printStackTrace();
+			
+		}
     }
 
 	@Override

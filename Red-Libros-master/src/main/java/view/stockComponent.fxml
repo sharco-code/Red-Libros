@@ -1,10 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox style="-fx-background-color: #f3f3f3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox style="-fx-background-color: #f3f3f3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxMAIN">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="stcock" />
+      <HBox alignment="CENTER_LEFT" minHeight="100.0" prefHeight="100.0" style="-fx-background-color: WHITE;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stock" fx:id="xLabelTitle">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Text>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="90.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <RadioButton mnemonicParsing="false" onAction="#xRadioButtonNOMBRE_Action" selected="true" text="Nombre" fx:id="xRadioButtonNOMBRE" />
+                        <RadioButton mnemonicParsing="false" onAction="#xRadioButtonCODIGO_Action" prefWidth="90.0" text="Código" fx:id="xRadioButtonCODIGO" />
+                     </children>
+                  </VBox>
+                  <TextField promptText="Buscar por nombre" style="-fx-background-color: #ededed;" fx:id="xTextFieldSearch">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <FontAwesomeIcon iconName="SEARCH" size="1.5em">
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <TableView layoutY="1.0" stylesheets="@../style/table_style.css" VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
+      <VBox VBox.vgrow="ALWAYS">
+         <children>
+            <Separator>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Separator>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplares:" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Text>
+            <VBox style="-fx-border-color: GREY;" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <TableView stylesheets="@../style/table_style_small.css" VBox.vgrow="ALWAYS" fx:id="xTableViewEjemplar" />
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <VBox alignment="CENTER">
+                                       <children>
+                                          <Label prefWidth="120.0" text="Unidades totales:">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox>
+                                       <children>
+                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldUnidadesTotales">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="200.0">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Separator>
+                        <VBox>
+                           <children>
+                              <VBox VBox.vgrow="ALWAYS" fx:id="x">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" fx:id="xImageView" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </VBox>
