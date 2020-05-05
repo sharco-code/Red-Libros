@@ -9,7 +9,6 @@ module proyectoFinal.redLibros {
 	requires org.hibernate.orm.core;
 	requires java.sql;
 	requires java.persistence;
-	requires commons.dbcp2;
 	requires java.logging;
 	requires java.desktop;
 	requires itextpdf;
