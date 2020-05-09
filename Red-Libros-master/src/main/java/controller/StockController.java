@@ -30,22 +30,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.DefaultStringConverter;
 import model.EjemplarTabla;
+import model.StockTabla;
 import pojo.Ejemplare;
 import pojo.Libro;
 import service.BarcodeService;
 import service.EjemplarTablaService;
+import service.StockTablaService;
 import dao.LibroDAO;
 
 public class StockController implements Initializable {
-	
+
 	@FXML
-    private TableView<EjemplarTabla> xTableViewEjemplar;
+    private TextField xTextFieldEJE1;
 
     @FXML
-    private TextField xTextFieldUnidadesTotales;
-    
+    private TextField xTextFieldEJE2;
+
+    @FXML
+    private TextField xTextFieldEJE3;
+
+    @FXML
+    private TextField xTextFieldEJE4;
+
 	@FXML
-	private TableView<Libro> xTableLibros;
+	private TableView<StockTabla> xTableLibros;
 
 	@FXML
 	private RadioButton xRadioButtonNOMBRE;
@@ -53,12 +61,12 @@ public class StockController implements Initializable {
 	@FXML
 	private RadioButton xRadioButtonCODIGO;
 
-	 @FXML
-    private VBox x;
+	@FXML
+	private VBox x;
 
-    @FXML
-    private ImageView xImageView;
-	    
+	@FXML
+	private ImageView xImageView;
+
 	@FXML
 	private TextField xTextFieldSearch;
 
@@ -68,7 +76,7 @@ public class StockController implements Initializable {
 	void xRadioButtonCODIGO_Action(ActionEvent event) {
 		this.xRadioButtonNOMBRE.setSelected(false);
 		this.xTextFieldSearch.setText("");
-		
+
 		this.xTextFieldSearch.setPromptText("Buscar por codigo");
 		radioButton_Selected = 2;
 	}
@@ -77,7 +85,7 @@ public class StockController implements Initializable {
 	void xRadioButtonNOMBRE_Action(ActionEvent event) {
 		this.xRadioButtonCODIGO.setSelected(false);
 		this.xTextFieldSearch.setText("");
-		
+
 		this.xTextFieldSearch.setPromptText("Buscar por nombre");
 		radioButton_Selected = 1;
 	}
@@ -89,9 +97,11 @@ public class StockController implements Initializable {
 
 	private List<Libro> librosFiltrados = new ArrayList<>();
 
+	private StockTablaService StockTablaService = new StockTablaService();
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		this.xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				filtrar(newValue);
@@ -99,83 +109,83 @@ public class StockController implements Initializable {
 		});
 
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void reload() throws SQLException, Exception {
 
 		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
+
+				Libro libroSeleccionado = libroDAO.findById(newSelection.getId());
+
+				
+				this.xTextFieldEJE1.setText(libroSeleccionado.getUnidades() + "");
+				
+				this.xTextFieldEJE2.setText(libroSeleccionado.getContenido().getMatriculas().size()+"");
 				
 				
-				reloadEjemplares(libroDAO.findById(newSelection.getId()));
-				this.xTextFieldUnidadesTotales.setText(newSelection.getUnidades()+"");
-				/*
-				Parent root = null;
-
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
-
-					LibroDetalleController libroDetalleController = new LibroDetalleController();
-					loader.setController(libroDetalleController);
-					// root =
-					// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
-					root = loader.load();
-					libroDetalleController.setLibro(newSelection);
-
-					this.xVBoxMAIN.getChildren().clear();
-					this.xVBoxMAIN.getChildren().add(root);
-
-					libroDetalleController.disableComboBoxes();
-				} catch (IOException e) {
-					e.printStackTrace();
+				
+				int eje3 = 0, eje4 = 0;
+				for (int i = 0; i < libroSeleccionado.getEjemplares().size(); i++) {
+					if(libroSeleccionado.getEjemplares().get(i).getPrestado()==1) {
+						eje3++;
+					}
+					eje4++;
 				}
-				*/
+				eje4 = eje4 - eje3;
+				this.xTextFieldEJE3.setText(eje3 + "");
+				this.xTextFieldEJE4.setText(eje4 + "");
+				
 
 			}
 		});
 
 		xTableLibros.getItems().clear();
-		
+
 		TableColumn codigoColumn = new TableColumn("Codigo");
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-		codigoColumn.setMaxWidth(450);
-		
+		codigoColumn.setMaxWidth(700);
+
 		TableColumn precioColumn = new TableColumn("Precio");
 		precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
 		precioColumn.setMaxWidth(400);
 
+		TableColumn cursoColumn = new TableColumn("Curso");
+		cursoColumn.setCellValueFactory(new PropertyValueFactory<>("curso"));
+
 		TableColumn nombreColumn = new TableColumn("Nombre");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
 
-		xTableLibros.getColumns().addAll(codigoColumn, nombreColumn, precioColumn);
+		xTableLibros.getColumns().addAll(codigoColumn, nombreColumn, cursoColumn, precioColumn);
 		xTableLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		getLibros();
 
-		xTableLibros.getItems().addAll(listaLibros);
+		xTableLibros.getItems().addAll(this.StockTablaService.converToStockTabla(listaLibros));
 
 	}
 
 	private LibroDAO libroDAO = new LibroDAO();
-	
+
 	private void getLibros() {
-			
-		
+
 		listaLibros = libroDAO.getAll();
-			
+
 	}
 
 	private void filtrar(String newValue) {
-		if(radioButton_Selected==1) filtrarPorNombre(newValue);
-		else filtrarPorCodigo(newValue);
+		if (radioButton_Selected == 1)
+			filtrarPorNombre(newValue);
+		else
+			filtrarPorCodigo(newValue);
 	}
-	
+
 	private void filtrarPorNombre(String newValue) {
 		// TODO Auto-generated method stub
 		librosFiltrados = listaLibros.stream().filter(libro -> libro.getNombre().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableLibros.getItems().clear();
-		xTableLibros.getItems().addAll(librosFiltrados);
+		xTableLibros.getItems().addAll(this.StockTablaService.converToStockTabla(librosFiltrados));
 
 	}
 
@@ -184,72 +194,19 @@ public class StockController implements Initializable {
 		librosFiltrados = listaLibros.stream().filter(libro -> libro.getCodigo().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableLibros.getItems().clear();
-		xTableLibros.getItems().addAll(librosFiltrados);
+		xTableLibros.getItems().addAll(this.StockTablaService.converToStockTabla(librosFiltrados));
 
 	}
 
 	@SuppressWarnings({ "rawtypes" })
 	private TableColumn codigoColumn = new TableColumn("Codigo");
 	@SuppressWarnings("unchecked")
-	private TableColumn<EjemplarTabla,String> estadoColumn = new TableColumn("Estado");
+	private TableColumn<EjemplarTabla, String> estadoColumn = new TableColumn("Estado");
 	@SuppressWarnings("unchecked")
 	private TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
-	
+
 	private EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
-	private ObservableList<String> listaEstados =  FXCollections.observableArrayList();
-	private ObservableList<String> listaPrestado =  FXCollections.observableArrayList();
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	void reloadEjemplares(Libro libroSeleccionado) {
-		if(libroSeleccionado==null) return;
-		
-		
-		xTableViewEjemplar.getItems().clear();
-		xTableViewEjemplar.getColumns().clear();
+	private ObservableList<String> listaEstados = FXCollections.observableArrayList();
+	private ObservableList<String> listaPrestado = FXCollections.observableArrayList();
 
-		BarcodeService barcodeService = new BarcodeService();
-		xTableViewEjemplar.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if (newSelection != null) {
-				this.xImageView.setImage(
-						barcodeService.convertToFxImage(barcodeService.generateImage(newSelection.getCodigo())));
-			}
-		});
-
-		xTableViewEjemplar.getItems().clear();
-
-		codigoColumn = new TableColumn("Codigo");
-		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-
-		estadoColumn = new TableColumn("Estado");
-		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
-		estadoColumn.setCellFactory(ComboBoxTableCell.<EjemplarTabla,String>forTableColumn(new DefaultStringConverter(),this.listaEstados));
-		estadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
-			String newValue = e.getNewValue();
-			int index = e.getTablePosition().getRow();
-			e.getTableView().getItems().get( index ).setEstado(newValue);
-		});
-
-		prestadoColumn = new TableColumn("Prestado");
-		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
-		prestadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaPrestado));
-		prestadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
-			String newValue = e.getNewValue();
-			int index = e.getTablePosition().getRow();
-			e.getTableView().getItems().get( index ).setPrestado(newValue);
-		});
-		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
-		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		xTableViewEjemplar.setEditable(true);
-
-		
-		estadoColumn.setEditable(false);
-		prestadoColumn.setEditable(false);
-		
-		List<Ejemplare> listaEjemplares = new ArrayList<>();
-		
-		listaEjemplares = libroSeleccionado.getEjemplares();
-
-		xTableViewEjemplar.getItems().addAll(ejemplarTablaService.converToEjemplarTabla(listaEjemplares));
-	}
-  
 }

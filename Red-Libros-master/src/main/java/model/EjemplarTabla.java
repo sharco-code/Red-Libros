@@ -8,14 +8,10 @@ public class EjemplarTabla {
 	private String estado;
 
 	private String prestado;
-	
-	
 
 	public EjemplarTabla() {
 		super();
 	}
-	
-	
 
 	public EjemplarTabla(String id, String codigo, String estado, String prestado) {
 		super();
@@ -24,8 +20,6 @@ public class EjemplarTabla {
 		this.estado = estado;
 		this.prestado = prestado;
 	}
-
-
 
 	public String getId() {
 		return id;
@@ -58,7 +52,5 @@ public class EjemplarTabla {
 	public void setPrestado(String prestado) {
 		this.prestado = prestado;
 	}
-	
-	
 
 }

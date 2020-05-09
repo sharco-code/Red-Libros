@@ -8,7 +8,6 @@ import pojo.Ejemplare;
 
 public class EjemplarTablaService {
 	
-	
 	public List<EjemplarTabla> converToEjemplarTabla(List<Ejemplare> listaEjemplare){
 		
 		List<EjemplarTabla> listaEjemplarTabla = new ArrayList<>();
