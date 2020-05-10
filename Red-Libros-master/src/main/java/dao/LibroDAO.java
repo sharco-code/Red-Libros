@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 import javax.persistence.Query;
 
-
+import pojo.Ejemplare;
 import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
 
@@ -45,7 +46,6 @@ public class LibroDAO {
 			Query q = sessionFactory.getCurrentSession().createQuery("SELECT e FROM Libro e");
 	        listaLibros = q.getResultList();
 	        sessionFactory.getCurrentSession().getTransaction().commit();
-	        
 			logger.log(Level.INFO, "LibroDAO getAll() successful");
 			
 			return listaLibros;
@@ -157,4 +157,6 @@ public class LibroDAO {
 			throw re;
 		}
 	}
+	
+	
 }

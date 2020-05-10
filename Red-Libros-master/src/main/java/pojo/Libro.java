@@ -128,4 +128,11 @@ public class Libro implements Serializable {
 		return ejemplare;
 	}
 
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	
+	
+
 }

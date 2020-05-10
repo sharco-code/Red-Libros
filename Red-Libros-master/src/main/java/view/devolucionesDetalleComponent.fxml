@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="600.0">
+               <children>
+                  <Label prefWidth="60.0" text="NIA:">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField editable="false" promptText="NIA" style="-fx-background-color: TRANSPARENT;" fx:id="xTextFieldNIA">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="22.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="94.0" text="Expediente:">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField editable="false" promptText="Expediente" style="-fx-background-color: TRANSPARENT;" fx:id="xTextFieldExpediente">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="94.0" text="Nombre:">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField editable="false" promptText="Nombre" style="-fx-background-color: TRANSPARENT;" fx:id="xTextFieldNombre">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="318.0" prefWidth="705.0">
+         <children>
+            <HBox prefHeight="289.0" prefWidth="705.0">
+               <children>
+                  <TreeView prefHeight="289.0" prefWidth="410.0" fx:id="xTreeViewLibros" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

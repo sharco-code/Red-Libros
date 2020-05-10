@@ -173,7 +173,7 @@ public class Alumno implements Serializable {
 	private List<Historial> historials;
 
 	//bi-directional many-to-one association to Matricula
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="alumno")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="alumno")
 	private List<Matricula> matriculas;
 
 	public Alumno() {

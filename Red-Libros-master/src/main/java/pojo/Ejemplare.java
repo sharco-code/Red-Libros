@@ -98,4 +98,11 @@ public class Ejemplare implements Serializable {
 		return historial;
 	}
 
+	@Override
+	public String toString() {
+		return codigo;
+	}
+	
+	
+
 }

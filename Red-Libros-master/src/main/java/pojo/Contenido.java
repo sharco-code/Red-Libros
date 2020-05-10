@@ -36,7 +36,7 @@ public class Contenido implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="contenidoBean")
 	private List<Matricula> matriculas;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="contenido")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="contenido")
 	private List<Libro> libros;
 
 	public Contenido() {

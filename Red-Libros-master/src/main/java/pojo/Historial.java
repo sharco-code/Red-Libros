@@ -15,16 +15,16 @@ public class Historial implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private Integer id;
 
 	@Column(name="curso_escolar")
-	private int cursoEscolar;
+	private Integer cursoEscolar;
 
 	@Column(name="estado_final")
-	private int estadoFinal;
+	private Integer estadoFinal;
 
 	@Column(name="estado_inicial")
-	private int estadoInicial;
+	private Integer estadoInicial;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_final")
@@ -49,35 +49,35 @@ public class Historial implements Serializable {
 	public Historial() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getCursoEscolar() {
+	public Integer getCursoEscolar() {
 		return this.cursoEscolar;
 	}
 
-	public void setCursoEscolar(int cursoEscolar) {
+	public void setCursoEscolar(Integer cursoEscolar) {
 		this.cursoEscolar = cursoEscolar;
 	}
 
-	public int getEstadoFinal() {
+	public Integer getEstadoFinal() {
 		return this.estadoFinal;
 	}
 
-	public void setEstadoFinal(int estadoFinal) {
+	public void setEstadoFinal(Integer estadoFinal) {
 		this.estadoFinal = estadoFinal;
 	}
 
-	public int getEstadoInicial() {
+	public Integer getEstadoInicial() {
 		return this.estadoInicial;
 	}
 
-	public void setEstadoInicial(int estadoInicial) {
+	public void setEstadoInicial(Integer estadoInicial) {
 		this.estadoInicial = estadoInicial;
 	}
 
@@ -120,5 +120,14 @@ public class Historial implements Serializable {
 	public void setEjemplare(Ejemplare ejemplare) {
 		this.ejemplare = ejemplare;
 	}
+
+	@Override
+	public String toString() {
+		return "Historial [id=" + id + ", cursoEscolar=" + cursoEscolar + ", estadoFinal=" + estadoFinal
+				+ ", estadoInicial=" + estadoInicial + ", fechaFinal=" + fechaFinal + ", fechaInicial=" + fechaInicial
+				+ ", observaciones=" + observaciones + ", alumno=" + alumno + ", ejemplare=" + ejemplare + "]";
+	}
+	
+	
 
 }

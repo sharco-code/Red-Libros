@@ -52,7 +52,7 @@ public class Matricula implements Serializable {
 	private Contenido contenidoBean;
 
 	//bi-directional many-to-one association to Curso
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="curso")
 	private Curso cursoBean;
 
@@ -175,5 +175,9 @@ public class Matricula implements Serializable {
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
+
+	
+	
+	
 
 }

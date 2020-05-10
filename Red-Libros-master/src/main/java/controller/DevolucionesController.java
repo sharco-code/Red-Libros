@@ -41,6 +41,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
 import pojo.Curso;
@@ -49,7 +50,7 @@ import utiles.hibernate.UtilesHibernate;
 public class DevolucionesController implements Initializable {
 
 	@FXML
-	private AnchorPane anchorpane;
+    private VBox xVBoxMAIN;
 
 	@FXML
 	private TableView<Alumno> xTableMain;
@@ -185,21 +186,24 @@ public class DevolucionesController implements Initializable {
 
 		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
-				/*
-				 * Parent root = null; try {
-				 * 
-				 * FXMLLoader loader = new
-				 * FXMLLoader(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
-				 * 
-				 * AlumnoDetalleController alumnoDetalleController = new
-				 * AlumnoDetalleController(); loader.setController(alumnoDetalleController);
-				 * //root =
-				 * FXMLLoader.load(getClass().getResource("/view/alumnoDetalleComponent.fxml"));
-				 * root = loader.load(); alumnoDetalleController.setAlumno(newSelection);
-				 * anchorpane.getChildren().clear(); anchorpane.getChildren().add(root);
-				 * 
-				 * } catch (IOException e) { e.printStackTrace(); }
-				 */
+
+				Parent root = null;
+				try {
+
+					FXMLLoader loader = new FXMLLoader(
+							getClass().getResource("/view/devolucionesDetalleComponent.fxml"));
+
+					DevolucionesDetalleController devolucionesDetalleController = new DevolucionesDetalleController();
+					loader.setController(devolucionesDetalleController);
+					FXMLLoader.load(getClass().getResource("/view/devolucionesDetalleComponent.fxml"));
+					root = loader.load();
+					devolucionesDetalleController.setAlumno(newSelection);
+					xVBoxMAIN.getChildren().clear();
+					xVBoxMAIN.getChildren().add(root);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
 			}
 		});

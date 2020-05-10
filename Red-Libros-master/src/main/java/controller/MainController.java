@@ -105,12 +105,24 @@ public class MainController implements Initializable {
 
     @FXML
     void EntregasCLICKED(MouseEvent event) {
+    	this.xVBoxCENTER.getChildren().clear();
     	try {
     		this.entregasController = new EntregasController();
-        	this.xVBoxCENTER.getChildren().clear();
+    		
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/entregasComponent.fxml"));
+    		loader.setController(this.entregasController);
+    		VBox vbox = (VBox) loader.load();
+    		
+    		
+    		VBox.setVgrow(vbox, Priority.ALWAYS);
+			
+			this.xVBoxCENTER.getChildren().add(vbox);
+			
+			this.entregasController.reload();
 		} catch (Exception e) {
 			showErrorComponent();
 			e.printStackTrace();
+			
 		}
     	
     }

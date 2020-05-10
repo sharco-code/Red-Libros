@@ -1,10 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f3f3f3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="556.0" prefWidth="1038.0" style="-fx-background-color: #f3f3f3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxMAIN">
    <children>
-      <TableView VBox.vgrow="ALWAYS" fx:id="xTableMain" />
+      <VBox maxHeight="100.0" minHeight="100.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: WHITE;" VBox.vgrow="ALWAYS">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Devoluciones" fx:id="xLabelTitle">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="50.0" right="10.0" top="15.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" minWidth="800.0" style="-fx-background-color: WHITE;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FIltrar por curso:">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Text>
+                        <ComboBox maxWidth="100.0" prefWidth="100.0" promptText="Año" fx:id="xComboBoxCursoEscolar" />
+                        <ComboBox disable="true" maxWidth="250.0" prefWidth="250.0" promptText="Curso" HBox.hgrow="ALWAYS" fx:id="xComboBoxCurso">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <Separator orientation="VERTICAL">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Separator>
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="90.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <RadioButton mnemonicParsing="false" onAction="#xRadioButtonNIA_Action" selected="true" text="NIA" fx:id="xRadioButtonNIA" />
+                                          <RadioButton mnemonicParsing="false" onAction="#xRadioButtonEXPEDIENTE_Action" prefWidth="90.0" text="Expediente" fx:id="xRadioButtonEXPEDIENTE" />
+                                       </children>
+                                    </VBox>
+                                    <TextField promptText="Buscar por NIA" style="-fx-background-color: #ededed;" fx:id="xTextFieldSearch">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <FontAwesomeIcon iconName="SEARCH" size="1.5em" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <TableView stylesheets="@../style/table_style.css" VBox.vgrow="ALWAYS" fx:id="xTableMain" />
    </children>
 </VBox>
