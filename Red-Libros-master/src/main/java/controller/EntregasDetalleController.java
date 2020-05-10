@@ -1,9 +1,13 @@
 package controller;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import dao.HistorialDAO;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -23,7 +27,7 @@ import pojo.Libro;
 import pojo.Matricula;
 import service.BarcodeService;
 import service.EntregasService;
-public class EntregasDetalleController {
+public class EntregasDetalleController implements Initializable {
 	@FXML
     private TextField xTextFieldNIA;
 
@@ -47,7 +51,7 @@ public class EntregasDetalleController {
     private TableView<EntregaTabla> xTableViewHistorial;
     
     @FXML
-    private HBox xButtonScan;
+    private FontAwesomeIcon xButtonScan;
     
     @FXML
     private TextField xTextFieldCodigoEjemplar;
@@ -122,8 +126,8 @@ public class EntregasDetalleController {
 		ejemplarColumn = new TableColumn("Ejemplar");
 		ejemplarColumn.setCellValueFactory(new PropertyValueFactory<>("idEjemplar"));
 
-		estadoInicialColumn = new TableColumn("Estado");
-		estadoInicialColumn.setCellValueFactory(new PropertyValueFactory<>("estadoInicial"));
+		//estadoInicialColumn = new TableColumn("Estado");
+		//estadoInicialColumn.setCellValueFactory(new PropertyValueFactory<>("estadoInicial"));
 		
 		fechaInicialColumn = new TableColumn("Fecha Inicial");
 		fechaInicialColumn.setCellValueFactory(new PropertyValueFactory("fecha_inicial"));
@@ -131,10 +135,10 @@ public class EntregasDetalleController {
 		asignaturaColumn = new TableColumn("Asignatura");
 		asignaturaColumn.setCellValueFactory(new PropertyValueFactory("asignatura"));
 		
-		cursoColumn = new TableColumn("Curso");
-		cursoColumn.setCellValueFactory(new PropertyValueFactory("curso"));
+		//cursoColumn = new TableColumn("Curso");
+		//cursoColumn.setCellValueFactory(new PropertyValueFactory("curso"));
 		
-		xTableViewHistorial.getColumns().addAll(cursoColumn,asignaturaColumn,ejemplarColumn,estadoInicialColumn,fechaInicialColumn);
+		xTableViewHistorial.getColumns().addAll(asignaturaColumn,ejemplarColumn,fechaInicialColumn);
 		xTableViewHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewHistorial.setEditable(true);
 
@@ -188,6 +192,13 @@ public class EntregasDetalleController {
 		
 
     }
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.xTreeViewLibros.setShowRoot(false);
+		
+	}
 		
     
     

@@ -18,7 +18,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" style="-fx-background-color: WHITE;" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Devoluciones" fx:id="xLabelTitle">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Entregas" fx:id="xLabelTitle">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
