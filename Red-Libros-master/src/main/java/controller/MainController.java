@@ -251,6 +251,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 			
 		}
+
     }
 
 	@Override
@@ -272,7 +273,14 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-    
+	
+	private void showToastRED(String toastMsg) {
+		int toastMsgTime = 1000; //3.5 seconds
+		int fadeInTime = 150; //0.5 seconds
+		int fadeOutTime= 300; //0.5 seconds
+		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+	}
+	
 	private void showToast(String toastMsg) {
 		int toastMsgTime = 1000; //3.5 seconds
 		int fadeInTime = 150; //0.5 seconds

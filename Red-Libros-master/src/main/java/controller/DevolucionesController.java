@@ -188,6 +188,7 @@ public class DevolucionesController implements Initializable {
 			xTableMain.getItems().addAll(alumnosFiltrados);
 			
 		});
+		
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
