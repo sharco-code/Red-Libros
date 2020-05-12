@@ -98,6 +98,12 @@ public class EntregasController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		this.xTextFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+				filtrar(newValue);
+			}
+		});
+		
 		SessionFactory factory;
 		try {
 			listaCursos = cursoDAO.getAll();
@@ -172,9 +178,12 @@ public class EntregasController implements Initializable {
 
 	private void setListenerComboBoxCurso() {
 		xComboBoxCurso.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			listaAlumnos = alumnoDAO.getAll().stream().filter(alumno -> alumno.getCursoBean() == newSelection)
-					.collect(Collectors.toList());
+			alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getCursoBean().getId().contains(newSelection.getId())).collect((Collectors.toList()));
+			xTableMain.getItems().clear();
+			xTableMain.getItems().addAll(alumnosFiltrados);
+			
 		});
+		
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -208,16 +217,24 @@ public class EntregasController implements Initializable {
 		TableColumn apellido1Column = new TableColumn("Primer apellido");
 		apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
 
-		apellido1Column.setMaxWidth(900);
+		apellido1Column.setMaxWidth(1300);
 
 		TableColumn apellido2Column = new TableColumn("Segundo apellido");
 		apellido2Column.setCellValueFactory(new PropertyValueFactory("apellido2"));
-		apellido2Column.setMaxWidth(900);
+		apellido2Column.setMaxWidth(1300);
 
 		TableColumn nombreColumn = new TableColumn("Nombre");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombre"));
+		nombreColumn.setMaxWidth(1900);
+		
+		TableColumn niaColumn = new TableColumn("NIA");
+		niaColumn.setCellValueFactory(new PropertyValueFactory("nia"));
+		niaColumn.setMaxWidth(900);
+		
+		TableColumn expedienteColumn = new TableColumn("Expediente");
+		expedienteColumn.setCellValueFactory(new PropertyValueFactory("expediente"));
 
-		xTableMain.getColumns().addAll(apellido1Column, apellido2Column, nombreColumn);
+		xTableMain.getColumns().addAll(apellido1Column, apellido2Column, nombreColumn, niaColumn, expedienteColumn);
 		xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		getAlumnos();
@@ -232,9 +249,29 @@ public class EntregasController implements Initializable {
 	}
 
 	public void filtrar(String newValue) {
+		if(radioButton_Selected==1) {
+			filtrarPorNia(newValue);
+		}
+		else {
+			filtrarPorExpediente(newValue);
+		}
+	}
+	
+	public void filtrarPorNia(String newValue) {
 		// TODO Auto-generated method stub
-		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getNombre().contains(newValue))
+		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getNia().contains(newValue))
 				.collect((Collectors.toList()));
+		
+		xTableMain.getItems().clear();
+		xTableMain.getItems().addAll(alumnosFiltrados);
+
+	}
+	
+	public void filtrarPorExpediente(String newValue) {
+		// TODO Auto-generated method stub
+		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getExpediente().contains(newValue))
+				.collect((Collectors.toList()));
+		
 		xTableMain.getItems().clear();
 		xTableMain.getItems().addAll(alumnosFiltrados);
 
