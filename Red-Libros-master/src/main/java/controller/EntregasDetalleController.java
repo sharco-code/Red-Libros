@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import app.Main;
 import dao.HistorialDAO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import pojo.Libro;
 import pojo.Matricula;
 import service.BarcodeService;
 import service.EntregasService;
+import view.Toast;
 public class EntregasDetalleController implements Initializable {
 	@FXML
     private TextField xTextFieldNIA;
@@ -156,42 +158,64 @@ public class EntregasDetalleController implements Initializable {
 		try {
 			this.entregasService.entregarLibro(this.selectedLibro,this.alumno);
 			this.listaLibros.remove(this.selectedLibro);
+			
 			reload();
+			showToast("Libro entregado correctamente");
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			showToastRED(e.getMessage());
 		}
 		
 
     }
 	
 	@FXML
-    void ScanCLICKED(MouseEvent event) throws Exception {
+    void ScanCLICKED(MouseEvent event) {
 		if(this.xTextFieldCodigoEjemplar.getText().equals("")) {
 			return;
 		}
-		
-		Ejemplare ejemplar = this.entregasService.scanEjemplar(this.xTextFieldCodigoEjemplar.getText());
-		if(ejemplar == null) {
-			throw new Exception("No se encontro el ejemplar");
-		}
-		
-		for(Libro libro: this.listaLibros) {
-			if(libro.getCodigo().equals(ejemplar.getLibro().getCodigo())) {
-				this.entregasService.entregarLibroScaneado(ejemplar,this.alumno);
-				
-				this.listaLibros.remove(libro);
-				reload();
-				return;
+		try {
+			Ejemplare ejemplar = this.entregasService.scanEjemplar(this.xTextFieldCodigoEjemplar.getText());
+			if(ejemplar == null) {
+				throw new Exception("No se encontro el ejemplar");
 			}
+			for(Libro libro: this.listaLibros) {
+				if(libro.getCodigo().equals(ejemplar.getLibro().getCodigo())) {
+					this.entregasService.entregarLibroScaneado(ejemplar,this.alumno);
+					
+					this.listaLibros.remove(libro);
+					reload();
+					this.xTextFieldCodigoEjemplar.setText("");
+					showToast("Libro entregado correctamente");
+					return;
+				}
+			}
+			
+			throw new Exception("El alumno no esta matriculado en la asignatura de este libro");
+		} catch (Exception e) {
+			// TODO: handle exception
+			showToastRED(e.getMessage());
 		}
 		
-		throw new Exception("El alumno no esta matriculado en la asignatura de este libro");
 		
 		
 		
 
     }
+	
+	private void showToastRED(String toastMsg) {
+		int toastMsgTime = 1000; //3.5 seconds
+		int fadeInTime = 150; //0.5 seconds
+		int fadeOutTime= 300; //0.5 seconds
+		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+	}
+	
+	private void showToast(String toastMsg) {
+		int toastMsgTime = 1000; //3.5 seconds
+		int fadeInTime = 150; //0.5 seconds
+		int fadeOutTime= 300; //0.5 seconds
+		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+	}
 
 
 	@Override

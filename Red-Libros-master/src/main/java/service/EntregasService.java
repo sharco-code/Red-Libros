@@ -150,12 +150,13 @@ public class EntregasService {
 		return ejemplar;
 	}
 
-	public void entregarLibroScaneado(Ejemplare ejemplar, Alumno alumno) {
+	public void entregarLibroScaneado(Ejemplare ejemplar, Alumno alumno) throws Exception {
 		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		
 		try {
+			
 			Historial historial = new Historial();
 			historial.setAlumno(alumno);
 			historial.setFechaInicial(new Date(this.df.format(dateobj)));
@@ -171,10 +172,12 @@ public class EntregasService {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			throw e;
 		}
 		
 	}
+	
+
 
 	
 
