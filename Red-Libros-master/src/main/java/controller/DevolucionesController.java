@@ -205,7 +205,6 @@ public class DevolucionesController implements Initializable {
 
 					DevolucionesDetalleController devolucionesDetalleController = new DevolucionesDetalleController();
 					loader.setController(devolucionesDetalleController);
-					FXMLLoader.load(getClass().getResource("/view/devolucionesDetalleComponent.fxml"));
 					root = loader.load();
 					devolucionesDetalleController.setAlumno(newSelection);
 					xVBoxMAIN.getChildren().clear();

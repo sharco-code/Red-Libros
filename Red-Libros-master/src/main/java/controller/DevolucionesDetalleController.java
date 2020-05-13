@@ -1,29 +1,58 @@
 package controller;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import pojo.Alumno;
 import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
-public class DevolucionesDetalleController {
+public class DevolucionesDetalleController implements Initializable {
 	@FXML
+    private TextField xTextFieldNombre;
+
+    @FXML
     private TextField xTextFieldNIA;
 
     @FXML
     private TextField xTextFieldExpediente;
 
     @FXML
-    private TextField xTextFieldNombre;
+    private TableView<?> xTableViewHistorial;
 
     @FXML
-    private TreeView<Libro> xTreeViewLibros;
+    private TextField xTextFieldCodigoEjemplar;
+
+    @FXML
+    private FontAwesomeIcon xButtonScan;
+
+    @FXML
+    private TreeView<?> xTreeViewLibros;
+
+    @FXML
+    private HBox xButtonDevolver;
 
     
     private Alumno alumno;
 
+    @FXML
+    void DevolverCLICKED(MouseEvent event) {
+
+    }
+
+    @FXML
+    void ScanCLICKED(MouseEvent event) {
+
+    }
+    
 
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
@@ -47,7 +76,6 @@ public class DevolucionesDetalleController {
 				libros.getChildren().add(new TreeItem<Libro>(libro));
 			}
 			root.getChildren().add(libros);
-			
 		}
 		xTreeViewLibros.setRoot(root);
 		xTreeViewLibros.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> { 
@@ -58,6 +86,12 @@ public class DevolucionesDetalleController {
 			
 
 		});
+		
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.xTreeViewLibros.setShowRoot(false);
 		
 	}
 	
