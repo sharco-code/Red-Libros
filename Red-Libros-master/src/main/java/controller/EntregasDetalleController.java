@@ -155,6 +155,7 @@ public class EntregasDetalleController implements Initializable {
 	@FXML
     void EntregarCLICKED(MouseEvent event) {
 		if(this.selectedLibro == null) {
+			showToastRED("Debes seleccionar un libro para entregar");
 			return;
 		}
 		try {
