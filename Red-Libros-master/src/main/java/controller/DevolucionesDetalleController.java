@@ -62,6 +62,7 @@ public class DevolucionesDetalleController implements Initializable {
     @FXML
     void DevolverCLICKED(MouseEvent event) {
     	if(this.selectedLibro == null) {
+    		showToastRED("Selecciona un libro para devolver");
 			return;
 		}
 		try {
