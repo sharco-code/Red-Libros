@@ -465,15 +465,12 @@ public class LibroDetalleController implements Initializable {
 		this.xComboBoxCursoEscolar.setDisable(false);
 		this.xComboBoxCurso.setDisable(false);
 
-		this.xTextFieldCodigo.setEditable(true);
-
 		this.xTextFieldISBN.setEditable(true);
 
 		this.xTextFieldNombre.setEditable(true);
 		this.xTextFieldPrecio.setEditable(true);
 
 		this.xTextFieldPrecio.setStyle("-fx-background-color: WHITE;");
-		this.xTextFieldCodigo.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: WHITE;");
 		this.xTextFieldNombre.setStyle("-fx-background-color: WHITE;");
 
@@ -498,7 +495,7 @@ public class LibroDetalleController implements Initializable {
 	private boolean isNumberOrEmpty(String cadena) {
 		if(cadena.isEmpty() || cadena.isEmpty() ) return true;
 		try {
-			int num = Integer.parseInt(cadena);
+			double num = Double.parseDouble(cadena);
 			return true;
 		} catch (Exception e) {
 			return false;
