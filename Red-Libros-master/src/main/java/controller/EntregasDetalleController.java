@@ -112,6 +112,8 @@ public class EntregasDetalleController implements Initializable {
 			// Body would go here
 			if(newValue != null && newValue.getValue() instanceof Libro) {
 				this.selectedLibro = newValue.getValue();
+			}else {
+				this.selectedLibro = null;
 			}
 			
 

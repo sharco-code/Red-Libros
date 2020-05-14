@@ -17,6 +17,8 @@ import utiles.hibernate.UtilesHibernate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
@@ -165,6 +167,27 @@ public class AlumnoDAO {
 			return results;
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "find by example failed", re);
+			throw re;
+		}
+	}
+	
+	
+	public Alumno hidratar(java.lang.String id) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
+		logger.log(Level.INFO, "getting Alumno instance with id: " + id);
+		try {
+			Alumno instance = (Alumno) sessionFactory.getCurrentSession().get("pojo.Alumno", id);
+			if (instance == null) {
+				logger.log(Level.INFO, "get successful, no instance found");
+			} else {
+				Hibernate.initialize(instance.getHistorials());
+				logger.log(Level.INFO, "get successful, instance found");
+			}
+			return instance;
+		} catch (RuntimeException re) {
+			logger.log(Level.SEVERE, "get failed", re);
 			throw re;
 		}
 	}

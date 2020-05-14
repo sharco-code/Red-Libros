@@ -83,6 +83,7 @@ public class EjemplarDAO {
 		logger.log(Level.INFO, "persisting Ejemplares instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "persist successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "persist failed", re);
@@ -97,6 +98,7 @@ public class EjemplarDAO {
 		logger.log(Level.INFO, "attaching dirty Ejemplares instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);
@@ -111,6 +113,7 @@ public class EjemplarDAO {
 		logger.log(Level.INFO, "attaching clean Ejemplares instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);

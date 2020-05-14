@@ -62,6 +62,7 @@ public class LibroDAO {
 		logger.log(Level.INFO, "persisting Libro instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "persist successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "persist failed", re);
@@ -76,6 +77,7 @@ public class LibroDAO {
 		logger.log(Level.INFO, "attaching dirty Libro instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);
@@ -90,6 +92,7 @@ public class LibroDAO {
 		logger.log(Level.INFO, "attaching clean Libro instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);
@@ -104,6 +107,7 @@ public class LibroDAO {
 		logger.log(Level.INFO, "deleting Libro instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "delete successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "delete failed", re);
@@ -118,6 +122,7 @@ public class LibroDAO {
 		logger.log(Level.INFO, "merging Libro instance");
 		try {
 			Libro result = (Libro) sessionFactory.getCurrentSession().merge(detachedInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "merge successful");
 			return result;
 		} catch (RuntimeException re) {

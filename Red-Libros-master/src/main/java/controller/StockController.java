@@ -169,7 +169,9 @@ public class StockController implements Initializable {
 
 	private void getLibros() {
 
-		listaLibros = libroDAO.getAll();
+		listaLibros = libroDAO.getAll().stream().filter(libro -> {
+			return libro.getObsoleto() == 0;
+		}).collect((Collectors.toList()));
 
 	}
 

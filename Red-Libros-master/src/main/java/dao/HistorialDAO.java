@@ -86,6 +86,7 @@ public class HistorialDAO {
 		logger.log(Level.INFO, "attaching dirty Historial instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);
@@ -100,6 +101,7 @@ public class HistorialDAO {
 		logger.log(Level.INFO, "attaching clean Historial instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "attach successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "attach failed", re);
@@ -114,6 +116,7 @@ public class HistorialDAO {
 		logger.log(Level.INFO, "deleting Historial instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "delete successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "delete failed", re);
@@ -128,6 +131,7 @@ public class HistorialDAO {
 		logger.log(Level.INFO, "merging Historial instance");
 		try {
 			Historial result = (Historial) sessionFactory.getCurrentSession().merge(detachedInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "merge successful");
 			return result;
 		} catch (RuntimeException re) {

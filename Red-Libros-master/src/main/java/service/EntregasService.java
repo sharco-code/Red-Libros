@@ -60,7 +60,8 @@ public class EntregasService {
 
 	private boolean inHistorial(List<Historial> listaHistorial, Libro libro) {
 		for(Historial historial:listaHistorial) {
-			if(historial.getEjemplare().getLibro().getCodigo().equals(libro.getCodigo())) {
+			if(historial.getEjemplare().getLibro().getCodigo().equals(libro.getCodigo()) && historial.getFechaFinal() == null) {
+				
 				return true;
 			}
 		}
@@ -75,6 +76,7 @@ public class EntregasService {
 		listaHistorial = historialDAO.getAllByAlumno(id);
 		
 		for(Historial historial:listaHistorial) {
+			if(historial.getFechaFinal() != null)continue;
 			EntregaTabla entregaTabla = new EntregaTabla();
 			entregaTabla.setAsignatura(historial.getEjemplare().getLibro().getContenido().getNombreCas());
 			entregaTabla.setCurso(""+historial.getCursoEscolar());
@@ -126,11 +128,16 @@ public class EntregasService {
 			historial.setCursoEscolar(calendar.get(Calendar.YEAR));
 			historial.setEstadoInicial(ejemplar.getEstado());
 			historial.setObservaciones("");
-			historial.setId(this.historialDAO.getLastId()+1);
+			Integer lastId = this.historialDAO.getLastId();
+			if(lastId == null) {
+				lastId = 0;
+			}
+			historial.setId(lastId+1);
 			
 			this.historialDAO.attachDirty(historial);
 			ejemplar.setPrestado(new Integer(1).byteValue());
 			this.ejemplarDAO.attachDirty(ejemplar);
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception
