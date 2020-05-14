@@ -109,16 +109,16 @@ public class LibroDetalleController implements Initializable {
 	private boolean isNuevoLibro = false;
 
 	private LibrosController librosController;
-	
+
 	private EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
 
 	private LibroDAO libroDAO = new LibroDAO();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private ContenidoDAO contenidoDAO = new ContenidoDAO();
 	private EjemplarDAO ejemplarDAO = new EjemplarDAO();
-	
-	private ObservableList<String> listaEstados =  FXCollections.observableArrayList();
-	private ObservableList<String> listaPrestado =  FXCollections.observableArrayList();
+
+	private ObservableList<String> listaEstados = FXCollections.observableArrayList();
+	private ObservableList<String> listaPrestado = FXCollections.observableArrayList();
 
 	public void setLibrosController(LibrosController librosController) {
 		this.librosController = librosController;
@@ -173,28 +173,28 @@ public class LibroDetalleController implements Initializable {
 		newEjemplare.setEstado(0);
 		newEjemplare.setPrestado(new Byte("0"));
 
-		
 		int id = 0;
 		for (int i = 0; i < libro.getEjemplares().size(); i++) {
 			String[] x = libro.getEjemplares().get(i).getId().split(libro.getId());
-			
-			if( Integer.parseInt(x[1]) > id ) id = Integer.parseInt(x[1]);
+
+			if (Integer.parseInt(x[1]) > id)
+				id = Integer.parseInt(x[1]);
 		}
 		id++;
 		Formatter obj = new Formatter();
 
-        String numeroCeros = String.valueOf(obj.format("%03d", id));
-        
-		newEjemplare.setId( libro.getId()+numeroCeros );
-		newEjemplare.setCodigo(libro.getId()+numeroCeros  );
+		String numeroCeros = String.valueOf(obj.format("%03d", id));
+
+		newEjemplare.setId(libro.getId() + numeroCeros);
+		newEjemplare.setCodigo(libro.getId() + numeroCeros);
 
 		this.libro.setUnidades(this.libro.getUnidades() + 1);
 		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
-		
+
 		this.libro.addEjemplare(newEjemplare);
 
 		this.libroDAO.merge(this.libro);
-		
+
 		showToast("Ejemplar añadido");
 
 		reloadEjemplares();
@@ -204,23 +204,19 @@ public class LibroDetalleController implements Initializable {
 	void xButtonDeleteEjemplarCLICKED(MouseEvent event) {
 		if (this.xTableViewEjemplar.getSelectionModel().getSelectedItem() == null) {
 			showToast("Debes seleccionar un\nejemplar para borrarlo");
-		} else {
-			
-			System.out.println(this.libro.getId());
-			this.libro.removeEjemplare(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
-
-			this.libro.setUnidades(this.libro.getUnidades() - 1);
-			this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
-
-
-			this.libroDAO.merge(this.libro);
-			this.ejemplarDAO.delete(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
-			showToast("Ejemplar borrado");
-			
-			reloadEjemplares();
-			
+			return;
 		}
-		
+
+		this.libro.removeEjemplare(
+				this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
+
+		this.libro.setUnidades(this.libro.getUnidades() - 1);
+		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
+
+		this.ejemplarDAO.delete(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
+		showToast("Ejemplar borrado");
+
+		reloadEjemplares();
 
 	}
 
@@ -232,10 +228,10 @@ public class LibroDetalleController implements Initializable {
 			this.listaEstados.add("Perfecto");
 			this.listaEstados.add("Regular");
 			this.listaEstados.add("Mal");
-			
+
 			this.listaPrestado.add("No prestado");
 			this.listaPrestado.add("Prestado");
-			
+
 			listaCursos = cursoDAO.getAll();
 
 			xComboBoxCurso.setDisable(true);
@@ -331,31 +327,20 @@ public class LibroDetalleController implements Initializable {
 	}
 
 	@FXML
-	void ImprimirENTERED(MouseEvent event) {
-
-	}
-
-	@FXML
-	void ImprimirEXITED(MouseEvent event) {
-
-	}
-
-	@FXML
 	private ImageView xImageView;
-	
+
 	@SuppressWarnings({ "rawtypes" })
 	private TableColumn codigoColumn = new TableColumn("Codigo");
 	@SuppressWarnings("unchecked")
-	private TableColumn<EjemplarTabla,String> estadoColumn = new TableColumn("Estado");
+	private TableColumn<EjemplarTabla, String> estadoColumn = new TableColumn("Estado");
 	@SuppressWarnings("unchecked")
 	private TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
 		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
 		// elemenots que hay, si no saldrán duplicados
-		
-		
+
 		xTableViewEjemplar.getItems().clear();
 		xTableViewEjemplar.getColumns().clear();
 
@@ -374,29 +359,30 @@ public class LibroDetalleController implements Initializable {
 
 		estadoColumn = new TableColumn("Estado");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
-		estadoColumn.setCellFactory(ComboBoxTableCell.<EjemplarTabla,String>forTableColumn(new DefaultStringConverter(),this.listaEstados));
-		estadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
+		estadoColumn.setCellFactory(ComboBoxTableCell
+				.<EjemplarTabla, String>forTableColumn(new DefaultStringConverter(), this.listaEstados));
+		estadoColumn.setOnEditCommit((TableColumn.CellEditEvent<EjemplarTabla, String> e) -> {
 			String newValue = e.getNewValue();
 			int index = e.getTablePosition().getRow();
-			e.getTableView().getItems().get( index ).setEstado(newValue);
+			e.getTableView().getItems().get(index).setEstado(newValue);
 		});
 
 		prestadoColumn = new TableColumn("Prestado");
 		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
-		prestadoColumn.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(),this.listaPrestado));
-		prestadoColumn.setOnEditCommit(( TableColumn.CellEditEvent<EjemplarTabla, String> e ) ->{
+		prestadoColumn
+				.setCellFactory(ComboBoxTableCell.forTableColumn(new DefaultStringConverter(), this.listaPrestado));
+		prestadoColumn.setOnEditCommit((TableColumn.CellEditEvent<EjemplarTabla, String> e) -> {
 			String newValue = e.getNewValue();
 			int index = e.getTablePosition().getRow();
-			e.getTableView().getItems().get( index ).setPrestado(newValue);
+			e.getTableView().getItems().get(index).setPrestado(newValue);
 		});
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewEjemplar.setEditable(true);
 
-		
 		estadoColumn.setEditable(false);
 		prestadoColumn.setEditable(false);
-		
+
 		List<Ejemplare> listaEjemplares = new ArrayList<>();
 
 		listaEjemplares = libro.getEjemplares();
@@ -452,10 +438,10 @@ public class LibroDetalleController implements Initializable {
 
 	@FXML
 	void EditarCLICKED(MouseEvent event) {
-		
+
 		estadoColumn.setEditable(true);
 		prestadoColumn.setEditable(true);
-		
+
 		isButtonGuardarEnabled = true;
 		this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
 		this.xButtonGUARDAR.setDisable(!isButtonGuardarEnabled);
@@ -493,7 +479,8 @@ public class LibroDetalleController implements Initializable {
 	}
 
 	private boolean isNumberOrEmpty(String cadena) {
-		if(cadena.isEmpty() || cadena.isEmpty() ) return true;
+		if (cadena.isEmpty() || cadena.isEmpty())
+			return true;
 		try {
 			double num = Double.parseDouble(cadena);
 			return true;
@@ -502,37 +489,37 @@ public class LibroDetalleController implements Initializable {
 		}
 
 	}
-	
+
 	@FXML
 	void GuardarCLICKED(MouseEvent event) {
-		if(xTextFieldNombre.getText().isBlank() || xTextFieldNombre.getText().isEmpty()) {
+		if (xTextFieldNombre.getText().isBlank() || xTextFieldNombre.getText().isEmpty()) {
 			showToastRED("El nombre del libro no puede estar vacio");
 			return;
 		}
-		if(xTextFieldCodigo.getText().isBlank() || xTextFieldCodigo.getText().isEmpty()) {
+		if (xTextFieldCodigo.getText().isBlank() || xTextFieldCodigo.getText().isEmpty()) {
 			showToastRED("El codigo del libro no puede estar vacio");
 			return;
 		}
-		if(!isNumberOrEmpty(xTextFieldPrecio.getText())) {
+		if (!isNumberOrEmpty(xTextFieldPrecio.getText())) {
 			showToastRED("El precio del libro tiene que ser numerico");
 			return;
 		}
-		if(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem() == null) {
+		if (this.xComboBoxAsignatura.getSelectionModel().getSelectedItem() == null) {
 			showToastRED("Debes seleccionar una asignatura");
 			return;
 		}
-		
+
 		// Si es aÃ±adir o actualizar uno existente
 		if (isNuevoLibro) {
-			
+
 			this.libro = new Libro();
 			this.libro.setId(xTextFieldCodigo.getText());
 			this.libro.setCodigo(xTextFieldCodigo.getText());
 			this.libro.setIsbn(xTextFieldISBN.getText());
 			this.libro.setNombre(xTextFieldNombre.getText());
-			
-			//si no pone precio, por defecto se pone a 0
-			if(xTextFieldPrecio.getText().isBlank() || xTextFieldPrecio.getText().isEmpty()) {
+
+			// si no pone precio, por defecto se pone a 0
+			if (xTextFieldPrecio.getText().isBlank() || xTextFieldPrecio.getText().isEmpty()) {
 				this.libro.setPrecio(0);
 			} else {
 				this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
@@ -548,14 +535,13 @@ public class LibroDetalleController implements Initializable {
 				showToastRED("No puedes usar un código ya registrado");
 				return;
 			}
-			
-			
+
 			showToast("Libro creado con éxito");
 
 		} else {
 			estadoColumn.setEditable(false);
 			prestadoColumn.setEditable(false);
-			
+
 			this.libro.setCodigo(xTextFieldCodigo.getText());
 			this.libro.setIsbn(xTextFieldISBN.getText());
 			this.libro.setNombre(xTextFieldNombre.getText());
@@ -570,19 +556,19 @@ public class LibroDetalleController implements Initializable {
 			} else {
 				this.libro.setObsoleto((byte) 0);
 			}
-			
-			//CAMBIAR DE ejemplarTAbla a ejemplare
-			
-			for(EjemplarTabla ejemplarTabla:this.xTableViewEjemplar.getItems()) {
-				for(Ejemplare ejemplarLibro:this.libro.getEjemplares()) {
-					if(ejemplarTabla.getId().equals(ejemplarLibro.getId())) {
+
+			// CAMBIAR DE ejemplarTAbla a ejemplare
+
+			for (EjemplarTabla ejemplarTabla : this.xTableViewEjemplar.getItems()) {
+				for (Ejemplare ejemplarLibro : this.libro.getEjemplares()) {
+					if (ejemplarTabla.getId().equals(ejemplarLibro.getId())) {
 						ejemplarLibro.setEstado(ejemplarTablaService.convertToEstadoLibro(ejemplarTabla.getEstado()));
-						ejemplarLibro.setPrestado(ejemplarTablaService.convertToPrestadoLibro(ejemplarTabla.getPrestado()));
+						ejemplarLibro
+								.setPrestado(ejemplarTablaService.convertToPrestadoLibro(ejemplarTabla.getPrestado()));
 						ejemplarDAO.merge(ejemplarLibro);
 					}
 				}
 			}
-			
 
 			libroDAO.merge(this.libro);
 
@@ -770,11 +756,11 @@ public class LibroDetalleController implements Initializable {
 		}
 
 	}
-	
+
 	private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
+		int toastMsgTime = 1000; // 3.5 seconds
+		int fadeInTime = 150; // 0.5 seconds
+		int fadeOutTime = 300; // 0.5 seconds
 		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 
