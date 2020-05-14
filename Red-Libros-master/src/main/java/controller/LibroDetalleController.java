@@ -495,23 +495,65 @@ public class LibroDetalleController implements Initializable {
 		}
 	}
 
+	private boolean isNumberOrEmpty(String cadena) {
+		if(cadena.isEmpty() || cadena.isEmpty() ) return true;
+		try {
+			int num = Integer.parseInt(cadena);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+	
 	@FXML
 	void GuardarCLICKED(MouseEvent event) {
+		if(xTextFieldNombre.getText().isBlank() || xTextFieldNombre.getText().isEmpty()) {
+			showToastRED("El nombre del libro no puede estar vacio");
+			return;
+		}
+		if(xTextFieldCodigo.getText().isBlank() || xTextFieldCodigo.getText().isEmpty()) {
+			showToastRED("El codigo del libro no puede estar vacio");
+			return;
+		}
+		if(!isNumberOrEmpty(xTextFieldPrecio.getText())) {
+			showToastRED("El precio del libro tiene que ser numerico");
+			return;
+		}
+		if(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem() == null) {
+			showToastRED("Debes seleccionar una asignatura");
+			return;
+		}
+		
 		// Si es aÃ±adir o actualizar uno existente
 		if (isNuevoLibro) {
-
+			
 			this.libro = new Libro();
 			this.libro.setId(xTextFieldCodigo.getText());
 			this.libro.setCodigo(xTextFieldCodigo.getText());
 			this.libro.setIsbn(xTextFieldISBN.getText());
 			this.libro.setNombre(xTextFieldNombre.getText());
-			this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
+			
+			//si no pone precio, por defecto se pone a 0
+			if(xTextFieldPrecio.getText().isBlank() || xTextFieldPrecio.getText().isEmpty()) {
+				this.libro.setPrecio(0);
+			} else {
+				this.libro.setPrecio(Double.parseDouble(xTextFieldPrecio.getText()));
+			}
 			this.libro.setUnidades(Integer.parseInt(xTextFieldUnidadesTotales.getText()));
 
 			this.libro.setContenido(
 					contenidoDAO.findById(this.xComboBoxAsignatura.getSelectionModel().getSelectedItem().getId()));
 
-			libroDAO.merge(this.libro);
+			try {
+				libroDAO.persist(this.libro);
+			} catch (RuntimeException e) {
+				showToastRED("No puedes usar un código ya registrado");
+				return;
+			}
+			
+			
+			showToast("Libro creado con éxito");
 
 		} else {
 			estadoColumn.setEditable(false);
@@ -730,6 +772,13 @@ public class LibroDetalleController implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void showToastRED(String toastMsg) {
+		int toastMsgTime = 1000; //3.5 seconds
+		int fadeInTime = 150; //0.5 seconds
+		int fadeOutTime= 300; //0.5 seconds
+		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 
 }

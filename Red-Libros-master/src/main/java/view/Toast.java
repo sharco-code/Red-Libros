@@ -21,7 +21,7 @@ public final class Toast
         toastStage.setResizable(false);
         toastStage.initStyle(StageStyle.TRANSPARENT);
 
-        toastStage.setX(ownerStage.getX()+(ownerStage.getWidth()/2)-100);
+        toastStage.setX(ownerStage.getX()+(ownerStage.getWidth()/2)-210);
         toastStage.setY(ownerStage.getY()+(ownerStage.getHeight()/2)-20);
         
         Text text = new Text(toastMsg);
@@ -68,7 +68,7 @@ public final class Toast
         toastStage.setResizable(false);
         toastStage.initStyle(StageStyle.TRANSPARENT);
 
-        toastStage.setX(ownerStage.getX()+(ownerStage.getWidth()/2)-100);
+        toastStage.setX(ownerStage.getX()+(ownerStage.getWidth()/2)-210);
         toastStage.setY(ownerStage.getY()+(ownerStage.getHeight()/2)-20);
         
         Text text = new Text(toastMsg);

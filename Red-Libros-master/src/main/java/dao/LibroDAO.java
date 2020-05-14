@@ -65,7 +65,7 @@ public class LibroDAO {
 			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "persist successful");
 		} catch (RuntimeException re) {
-			logger.log(Level.SEVERE, "persist failed", re);
+			logger.log(Level.SEVERE, "persist failed");
 			throw re;
 		}
 	}
