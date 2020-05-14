@@ -5,14 +5,20 @@ import java.util.ResourceBundle;
 import app.Main;
 import dao.AlumnoDAO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import pojo.Alumno;
 import pojo.Ejemplare;
 import pojo.Historial;
@@ -21,6 +27,10 @@ import pojo.Matricula;
 import service.DevolucionesService;
 import view.Toast;
 public class DevolucionesDetalleController implements Initializable {
+	
+	@FXML
+    private VBox xVBoxMAIN;
+	
 	@FXML
     private TextField xTextFieldNombre;
 
@@ -45,6 +55,8 @@ public class DevolucionesDetalleController implements Initializable {
     @FXML
     private HBox xButtonDevolver;
 
+    @FXML
+    private ComboBox<String> xComboBoxEstado;
     
     private Alumno alumno;
     
@@ -65,8 +77,27 @@ public class DevolucionesDetalleController implements Initializable {
     		showToastRED("Selecciona un libro para devolver");
 			return;
 		}
+    	if(this.xComboBoxEstado.getSelectionModel().getSelectedItem() == null) {
+    		showToastRED("Debes seleccionar el estado del libro");
+			return;
+    	}
+    	
 		try {
-			this.devolucionesService.devolverLibro(this.selectedLibro,this.alumno);
+			int estado = 0;
+			
+			switch (this.xComboBoxEstado.getSelectionModel().getSelectedItem()) {
+			case "Perfecto":
+				estado = 0;
+				break;
+			case "Regular":
+				estado = 1;
+				break;
+			case "Mal":
+				estado = 2;
+				break;
+			}
+			
+			this.devolucionesService.devolverLibro(this.selectedLibro,this.alumno, estado);
 			
 			reload();
 			showToast("Libro devuelto correctamente");
@@ -74,6 +105,7 @@ public class DevolucionesDetalleController implements Initializable {
 			// TODO: handle exception
 			showToastRED(e.getMessage());
 		}
+		
     }
 
     @FXML
@@ -156,6 +188,12 @@ public class DevolucionesDetalleController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.xTreeViewLibros.setShowRoot(false);
+
+		this.xComboBoxEstado.getItems().addAll(
+			    "Perfecto",
+			    "Regular",
+			    "Mal"
+			);
 		
 	}
 	

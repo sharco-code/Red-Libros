@@ -29,7 +29,7 @@ public class DevolucionesService {
 	
 	
 	
-	public void devolverLibro(Libro selectedLibro,Alumno alumno) throws Exception {
+	public void devolverLibro(Libro selectedLibro,Alumno alumno, int estado) throws Exception {
 		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
@@ -49,9 +49,12 @@ public class DevolucionesService {
 		try {
 			historial.setFechaFinal(new Date(this.df.format(dateobj)));
 			
+			historial.setEstadoInicial(ejemplar.getEstado());
+			historial.setEstadoFinal(estado);
 			
 			this.historialDAO.merge(historial);
 			ejemplar.setPrestado(new Integer(0).byteValue());
+			ejemplar.setEstado(estado);
 			this.ejemplarDAO.merge(ejemplar);
 			
 		} catch (Exception e) {
