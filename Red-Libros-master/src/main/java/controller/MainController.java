@@ -47,6 +47,7 @@ public class MainController implements Initializable {
     private DevolucionesController devolucionesController;
     private ErrorController errorController;
     private StockController stockController;
+    private HistorialController historialController;
     
     @FXML
     void AjustesCLICKED(MouseEvent event) {
@@ -130,6 +131,24 @@ public class MainController implements Initializable {
     @FXML
     void HistorialCLICKED(MouseEvent event) {
     	this.xVBoxCENTER.getChildren().clear();
+    	try {
+    		this.historialController = new HistorialController();
+    		
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/historialComponent.fxml"));
+    		loader.setController(this.historialController);
+    		VBox vbox = (VBox) loader.load();
+    		
+    		
+    		VBox.setVgrow(vbox, Priority.ALWAYS);
+			
+			this.xVBoxCENTER.getChildren().add(vbox);
+			
+			this.historialController.reload();
+		} catch (Exception e) {
+			showErrorComponent();
+			e.printStackTrace();
+			
+		}
     }
 
     private void showErrorComponent() {

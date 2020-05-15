@@ -7,11 +7,13 @@ import java.util.logging.Logger;
 
 import javax.persistence.Query;
 
+import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import pojo.Ejemplare;
+import pojo.Historial;
 import utiles.hibernate.UtilesHibernate;
 
 
@@ -182,6 +184,37 @@ public class EjemplarDAO {
 			return results;
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "find by example failed", re);
+			throw re;
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Ejemplare> getAllWithLibros() {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
+		logger.log(Level.INFO, "EjemplarDAO getAll()...");
+		try {
+			List<Ejemplare> listaEjemplare = new ArrayList<>();
+
+			
+			Query q = sessionFactory.getCurrentSession().createQuery("SELECT e FROM Ejemplare e");
+	        listaEjemplare = q.getResultList();
+	        for(Ejemplare ejemplar:listaEjemplare) {
+	        	Hibernate.initialize(ejemplar.getLibro());
+	        	Hibernate.initialize(ejemplar.getHistorials());
+	        	for(Historial historial:ejemplar.getHistorials()) {
+	        		Hibernate.initialize(historial.getAlumno());
+	        	}
+	        }
+	        sessionFactory.getCurrentSession().getTransaction().commit();
+	        
+			logger.log(Level.INFO, "EjemplarDAO getAll() successful");
+			
+			return listaEjemplare;
+		} catch (RuntimeException re) {
+			logger.log(Level.SEVERE, "EjemplarDAO getAll() failed", re);
 			throw re;
 		}
 	}

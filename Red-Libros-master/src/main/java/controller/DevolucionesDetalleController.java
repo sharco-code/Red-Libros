@@ -163,6 +163,9 @@ public class DevolucionesDetalleController implements Initializable {
 			ejemplares.setExpanded(true);
 			root.getChildren().add(ejemplares);
 		}
+		if(root.getChildren().isEmpty()) {
+			root.getChildren().add(new TreeItem<String>("Alumno no tiene libros prestados"));
+		}
 		xTreeViewLibros.setRoot(root);
 		xTreeViewLibros.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> { 
 			// Body would go here
