@@ -33,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Options;
 import pojo.Libro;
@@ -43,6 +44,10 @@ import service.SettingsService;
 
 public class AjustesController implements Initializable {
 
+	
+	@FXML
+	private VBox xVBoxMAIN;
+	
 	@FXML
 	private TextField xTextFieldIP;
 
@@ -129,7 +134,22 @@ public class AjustesController implements Initializable {
 
 	@FXML
 	void ImportCLICKED(MouseEvent event) {
+		Parent root = null;
+		try {
 
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/view/importacionComponent.fxml"));
+
+			ImportacionController importacionController = new ImportacionController();
+			loader.setController(importacionController);
+			root = loader.load();
+			xVBoxMAIN.getChildren().clear();
+			xVBoxMAIN.getChildren().add(root);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+
 
 }
