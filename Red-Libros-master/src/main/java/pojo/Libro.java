@@ -20,7 +20,7 @@ public class Libro implements Serializable {
 
 	private String codigo;
 
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_contenido")
 	private Contenido contenido;
 

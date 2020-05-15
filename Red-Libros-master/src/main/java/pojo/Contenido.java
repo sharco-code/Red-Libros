@@ -28,15 +28,15 @@ public class Contenido implements Serializable {
 	private String nombreVal;
 
 	//bi-directional many-to-one association to Curso
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne( fetch=FetchType.EAGER)
 	@JoinColumn(name="curso")
 	private Curso cursoBean;
 
 	//bi-directional many-to-one association to Matricula
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="contenidoBean")
+	@OneToMany( fetch=FetchType.LAZY,mappedBy="contenidoBean")
 	private List<Matricula> matriculas;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="contenido")
+	@OneToMany( fetch=FetchType.EAGER,mappedBy="contenido")
 	private List<Libro> libros;
 
 	public Contenido() {
