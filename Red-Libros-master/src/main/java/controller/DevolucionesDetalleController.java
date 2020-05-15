@@ -50,7 +50,7 @@ public class DevolucionesDetalleController implements Initializable {
     private FontAwesomeIcon xButtonScan;
 
     @FXML
-    private TreeView<Libro> xTreeViewLibros;
+    private TreeView<Ejemplare> xTreeViewLibros;
 
     @FXML
     private HBox xButtonDevolver;
@@ -62,7 +62,7 @@ public class DevolucionesDetalleController implements Initializable {
     
     private AlumnoDAO alumnoDAO = new AlumnoDAO();
     
-    private Libro selectedLibro;
+    private Ejemplare selectedEjemplar;
     
     private DevolucionesService devolucionesService;
     
@@ -73,7 +73,7 @@ public class DevolucionesDetalleController implements Initializable {
 
     @FXML
     void DevolverCLICKED(MouseEvent event) {
-    	if(this.selectedLibro == null) {
+    	if(this.selectedEjemplar == null) {
     		showToastRED("Selecciona un libro para devolver");
 			return;
 		}
@@ -97,7 +97,7 @@ public class DevolucionesDetalleController implements Initializable {
 				break;
 			}
 			
-			this.devolucionesService.devolverLibro(this.selectedLibro,this.alumno, estado);
+			this.devolucionesService.devolverLibro(this.selectedEjemplar,this.alumno, estado);
 			
 			reload();
 			showToast("Libro devuelto correctamente");
@@ -149,25 +149,25 @@ public class DevolucionesDetalleController implements Initializable {
 		TreeItem root = new TreeItem();
 		for(Historial historial: this.alumno.getHistorials()) {
 			if(historial.getFechaFinal() != null) continue;
-			TreeItem libros = new TreeItem<String>();
-			libros.setValue(historial.getEjemplare().getLibro().getContenido().getNombreCas());
-			if(isInRoot(root,libros)) continue;
+			TreeItem ejemplares = new TreeItem<String>();
+			ejemplares.setValue(historial.getEjemplare().getLibro().getContenido().getNombreCas());
+			if(isInRoot(root,ejemplares)) continue;
 			for(Historial historialLibro: this.alumno.getHistorials()) {
 				if(historialLibro.getFechaFinal() != null) continue;
 				if(!historialLibro.getEjemplare().getLibro().getContenido().getCodigo().equals(historial.getEjemplare().getLibro().getContenido().getCodigo())) {
 					continue;
 				}
-				libros.getChildren().add(new TreeItem<Libro>(historialLibro.getEjemplare().getLibro()));
+				ejemplares.getChildren().add(new TreeItem<Ejemplare>(historialLibro.getEjemplare()));
 				
 			}
-			libros.setExpanded(true);
-			root.getChildren().add(libros);
+			ejemplares.setExpanded(true);
+			root.getChildren().add(ejemplares);
 		}
 		xTreeViewLibros.setRoot(root);
 		xTreeViewLibros.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> { 
 			// Body would go here
-			if(newValue != null && newValue.getValue() instanceof Libro) {
-				this.selectedLibro = newValue.getValue();
+			if(newValue != null && newValue.getValue() instanceof Ejemplare) {
+				this.selectedEjemplar = newValue.getValue();
 			}
 			
 

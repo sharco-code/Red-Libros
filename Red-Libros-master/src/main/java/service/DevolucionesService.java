@@ -29,16 +29,15 @@ public class DevolucionesService {
 	
 	
 	
-	public void devolverLibro(Libro selectedLibro,Alumno alumno, int estado) throws Exception {
+	public void devolverLibro(Ejemplare ejemplar,Alumno alumno, int estado) throws Exception {
 		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
-		Ejemplare ejemplar = null;
 		Historial historial = null;
 		for(Historial historialAlumno:alumno.getHistorials()) {
-			if(historialAlumno.getEjemplare().getLibro().getCodigo().equals(selectedLibro.getCodigo())) {
+			if(historialAlumno.getFechaFinal() != null) continue;
+			if(historialAlumno.getEjemplare().getCodigo().equals(ejemplar.getCodigo())) {
 				historial = historialAlumno;
-				ejemplar = historialAlumno.getEjemplare();
 				break;
 			}
 		}
