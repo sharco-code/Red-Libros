@@ -206,14 +206,13 @@ public class LibroDetalleController implements Initializable {
 			showToast("Debes seleccionar un\nejemplar para borrarlo");
 			return;
 		}
-
-		this.libro.removeEjemplare(
-				this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
+		Ejemplare ejemplar = this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId());
+		this.libro.removeEjemplare(	ejemplar);
 
 		this.libro.setUnidades(this.libro.getUnidades() - 1);
 		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
 
-		this.ejemplarDAO.delete(this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId()));
+		this.ejemplarDAO.delete(ejemplar);
 		showToast("Ejemplar borrado");
 
 		reloadEjemplares();
@@ -376,6 +375,7 @@ public class LibroDetalleController implements Initializable {
 			int index = e.getTablePosition().getRow();
 			e.getTableView().getItems().get(index).setPrestado(newValue);
 		});
+		
 		xTableViewEjemplar.getColumns().addAll(codigoColumn, prestadoColumn, estadoColumn);
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewEjemplar.setEditable(true);
@@ -439,8 +439,6 @@ public class LibroDetalleController implements Initializable {
 	@FXML
 	void EditarCLICKED(MouseEvent event) {
 
-		estadoColumn.setEditable(true);
-		prestadoColumn.setEditable(true);
 
 		isButtonGuardarEnabled = true;
 		this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
