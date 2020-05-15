@@ -130,6 +130,7 @@ public class EjemplarDAO {
 		logger.log(Level.INFO, "deleting Ejemplares instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
+			sessionFactory.getCurrentSession().getTransaction().commit();
 			logger.log(Level.INFO, "delete successful");
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "delete failed", re);
