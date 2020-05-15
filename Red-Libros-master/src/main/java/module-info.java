@@ -13,6 +13,8 @@ module proyectoFinal.redLibros {
 	requires java.desktop;
 	requires itextpdf;
 	requires barcode4j;
+	requires java.xml.bind;
+	requires jakarta.activation;
 	
 	exports utiles.xml;
 	opens utiles.xml;
@@ -38,6 +40,9 @@ module proyectoFinal.redLibros {
     
     exports model;
     opens model;
+    
+    exports xmlModels;
+    opens xmlModels;
     
     opens view;
       
