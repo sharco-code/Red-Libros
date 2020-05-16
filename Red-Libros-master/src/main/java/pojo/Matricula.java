@@ -47,7 +47,7 @@ public class Matricula implements Serializable {
 	private String tipoPredom;
 
 	//bi-directional many-to-one association to Contenido
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="contenido")
 	private Contenido contenidoBean;
 

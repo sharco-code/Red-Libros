@@ -7,30 +7,19 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.json.simple.parser.ParseException;
 
-import pojo.Alumno;
-import pojo.Curso;
+import pojo.Matricula;
+import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-/**
- * Home object for domain model class Alumno.
- * @see pojo.Alumno
- * @author Hibernate Tools
- */
-public class AlumnoDAO {
+public class MatriculaDAO {
 
-	private static final Logger logger = Logger.getLogger(AlumnoDAO.class.getName());
+	private static final Logger logger = Logger.getLogger(MatriculaDAO.class.getName());
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -44,32 +33,31 @@ public class AlumnoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Alumno> getAll() {
+	public List<Matricula> getAll() {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "AlumnoDAO getAll()...");
+		logger.log(Level.INFO, "MatriculaDAO getAll()...");
 		try {
-			List<Alumno> lst = new ArrayList<>();
+			List<Matricula> lst = new ArrayList<>();
 
-			Query q = sessionFactory.getCurrentSession().createQuery("SELECT e FROM Alumno e");
+			Query q = sessionFactory.getCurrentSession().createQuery("SELECT e FROM Matricula e");
 	        lst = q.getResultList();
 	        sessionFactory.getCurrentSession().getTransaction().commit();
 	        
-			logger.log(Level.INFO, "AlumnoDAO getAll() successful");
+			logger.log(Level.INFO, "MatriculaDAO getAll() successful");
 			
 			return lst;
 		} catch (RuntimeException re) {
-			logger.log(Level.SEVERE, "AlumnoDAO getAll() failed", re);
+			logger.log(Level.SEVERE, "MatriculaDAO getAll() failed", re);
 			throw re;
 		}
 	}
-	
-	public void persist(Alumno transientInstance) {
+	public void persist(Matricula transientInstance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "persisting Alumno instance");
+		logger.log(Level.INFO, "persisting Matricula instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			logger.log(Level.INFO, "persist successful");
@@ -79,11 +67,11 @@ public class AlumnoDAO {
 		}
 	}
 
-	public void attachDirty(Alumno instance) {
+	public void attachDirty(Matricula instance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "attaching dirty Alumno instance");
+		logger.log(Level.INFO, "attaching dirty Matricula instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			logger.log(Level.INFO, "attach successful");
@@ -93,11 +81,11 @@ public class AlumnoDAO {
 		}
 	}
 
-	public void attachClean(Alumno instance) {
+	public void attachClean(Matricula instance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "attaching clean Alumno instance");
+		logger.log(Level.INFO, "attaching clean Matricula instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			logger.log(Level.INFO, "attach successful");
@@ -107,11 +95,11 @@ public class AlumnoDAO {
 		}
 	}
 
-	public void delete(Alumno persistentInstance) {
+	public void delete(Matricula persistentInstance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "deleting Alumno instance");
+		logger.log(Level.INFO, "deleting Matricula instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			logger.log(Level.INFO, "delete successful");
@@ -121,14 +109,13 @@ public class AlumnoDAO {
 		}
 	}
 
-	public Alumno merge(Alumno detachedInstance) {
+	public Matricula merge(Matricula detachedInstance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "merging Alumno instance");
+		logger.log(Level.INFO, "merging Matricula instance");
 		try {
-			Alumno result = (Alumno) sessionFactory.getCurrentSession().merge(detachedInstance);
-			sessionFactory.getCurrentSession().getTransaction().commit();
+			Matricula result = (Matricula) sessionFactory.getCurrentSession().merge(detachedInstance);
 			logger.log(Level.INFO, "merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -137,13 +124,13 @@ public class AlumnoDAO {
 		}
 	}
 
-	public Alumno findById(java.lang.String id) {
+	public Matricula findById(java.lang.String id) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "getting Alumno instance with id: " + id);
+		logger.log(Level.INFO, "getting Matricula instance with id: " + id);
 		try {
-			Alumno instance = (Alumno) sessionFactory.getCurrentSession().get("pojo.Alumno", id);
+			Matricula instance = (Matricula) sessionFactory.getCurrentSession().get("pojo.Matricula", id);
 			if (instance == null) {
 				logger.log(Level.INFO, "get successful, no instance found");
 			} else {
@@ -156,13 +143,13 @@ public class AlumnoDAO {
 		}
 	}
 
-	public List findByExample(Alumno instance) {
+	public List findByExample(Matricula instance) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "finding Alumno instance by example");
+		logger.log(Level.INFO, "finding Matricula instance by example");
 		try {
-			List results = sessionFactory.getCurrentSession().createCriteria("pojo.Alumno")
+			List results = sessionFactory.getCurrentSession().createCriteria("pojo.Matricula")
 					.add(Example.create(instance)).list();
 			logger.log(Level.INFO, "find by example successful, result size: " + results.size());
 			return results;
@@ -173,24 +160,27 @@ public class AlumnoDAO {
 	}
 	
 	
-	public Alumno hidratar(java.lang.String id) {
+	@SuppressWarnings("unchecked")
+	public boolean exist(String alumno,String curso,String contenido) {
 		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
 			sessionFactory.getCurrentSession().beginTransaction();
 		}
-		logger.log(Level.INFO, "getting Alumno instance with id: " + id);
+		logger.log(Level.INFO, "MatriculaDAO exist()...");
 		try {
-			Alumno instance = (Alumno) sessionFactory.getCurrentSession().get("pojo.Alumno", id);
-			if (instance == null) {
-				logger.log(Level.INFO, "get successful, no instance found");
-			} else {
-				Hibernate.initialize(instance.getHistorials());
-				logger.log(Level.INFO, "get successful, instance found");
-			}
-			return instance;
+			List<Matricula> lst = new ArrayList<>();
+
+			Query q = sessionFactory.getCurrentSession().createQuery("SELECT e FROM Matricula e WHERE alumno = '"+alumno+"' AND curso = '"+curso+"' AND contenido = '"+contenido+"'");
+	        lst = q.getResultList();
+	        sessionFactory.getCurrentSession().getTransaction().commit();
+	        if(!lst.isEmpty())return true;
+	        
+			logger.log(Level.INFO, "MatriculaDAO exist() successful");
+			
+			return false;
 		} catch (RuntimeException re) {
-			logger.log(Level.SEVERE, "get failed", re);
+			logger.log(Level.SEVERE, "MatriculaDAO exist() failed", re);
 			throw re;
 		}
 	}
-	
 }
+

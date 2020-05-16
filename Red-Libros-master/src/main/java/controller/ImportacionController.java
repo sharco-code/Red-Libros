@@ -34,7 +34,7 @@ public class ImportacionController {
 			return;
 		}
 		try {
-			//importService.ImportarContenido(selectedDirectory.getAbsolutePath());
+			importService.importarAlumno(selectedDirectory.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToastRED("Error en la importacion");
@@ -52,7 +52,7 @@ public class ImportacionController {
 			return;
 		}
 		try {
-			importService.ImportarContenido(selectedDirectory.getAbsolutePath());
+			importService.importarContenido(selectedDirectory.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToastRED("Error en la importacion");
@@ -70,7 +70,7 @@ public class ImportacionController {
 			return;
 		}
 		try {
-			importService.ImportarCurso(selectedDirectory.getAbsolutePath());
+			importService.importarCurso(selectedDirectory.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToastRED("Error en la importacion");
@@ -88,7 +88,7 @@ public class ImportacionController {
 			return;
 		}
 		try {
-			importService.ImportarGrupo(selectedDirectory.getAbsolutePath());
+			importService.importarGrupo(selectedDirectory.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToastRED("Error en la importacion");
@@ -96,23 +96,7 @@ public class ImportacionController {
 		showToast("Grupos importados correctamente");
     }
 
-    @FXML
-    void ImportLibrosCLICKED(MouseEvent event) {
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Selecciona xml a importar");
-    	
-    	File selectedDirectory = fileChooser.showOpenDialog(Main.getStage());
-		if (selectedDirectory == null) {
-			return;
-		}
-		try {
-			//importService.ImportarLibro(selectedDirectory.getAbsolutePath());
-		} catch (Exception e) {
-			e.printStackTrace();
-			showToastRED("Error en la importacion");
-		}
-		showToast("Libros importadas correctamente");
-    }
+   
 
     @FXML
     void ImportMatriculasCLICKED(MouseEvent event) {
@@ -124,7 +108,7 @@ public class ImportacionController {
 			return;
 		}
 		try {
-			//importService.ImportarGrupo(selectedDirectory.getAbsolutePath());
+			importService.importarMatricula(selectedDirectory.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 			showToastRED("Error en la importacion");

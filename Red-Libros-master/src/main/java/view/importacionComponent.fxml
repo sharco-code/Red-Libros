@@ -93,9 +93,9 @@
                   </HBox>
                   <HBox alignment="CENTER" maxHeight="150.0" minWidth="150.0" prefHeight="150.0">
                      <children>
-                        <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" minWidth="200.0" onMouseClicked="#ImportLibrosCLICKED">
+                        <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" minWidth="200.0" onMouseClicked="#ImportAlumnosCLICKED">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Importar libros">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Importar alumnos">
                                  <font>
                                     <Font name="Arial" size="22.0" />
                                  </font>
@@ -109,31 +109,12 @@
                               <String fx:value="normal_button" />
                            </styleClass>
                            <HBox.margin>
-                              <Insets right="20.0" />
+                              <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </HBox>
                         <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" minWidth="200.0" onMouseClicked="#ImportMatriculasCLICKED">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Importar matriculas">
-                                 <font>
-                                    <Font name="Arial" size="22.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </Text>
-                           </children>
-                           <styleClass>
-                              <String fx:value="hover_border" />
-                              <String fx:value="normal_button" />
-                           </styleClass>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" minWidth="200.0" onMouseClicked="#ImportAlumnosCLICKED">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Importar alumnos">
                                  <font>
                                     <Font name="Arial" size="22.0" />
                                  </font>

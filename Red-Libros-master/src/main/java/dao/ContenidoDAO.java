@@ -1,13 +1,16 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import pojo.Contenido;
+import pojo.Libro;
 import utiles.hibernate.UtilesHibernate;
 
 public class ContenidoDAO {
@@ -128,6 +131,29 @@ public class ContenidoDAO {
 			return results;
 		} catch (RuntimeException re) {
 			logger.log(Level.SEVERE, "find by example failed", re);
+			throw re;
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public Contenido getByCodigo(String codigo) {
+		if(!sessionFactory.getCurrentSession().getTransaction().isActive()) {
+			sessionFactory.getCurrentSession().beginTransaction();
+		}
+		logger.log(Level.INFO, "Contenido getByCodigo()...");
+		try {
+			List<Contenido> listaContenido = new ArrayList<>();
+
+			
+			Query q = sessionFactory.getCurrentSession().createQuery("SELECT c FROM Contenido c WHERE c.codigo LIKE '"+codigo+"'");
+			listaContenido = q.getResultList();
+	        sessionFactory.getCurrentSession().getTransaction().commit();
+			logger.log(Level.INFO, "Contenido getByCodigo() successful");
+			if(listaContenido.isEmpty()) return null;
+			return listaContenido.get(0);
+		} catch (RuntimeException re) {
+			logger.log(Level.SEVERE, "Contenido getByCodigo() failed", re);
 			throw re;
 		}
 	}

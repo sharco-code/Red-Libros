@@ -21,12 +21,23 @@ public class CentroXML {
 	@XmlElementWrapper(name = "grupos")
     @XmlElement(name = "grupo")
 	private List<GrupoXML> grupos;
+	
+	@XmlElementWrapper(name = "alumnos")
+    @XmlElement(name = "alumno")
+	private List<AlumnoXML> alumnos;
+	
+	@XmlElementWrapper(name = "contenidos_alumno")
+    @XmlElement(name = "contenido_alumno")
+	private List<MatriculaXML> matriculas;
     
     @XmlAttribute
     private String codigo;
     
     @XmlAttribute
     private String fechaExportacion;
+    
+    @XmlAttribute
+    private String curso;
 
 	 
 	 
@@ -73,12 +84,46 @@ public class CentroXML {
 	public void setGrupos(List<GrupoXML> grupos) {
 		this.grupos = grupos;
 	}
+	
+	
+
+	public List<AlumnoXML> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(List<AlumnoXML> alumnos) {
+		this.alumnos = alumnos;
+	}
+
+
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+	
+	
+
+	public List<MatriculaXML> getMatriculas() {
+		return matriculas;
+	}
+
+	public void setMatriculas(List<MatriculaXML> matriculas) {
+		this.matriculas = matriculas;
+	}
 
 	@Override
 	public String toString() {
-		return "CentroXML [cursos=" + cursos + ", contenidos=" + contenidos + ", grupos=" + grupos + ", codigo="
-				+ codigo + ", fechaExportacion=" + fechaExportacion + "]";
+		return "CentroXML [cursos=" + cursos + ", contenidos=" + contenidos + ", grupos=" + grupos + ", alumnos="
+				+ alumnos + ", matriculas=" + matriculas + ", codigo=" + codigo + ", fechaExportacion="
+				+ fechaExportacion + ", curso=" + curso + "]";
 	}
+
+	
+
+	
 	
 	
 	

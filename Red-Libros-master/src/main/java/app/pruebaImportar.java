@@ -9,9 +9,11 @@ public class pruebaImportar {
 		
 		 ImportService importService = new ImportService();
 		 try {
-			 //importService.ImportarCurso("C:\\Users\\Usuario\\Downloads\\cursos.xml");
-			 //importService.ImportarContenido("C:\\Users\\Usuario\\Downloads\\contenidos.xml");
-			 importService.ImportarGrupo("C:\\Users\\Usuario\\Downloads\\grups.xml");
+			 importService.importarCurso("C:\\Users\\Usuario\\Downloads\\cursos.xml");
+			 importService.importarContenido("C:\\Users\\Usuario\\Downloads\\contenidos.xml");
+			 importService.importarGrupo("C:\\Users\\Usuario\\Downloads\\grups.xml");
+			 importService.importarAlumno("C:\\Users\\Usuario\\Downloads\\alumnesJoseRaul.xml");
+			 importService.importarMatricula("C:\\Users\\Usuario\\Downloads\\matriculaJoseRaul.xml");
 
 		} catch (Exception e) {
 			// TODO: handle exception
