@@ -33,13 +33,17 @@ public class ImportacionController {
 		if (selectedDirectory == null) {
 			return;
 		}
+		
 		try {
 			importService.importarAlumno(selectedDirectory.getAbsolutePath());
+			showToast("Alumnos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED("Error en la importacion");
+			showToastRED(e.getMessage());
+			return;
 		}
-		showToast("Alumnos importados correctamente");
+		
+		
     }
 
     @FXML
@@ -53,11 +57,12 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarContenido(selectedDirectory.getAbsolutePath());
+			showToast("Contenido importado correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED("Error en la importacion");
+			showToastRED(e.getMessage());
+			return;
 		}
-		showToast("Contenido importado correctamente");
     }
 
     @FXML
@@ -71,11 +76,12 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarCurso(selectedDirectory.getAbsolutePath());
+			showToast("Cursos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED("Error en la importacion");
+			showToastRED(e.getMessage());
+			return;
 		}
-		showToast("Cursos importados correctamente");
     }
 
     @FXML
@@ -89,11 +95,12 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarGrupo(selectedDirectory.getAbsolutePath());
+			showToast("Grupos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED("Error en la importacion");
+			showToastRED(e.getMessage());
+			return;
 		}
-		showToast("Grupos importados correctamente");
     }
 
    
@@ -109,11 +116,12 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarMatricula(selectedDirectory.getAbsolutePath());
+			showToast("Matriculas importadas correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED("Error en la importacion");
+			showToastRED(e.getMessage());
+			return;
 		}
-		showToast("Matriculas importadas correctamente");
     }
 
     @FXML
@@ -133,7 +141,7 @@ public class ImportacionController {
     }
     
     private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
+		int toastMsgTime = 4500; //3.5 seconds
 		int fadeInTime = 150; //0.5 seconds
 		int fadeOutTime= 300; //0.5 seconds
 		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);

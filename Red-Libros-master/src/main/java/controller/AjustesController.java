@@ -33,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Options;
@@ -146,10 +147,31 @@ public class AjustesController implements Initializable {
 			xVBoxMAIN.getChildren().clear();
 			xVBoxMAIN.getChildren().add(root);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			showErrorComponent();
 			e.printStackTrace();
+			
 		}
 	}
 
+	private void showErrorComponent() {
+    	this.xVBoxMAIN.getChildren().clear();
+    	try {
+    		ErrorController errorController = new ErrorController();
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/errorComponent.fxml"));
+    		loader.setController(errorController);
+    		VBox vbox = (VBox) loader.load();
+    		
+    		
+    		VBox.setVgrow(vbox, Priority.ALWAYS);
+			
+			this.xVBoxMAIN.getChildren().add(vbox);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+    }
+    
 
 }
