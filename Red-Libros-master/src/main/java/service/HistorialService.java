@@ -56,6 +56,19 @@ public class HistorialService {
 			return "No prestado";
 		}
 	}
+	
+	private String estadoIntToString(Integer estado) {
+		switch (estado) {
+		case 0:
+			return "Perfecto";
+		case 1:
+			return "Regular";
+		case 2:
+			return "Mal";
+		default:
+			return "Perfecto";
+		}
+	}
 
 	public List<HistorialTabla> getHistorial(Ejemplare ejemplar) {
 		// TODO Auto-generated method stub
@@ -64,6 +77,13 @@ public class HistorialService {
 			HistorialTabla historialTabla = new HistorialTabla();
 			historialTabla.setCurso(""+historial.getCursoEscolar());
 			historialTabla.setNia(historial.getAlumno().getNia());
+			
+			System.out.println("10"+historial.getEstadoFinal());
+			System.out.println("20"+estadoIntToString(historial.getEstadoFinal()));
+			historialTabla.setEstado_final(estadoIntToString(historial.getEstadoFinal()));
+			
+			historialTabla.setEstado_inicial(estadoIntToString(historial.getEstadoInicial()));
+			
 			if(historial.getAlumno().getApellido2() == null) {
 				historialTabla.setNombreCompleto(historial.getAlumno().getNombre()+" "+historial.getAlumno().getApellido1());
 			}else {

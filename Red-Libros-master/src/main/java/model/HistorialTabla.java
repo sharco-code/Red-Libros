@@ -5,6 +5,21 @@ public class HistorialTabla {
 	private String nia;
 	private String nombreCompleto;
 	private String fechaDevolucion;
+	private String estado_inicial;
+	private String estado_final;
+	
+	public String getEstado_inicial() {
+		return estado_inicial;
+	}
+	public void setEstado_inicial(String estado_inicial) {
+		this.estado_inicial = estado_inicial;
+	}
+	public String getEstado_final() {
+		return estado_final;
+	}
+	public void setEstado_final(String estado_final) {
+		this.estado_final = estado_final;
+	}
 	public HistorialTabla() {
 		super();
 	}

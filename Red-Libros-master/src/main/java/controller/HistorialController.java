@@ -99,7 +99,7 @@ public class HistorialController implements Initializable{
 		TableColumn libroColumn = new TableColumn("Libro");
 		libroColumn.setCellValueFactory(new PropertyValueFactory("nombreLibro"));
 		
-		TableColumn estadoColumn = new TableColumn("Estado");
+		TableColumn estadoColumn = new TableColumn("Estado actual");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory("estado"));
 		
 		TableColumn prestadoColumn = new TableColumn("Prestado");
@@ -121,9 +121,17 @@ public class HistorialController implements Initializable{
 		
 		TableColumn cursoColumn = new TableColumn("Curso");
 		cursoColumn.setCellValueFactory(new PropertyValueFactory<>("curso"));
-
+		cursoColumn.setMaxWidth(1000);
+		
 		TableColumn niaColumn = new TableColumn("NIA");
 		niaColumn.setCellValueFactory(new PropertyValueFactory("nia"));
+		niaColumn.setMaxWidth(2000);
+		
+		TableColumn inicialColumn = new TableColumn("Estado inicial");
+		inicialColumn.setCellValueFactory(new PropertyValueFactory("estado_inicial"));
+		
+		TableColumn finalColumn = new TableColumn("Estado final");
+		finalColumn.setCellValueFactory(new PropertyValueFactory("estado_final"));
 		
 		TableColumn nombreColumn = new TableColumn("Nombre completo");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
@@ -131,7 +139,7 @@ public class HistorialController implements Initializable{
 		TableColumn fechaDevolucionColumn = new TableColumn("Fecha de devolucion");
 		fechaDevolucionColumn.setCellValueFactory(new PropertyValueFactory("fechaDevolucion"));
 		xTableHistorial.getColumns().clear();
-		xTableHistorial.getColumns().addAll(cursoColumn, niaColumn,nombreColumn,fechaDevolucionColumn);
+		xTableHistorial.getColumns().addAll(cursoColumn, niaColumn,nombreColumn,inicialColumn,finalColumn,fechaDevolucionColumn);
 		xTableHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		listaHistorialTabla = this.historialService.getHistorial(ejemplar);
