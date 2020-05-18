@@ -33,8 +33,17 @@ public class PdfService {
 	
 	private void setColumnRows() {
 		Options options = SettingsService.getOptions();
-		this.columns = Integer.parseInt(options.getColumnas());
-		this.rows = Integer.parseInt(options.getFilas());
+		if(options.getColumnas() == null) {
+			this.columns = 2;
+		}else {
+			this.columns = Integer.parseInt(options.getColumnas());
+		}
+		if(options.getFilas() == null) {
+			this.rows = 2;
+		}else {
+			this.rows = Integer.parseInt(options.getFilas());
+		}
+		
 		setColumnsWidth();
 	}
 

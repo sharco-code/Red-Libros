@@ -37,6 +37,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -100,11 +101,41 @@ public class LibroDetalleController implements Initializable {
 
 	@FXML
 	private TableView<EjemplarTabla> xTableViewEjemplar;
+	
+	@FXML
+	private HBox xButtonAddEjemplar;
+
+	@FXML
+	private HBox xButtonDeleteEjemplar;
 
 	private List<Curso> listaCursos = new ArrayList<>();
 
 	@FXML
 	private Text xButtonBorrarTEXT;
+	
+	@FXML
+	private HBox xButtonEDITAR;
+
+	@FXML
+	private HBox xButtonGUARDAR;
+
+	@FXML
+	private HBox xButtonBORRAR;
+	
+	@FXML
+	private ImageView xImageView;
+	
+	@FXML
+    private HBox xButtonIMPRIMIRseleccion;
+
+	@SuppressWarnings({ "rawtypes" })
+	private TableColumn codigoColumn = new TableColumn("Codigo");
+	@SuppressWarnings("unchecked")
+	private TableColumn<EjemplarTabla, String> estadoColumn = new TableColumn("Estado");
+	@SuppressWarnings("unchecked")
+	private TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
+
+	private boolean isButtonGuardarEnabled = false;
 
 	private boolean isNuevoLibro = false;
 
@@ -160,11 +191,7 @@ public class LibroDetalleController implements Initializable {
 		this.xComboBoxCursoEscolar.setDisable(true);
 	}
 
-	@FXML
-	private HBox xButtonAddEjemplar;
-
-	@FXML
-	private HBox xButtonDeleteEjemplar;
+	
 
 	@FXML
 	void xButtonAddEjemplarCLICKED(MouseEvent event) {
@@ -223,6 +250,7 @@ public class LibroDetalleController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		xTableViewEjemplar.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE	);
 		try {
 			this.listaEstados.add("Perfecto");
 			this.listaEstados.add("Regular");
@@ -257,29 +285,21 @@ public class LibroDetalleController implements Initializable {
 
 	}
 
-	@FXML
-	private HBox xButtonEDITAR;
-
-	@FXML
-	private HBox xButtonGUARDAR;
-
-	@FXML
-	private HBox xButtonBORRAR;
-
-	private boolean isButtonGuardarEnabled = false;
+	
 
 	@FXML
 	private HBox xButtonIMPRIMIR;
 
-	void imprimir(String ruta) {
+	void imprimir(String ruta,String[] listaCodigos) {
+		if(listaCodigos.length <= 0) return;
 		PdfService pdfService = new PdfService();
 		BarcodeService barcodeService = new BarcodeService();
 
 		List<com.itextpdf.text.Image> codigos = new ArrayList<>();
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			for (int i = 0; i < libro.getEjemplares().size(); i++) {
-				ImageIO.write(barcodeService.generateImage(libro.getEjemplares().get(i).getCodigo()), "png", baos);
+			for (int i = 0; i < listaCodigos.length; i++) {
+				ImageIO.write(barcodeService.generateImage(listaCodigos[i]), "png", baos);
 				codigos.add(com.itextpdf.text.Image.getInstance(baos.toByteArray()));
 				baos.reset();
 			}
@@ -292,7 +312,6 @@ public class LibroDetalleController implements Initializable {
 		try {
 			pdfService.createPDF(codigos, ruta);
 			showToast("PDF generado corectamente");
-			System.out.println(ruta + "\\barcodes.pdf");
 			File pdfFile = new File(ruta + "\\barcodes.pdf");
 			if (pdfFile.exists()) {
 
@@ -321,19 +340,15 @@ public class LibroDetalleController implements Initializable {
 		if (selectedDirectory == null) {
 			return;
 		}
-		imprimir(selectedDirectory.getAbsolutePath());
+		String[] listaCodigos = new String[this.libro.getEjemplares().size()];
+		for (int i = 0; i < listaCodigos.length; i++) {
+			listaCodigos[i] = this.libro.getCodigo();
+		}
+		imprimir(selectedDirectory.getAbsolutePath(),listaCodigos);
 
 	}
 
-	@FXML
-	private ImageView xImageView;
-
-	@SuppressWarnings({ "rawtypes" })
-	private TableColumn codigoColumn = new TableColumn("Codigo");
-	@SuppressWarnings("unchecked")
-	private TableColumn<EjemplarTabla, String> estadoColumn = new TableColumn("Estado");
-	@SuppressWarnings("unchecked")
-	private TableColumn<EjemplarTabla, String> prestadoColumn = new TableColumn("Prestado");
+	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
@@ -754,6 +769,25 @@ public class LibroDetalleController implements Initializable {
 		}
 
 	}
+	@FXML
+    void ImprimirSeleccionCLICKED(MouseEvent event) {
+		List<EjemplarTabla> listaEjemplares = xTableViewEjemplar.getSelectionModel().getSelectedItems();
+		if(listaEjemplares == null || listaEjemplares.size() <= 0) return;
+		
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setInitialDirectory(new File("src"));
+
+		File selectedDirectory = directoryChooser.showDialog(Main.getStage());
+		if (selectedDirectory == null) {
+			return;
+		}
+		String[] listaCodigos = new String[listaEjemplares.size()];
+		for (int i = 0; i < listaCodigos.length; i++) {
+			listaCodigos[i] = listaEjemplares.get(i).getCodigo();
+		}
+		imprimir(selectedDirectory.getAbsolutePath(),listaCodigos);
+		
+    }
 
 	private void showToastRED(String toastMsg) {
 		int toastMsgTime = 1000; // 3.5 seconds
