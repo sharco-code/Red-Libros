@@ -18,6 +18,7 @@ import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,14 +35,13 @@ public class UtilesHibernate {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
                 
-                Object object = new JSONParser().parse(new FileReader(System.getProperty("user.dir") + "\\config\\settings.json"));
+                Object object = new JSONParser().parse(new FileReader(new File("settings.json")));
     			JSONObject jo = (JSONObject) object;
 
     			String ip = (String) jo.get("ip");
     			String port = (String) jo.get("port");
     			String user = (String) jo.get("user");
     			String password = (String) jo.get("password");
-                
                 settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://"+ip+":"+port+"/instituto?useSSL=false");
                 settings.put(Environment.USER, user);

@@ -14,7 +14,7 @@ import org.json.simple.parser.ParseException;
 import model.Options;
 
 public class SettingsService {
-	private static final String JSON_URL = System.getProperty("user.dir") + "\\config\\settings.json";
+	private static final String JSON_URL =  "settings.json";
 	private static Options options;
 	
 	

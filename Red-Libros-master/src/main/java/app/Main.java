@@ -23,7 +23,8 @@ public class Main extends Application {
 	        primaryStage.setScene(new Scene(root));
 	        
 	        //primaryStage.getIcons().add(new Image(Init.class.getResourceAsStream(System.getProperty("user.dir") + "\\images\\icon.png"))) ;
-	        primaryStage.getIcons().add(new Image("file:..\\..\\images\\icon.png"));
+	        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
+	        
 	        
 	        primaryStage.setMinHeight(570);
 	        primaryStage.setMinWidth(1100);
