@@ -352,6 +352,7 @@ public class LibroDetalleController implements Initializable {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
+		this.libro = libroDAO.findById(libro.getId());
 		// cada vez que se llama la funcion, estas dos lineas es para eliminar los
 		// elemenots que hay, si no saldrán duplicados
 
@@ -403,6 +404,7 @@ public class LibroDetalleController implements Initializable {
 		listaEjemplares = libro.getEjemplares();
 
 		xTableViewEjemplar.getItems().addAll(ejemplarTablaService.converToEjemplarTabla(listaEjemplares));
+
 	}
 
 	@FXML
@@ -603,7 +605,6 @@ public class LibroDetalleController implements Initializable {
 			this.xButtonIMPRIMIRseleccion.setVisible(true);
 			this.xButtonIMPRIMIR.setVisible(true);
 		}
-		
 		
 		this.xTextFieldPrecio.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldCodigo.setStyle("-fx-background-color: TRANSPARENT;");
