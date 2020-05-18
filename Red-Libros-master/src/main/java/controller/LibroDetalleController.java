@@ -156,6 +156,7 @@ public class LibroDetalleController implements Initializable {
 	}
 
 	public void setNuevoLibro() {
+		this.xButtonIMPRIMIRseleccion.setVisible(false);
 		this.xButtonAddEjemplar.setVisible(false);
 		this.xButtonDeleteEjemplar.setVisible(false);
 		this.isNuevoLibro = true;
@@ -305,7 +306,6 @@ public class LibroDetalleController implements Initializable {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 
@@ -424,7 +424,6 @@ public class LibroDetalleController implements Initializable {
 				this.librosController.reload();
 			} catch (Exception e) {
 				e.printStackTrace();
-
 			}
 
 		} else {
@@ -446,14 +445,12 @@ public class LibroDetalleController implements Initializable {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-
 			}
 		}
 	}
 
 	@FXML
 	void EditarCLICKED(MouseEvent event) {
-
 
 		isButtonGuardarEnabled = true;
 		this.xButtonGUARDAR.setStyle("-fx-background-color: #00d142;");
@@ -475,6 +472,9 @@ public class LibroDetalleController implements Initializable {
 
 		this.xButtonEDITAR.setDisable(true);
 		this.xButtonEDITAR.setStyle("-fx-background-color: GRAY;");
+		
+		this.xButtonIMPRIMIRseleccion.setVisible(false);
+		this.xButtonIMPRIMIR.setVisible(false);
 	}
 
 	@FXML
@@ -584,7 +584,6 @@ public class LibroDetalleController implements Initializable {
 			}
 
 			libroDAO.merge(this.libro);
-
 		}
 
 		isButtonGuardarEnabled = false;
@@ -599,7 +598,13 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldISBN.setEditable(true);
 		this.xTextFieldNombre.setEditable(true);
 		this.xTextFieldPrecio.setEditable(true);
-
+		
+		if(!isNuevoLibro) {
+			this.xButtonIMPRIMIRseleccion.setVisible(true);
+			this.xButtonIMPRIMIR.setVisible(true);
+		}
+		
+		
 		this.xTextFieldPrecio.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldCodigo.setStyle("-fx-background-color: TRANSPARENT;");
 		this.xTextFieldISBN.setStyle("-fx-background-color: TRANSPARENT;");
@@ -772,7 +777,10 @@ public class LibroDetalleController implements Initializable {
 	@FXML
     void ImprimirSeleccionCLICKED(MouseEvent event) {
 		List<EjemplarTabla> listaEjemplares = xTableViewEjemplar.getSelectionModel().getSelectedItems();
-		if(listaEjemplares == null || listaEjemplares.size() <= 0) return;
+		if(listaEjemplares == null || listaEjemplares.size() <= 0) {
+			showToastRED("No hay ejemplares seleccionados");
+			return;
+		}
 		
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setInitialDirectory(new File("src"));

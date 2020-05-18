@@ -281,29 +281,32 @@
                                           </TextField>
                                        </children>
                                     </VBox>
-                                    <HBox alignment="CENTER" maxHeight="35.0" minHeight="20.0" minWidth="140.0" onMouseClicked="#ImprimirSeleccionCLICKED" prefWidth="140.0" fx:id="xButtonIMPRIMIRseleccion">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="1.8em">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </FontAwesomeIcon>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Imprimir Seleccion">
-                                             <font>
-                                                <Font name="Arial" size="13.0" />
-                                             </font>
-                                          </Text>
-                                       </children>
-                                       <styleClass>
-                                          <String fx:value="hover_print" />
-                                          <String fx:value="print_button" />
-                                       </styleClass>
-                                       <opaqueInsets>
-                                          <Insets right="10.0" />
-                                       </opaqueInsets>
-                                    </HBox>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
+                                          <HBox alignment="CENTER" maxHeight="35.0" minHeight="20.0" minWidth="140.0" onMouseClicked="#ImprimirSeleccionCLICKED" prefWidth="140.0" fx:id="xButtonIMPRIMIRseleccion">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="1.8em">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </FontAwesomeIcon>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Imprimir Selección">
+                                                   <font>
+                                                      <Font name="Arial" size="13.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <styleClass>
+                                                <String fx:value="hover_print" />
+                                                <String fx:value="print_button" />
+                                             </styleClass>
+                                             <opaqueInsets>
+                                                <Insets right="10.0" />
+                                             </opaqueInsets>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </HBox>
                                           <HBox>
                                              <children>
                                                 <HBox alignment="CENTER" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onMouseClicked="#xButtonAddEjemplarCLICKED" prefWidth="30.0" fx:id="xButtonAddEjemplar">
