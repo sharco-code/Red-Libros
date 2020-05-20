@@ -78,9 +78,10 @@ public class HistorialService {
 			historialTabla.setCurso(""+historial.getCursoEscolar());
 			historialTabla.setNia(historial.getAlumno().getNia());
 			
-			System.out.println("10"+historial.getEstadoFinal());
-			System.out.println("20"+estadoIntToString(historial.getEstadoFinal()));
-			historialTabla.setEstado_final(estadoIntToString(historial.getEstadoFinal()));
+			if(historial.getEstadoFinal() != null) {
+				historialTabla.setEstado_final(estadoIntToString(historial.getEstadoFinal()));
+			}
+			
 			
 			historialTabla.setEstado_inicial(estadoIntToString(historial.getEstadoInicial()));
 			

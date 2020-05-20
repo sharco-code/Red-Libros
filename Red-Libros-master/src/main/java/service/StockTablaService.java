@@ -13,6 +13,7 @@ public class StockTablaService {
 		List<StockTabla> listaStockTabla = new ArrayList<>();
 		
 		for (Libro libro : listaLibro) {
+			if(libro.getObsoleto() != 0) continue;
 			StockTabla libroTabla = new StockTabla();
 			libroTabla.setCodigo(libro.getCodigo());
 			libroTabla.setId(libro.getId());
