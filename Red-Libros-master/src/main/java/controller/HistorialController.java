@@ -126,10 +126,11 @@ public class HistorialController implements Initializable{
 		List<HistorialTabla> listaHistorialTabla = new ArrayList<>();
 		xTableHistorial.getItems().clear();
 		
+		/*
 		TableColumn cursoColumn = new TableColumn("Curso");
 		cursoColumn.setCellValueFactory(new PropertyValueFactory<>("curso"));
 		cursoColumn.setMaxWidth(1000);
-		
+		*/
 		TableColumn niaColumn = new TableColumn("NIA");
 		niaColumn.setCellValueFactory(new PropertyValueFactory("nia"));
 		niaColumn.setMaxWidth(2000);
@@ -140,13 +141,13 @@ public class HistorialController implements Initializable{
 		TableColumn finalColumn = new TableColumn("Estado final");
 		finalColumn.setCellValueFactory(new PropertyValueFactory("estado_final"));
 		
-		TableColumn nombreColumn = new TableColumn("Nombre completo");
+		TableColumn nombreColumn = new TableColumn("Se entregó a");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
 		
 		TableColumn fechaDevolucionColumn = new TableColumn("Fecha de devolucion");
 		fechaDevolucionColumn.setCellValueFactory(new PropertyValueFactory("fechaDevolucion"));
 		xTableHistorial.getColumns().clear();
-		xTableHistorial.getColumns().addAll(cursoColumn, niaColumn,nombreColumn,inicialColumn,finalColumn,fechaDevolucionColumn);
+		xTableHistorial.getColumns().addAll(nombreColumn,niaColumn,inicialColumn,finalColumn,fechaDevolucionColumn);
 		xTableHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		listaHistorialTabla = this.historialService.getHistorial(ejemplar);
