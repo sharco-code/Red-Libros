@@ -348,8 +348,6 @@ public class LibroDetalleController implements Initializable {
 
 	}
 
-	
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void reloadEjemplares() {
 		this.libro = libroDAO.findById(libro.getId());
@@ -404,7 +402,6 @@ public class LibroDetalleController implements Initializable {
 		listaEjemplares = libro.getEjemplares();
 
 		xTableViewEjemplar.getItems().addAll(ejemplarTablaService.converToEjemplarTabla(listaEjemplares));
-
 	}
 
 	@FXML
