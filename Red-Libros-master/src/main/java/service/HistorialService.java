@@ -46,18 +46,18 @@ public class HistorialService {
 		}
 	}
 	
-	private String prestadoTabla(Ejemplare ejemplar) {
+	public static String prestadoTabla(Ejemplare ejemplar) {
 		switch (ejemplar.getPrestado()) {
 		case 0:
-			return "No prestado";
+			return "No entregado";
 		case 1:
-			return "Prestado";
+			return "Entregado";
 		default:
-			return "No prestado";
+			return "No entregado";
 		}
 	}
 	
-	private String estadoIntToString(Integer estado) {
+	public static String estadoIntToString(Integer estado) {
 		switch (estado) {
 		case 0:
 			return "Perfecto";

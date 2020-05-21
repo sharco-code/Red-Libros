@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import model.EjemplarHistorial;
 import model.HistorialTabla;
 import pojo.Ejemplare;
@@ -26,6 +27,12 @@ import service.HistorialService;
 
 public class HistorialController implements Initializable{
 
+	@FXML
+    private Text xTextEJEMPLAR;
+
+    @FXML
+    private Text xTextESTADO;
+    
 	@FXML
 	private TableView<EjemplarHistorial> xTableEjemplare;
 
@@ -88,6 +95,8 @@ public class HistorialController implements Initializable{
 		xTableEjemplare.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				this.setHistorialTable(newSelection.getEjemplar());
+				this.xTextEJEMPLAR.setText(newSelection.getEjemplar().getCodigo()+" - "+newSelection.getNombreLibro());
+				this.xTextESTADO.setText(HistorialService.prestadoTabla(newSelection.getEjemplar())+"");
 			}
 		});
 
@@ -101,11 +110,9 @@ public class HistorialController implements Initializable{
 		
 		TableColumn estadoColumn = new TableColumn("Estado actual");
 		estadoColumn.setCellValueFactory(new PropertyValueFactory("estado"));
-		
-		TableColumn prestadoColumn = new TableColumn("Prestado");
-		prestadoColumn.setCellValueFactory(new PropertyValueFactory("prestado"));
+	
 
-		xTableEjemplare.getColumns().addAll(ejemplarColumn, libroColumn,estadoColumn,prestadoColumn);
+		xTableEjemplare.getColumns().addAll(ejemplarColumn, libroColumn,estadoColumn);
 		xTableEjemplare.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		this.listaEjemplares = this.historialService.getEjemplares();

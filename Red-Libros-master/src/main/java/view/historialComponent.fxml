@@ -55,6 +55,46 @@
             <Insets bottom="5.0" />
          </VBox.margin>
       </Separator>
+      <HBox>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplar seleccionado:">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="3.0" left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="xTextEJEMPLAR">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estado actual:">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="xTextESTADO">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
       <VBox style="-fx-border-color: GREY;">
          <children>
             <VBox VBox.vgrow="ALWAYS">
