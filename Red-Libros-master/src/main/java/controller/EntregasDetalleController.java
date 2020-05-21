@@ -98,6 +98,7 @@ public class EntregasDetalleController implements Initializable {
 		for(Matricula matricula: this.alumno.getMatriculas()) {
 			TreeItem libros = new TreeItem<String>();
 			libros.setValue(matricula.getContenidoBean().getNombreCas());
+			if(isInRoot(root,libros)) continue;
 			for(Libro libro:this.entregasService.getLibros(matricula)) {
 				libros.getChildren().add(new TreeItem<>(libro));
 				this.listaLibros.add(libro);
@@ -205,6 +206,17 @@ public class EntregasDetalleController implements Initializable {
 		
 
     }
+	
+	private boolean isInRoot(TreeItem root,TreeItem libros) {
+		for(Object item:root.getChildren()) {
+			if(((TreeItem)item).getValue().equals(libros.getValue())){
+				
+				return true;
+			};
+		}
+		
+		return false;
+	}
 	
 	private void showToastRED(String toastMsg) {
 		int toastMsgTime = 1000; //3.5 seconds

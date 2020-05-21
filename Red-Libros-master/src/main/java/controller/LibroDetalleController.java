@@ -123,6 +123,9 @@ public class LibroDetalleController implements Initializable {
 	private HBox xButtonBORRAR;
 	
 	@FXML
+	private HBox xButtonIMPRIMIR;
+	
+	@FXML
 	private ImageView xImageView;
 	
 	@FXML
@@ -288,8 +291,7 @@ public class LibroDetalleController implements Initializable {
 
 	
 
-	@FXML
-	private HBox xButtonIMPRIMIR;
+	
 
 	void imprimir(String ruta,String[] listaCodigos) {
 		if(listaCodigos.length <= 0) return;
@@ -342,7 +344,8 @@ public class LibroDetalleController implements Initializable {
 		}
 		String[] listaCodigos = new String[this.libro.getEjemplares().size()];
 		for (int i = 0; i < listaCodigos.length; i++) {
-			listaCodigos[i] = this.libro.getCodigo();
+			
+			listaCodigos[i] = this.libro.getEjemplares().get(i).getCodigo();
 		}
 		imprimir(selectedDirectory.getAbsolutePath(),listaCodigos);
 

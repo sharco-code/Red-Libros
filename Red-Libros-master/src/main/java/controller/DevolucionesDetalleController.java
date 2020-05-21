@@ -181,6 +181,7 @@ public class DevolucionesDetalleController implements Initializable {
 	private boolean isInRoot(TreeItem root,TreeItem libros) {
 		for(Object item:root.getChildren()) {
 			if(((TreeItem)item).getValue().equals(libros.getValue())){
+				
 				return true;
 			};
 		}
