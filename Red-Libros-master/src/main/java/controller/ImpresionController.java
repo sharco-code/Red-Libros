@@ -22,6 +22,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import model.Options;
 import pojo.Libro;
@@ -32,7 +33,7 @@ import view.Toast;
 
 public class ImpresionController implements Initializable {
 	@FXML
-    private VBox xVBoxMAIN;
+    private VBox xVBoxCENTER;
 
 	@FXML
     private ChoiceBox<String> xChoiceBoxColumna;
@@ -46,6 +47,9 @@ public class ImpresionController implements Initializable {
     @FXML
     private HBox xButtonImprimir;
 
+    @FXML
+    private Text xTextLibrosSeleccionados;
+    
     @FXML
     private HBox xButtonCancelar;
 
@@ -80,6 +84,7 @@ public class ImpresionController implements Initializable {
     		cambiarEstado();
     	});
 		
+    	this.xTextLibrosSeleccionados.setText(Integer.toString(librosSeleccionados));
 	}
     
     @FXML
@@ -91,7 +96,6 @@ public class ImpresionController implements Initializable {
     void ImprimirCLICKED(MouseEvent event) {
     	seleccionarCarpeta();
     	imprimir();
-    	volver();
     }
 
 	private void seleccionarCarpeta() {
@@ -150,11 +154,11 @@ public class ImpresionController implements Initializable {
 			} else {
 				System.out.println("File is not exists!");
 			}
-
+			volver();
 		} catch (Exception e) {
-			e.printStackTrace();
-			showToast("No se ha podido generar el PDF");
+			showToastRED("No se ha podido generar el PDF");
 		}
+		
 	}
     
     void  volver() {
@@ -169,8 +173,8 @@ public class ImpresionController implements Initializable {
 			root = loader.load();
 			libroDetalleController.setLibro(this.libro);
 
-			this.xVBoxMAIN.getChildren().clear();
-			this.xVBoxMAIN.getChildren().add(root);
+			this.xVBoxCENTER.getChildren().clear();
+			this.xVBoxCENTER.getChildren().add(root);
 
 			libroDetalleController.disableComboBoxes();
 		} catch (IOException e) {
@@ -220,6 +224,13 @@ public class ImpresionController implements Initializable {
 		this.listaCodigos = listaCodigos;
 	}
 
+	private int librosSeleccionados = 0;
+	
+	public void setxTextLibrosSeleccionados(int librosSeleccionados) {
+		this.librosSeleccionados = librosSeleccionados;
+	}
+
+	
 	
     
     

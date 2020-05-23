@@ -749,15 +749,20 @@ public class LibroDetalleController implements Initializable {
     }
 	
 	void imprimir(String[] listaCodigos) {
+		if(listaCodigos.length < 1) {
+			showToastRED("Este libro no tiene ningun ejemplar");
+			return;
+		}
 		this.xVBoxMAIN.getChildren().clear();
 		try {
 			ImpresionController impresionController = new ImpresionController();
 			impresionController.setLibro(this.libro);
 			impresionController.setListaCodigos(listaCodigos);
+			impresionController.setxTextLibrosSeleccionados(listaCodigos.length);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/impresionComponent.fxml"));
 			loader.setController(impresionController);
 			VBox vbox = (VBox) loader.load();
-
+			
 			VBox.setVgrow(vbox, Priority.ALWAYS);
 
 			this.xVBoxMAIN.getChildren().add(vbox);

@@ -6,33 +6,116 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="408.0" prefWidth="756.0" style="-fx-background-color: #f3f3f3;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxMAIN">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #f3f3f3;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxCENTER">
    <children>
-      <VBox alignment="CENTER" style="-fx-background-color: #f3f3f3;" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER_LEFT" minHeight="100.0" prefHeight="100.0" style="-fx-background-color: WHITE;">
          <children>
-            <VBox alignment="CENTER" prefHeight="75.0" prefWidth="656.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imprimir códigos de barras" fx:id="xLabelTitle">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="408.0" prefWidth="756.0" style="-fx-background-color: #f3f3f3;" stylesheets="@../style/style.css">
+         <children>
+            <VBox alignment="TOP_CENTER" style="-fx-background-color: #f3f3f3;">
                <children>
-                  <Label text="Empieza en columna:" />
-                  <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxColumna" />
+                  <HBox alignment="CENTER">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplares seleccionados:">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" fx:id="xTextLibrosSeleccionados">
+                           <font>
+                              <Font name="Arial Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="656.0">
+            <VBox alignment="CENTER">
                <children>
-                  <Label text="Empieza en la fila:" />
-                  <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxFila" />
+                  <CheckBox mnemonicParsing="false" selected="true" text="Usar toda la página" fx:id="xCheckBoxPagina">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets top="100.0" />
+                     </padding>
+                  </CheckBox>
+                  <Separator prefWidth="200.0">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                  </Separator>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Empieza en columna:">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxColumna">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Empieza en la fila:">
+                           <font>
+                              <Font name="Arial" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox prefWidth="150.0" fx:id="xChoiceBoxFila" />
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER" />
                </children>
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
             </VBox>
-            <CheckBox mnemonicParsing="false" selected="true" text="Usar toda la página" fx:id="xCheckBoxPagina" />
-            <HBox alignment="CENTER">
+         </children>
+      </VBox>
+      <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: WHITE;" HBox.hgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#ImprimirCLICKED" prefWidth="140.0" fx:id="xButtonImprimir">
                      <children>
-                        <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="1.8em" />
+                        <FontAwesomeIcon fill="WHITE" iconName="PRINT" size="1.8em">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIcon>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Imprimir">
                            <font>
                               <Font name="Arial" size="19.0" />
@@ -43,25 +126,23 @@
                         <String fx:value="hover_main" />
                         <String fx:value="normal_button" />
                      </styleClass>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#CancelarCLICKED" prefWidth="140.0" fx:id="xButtonCancelar">
+                  <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Cancelar">
-                           <font>
-                              <Font name="Arial" size="19.0" />
-                           </font>
-                        </Text>
+                        <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#CancelarCLICKED" prefWidth="140.0" fx:id="xButtonCancelar">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: WHITE;" text="Cancelar">
+                                 <font>
+                                    <Font name="Arial" size="19.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <styleClass>
+                              <String fx:value="red_button_hover" />
+                              <String fx:value="red_button" />
+                           </styleClass>
+                        </HBox>
                      </children>
-                     <styleClass>
-                        <String fx:value="red_button_hover" />
-                        <String fx:value="red_button" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
                   </HBox>
                </children>
                <padding>
@@ -69,9 +150,6 @@
                </padding>
             </HBox>
          </children>
-         <padding>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-         </padding>
-      </VBox>
+      </HBox>
    </children>
 </VBox>
