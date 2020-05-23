@@ -18,9 +18,10 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainView.fxml"));
 	        Parent root = loader.load();
-	        
+	        Scene scene = new Scene(root);
+	        scene.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 	        primaryStage.setTitle("Red de Libros");
-	        primaryStage.setScene(new Scene(root));
+	        primaryStage.setScene(scene);
 	        
 	        //primaryStage.getIcons().add(new Image(Init.class.getResourceAsStream(System.getProperty("user.dir") + "\\images\\icon.png"))) ;
 	        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));

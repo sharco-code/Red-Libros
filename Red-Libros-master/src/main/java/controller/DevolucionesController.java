@@ -207,6 +207,7 @@ public class DevolucionesController implements Initializable {
 					loader.setController(devolucionesDetalleController);
 					root = loader.load();
 					devolucionesDetalleController.setAlumno(newSelection);
+					root.getStylesheets().add(getClass().getResource("/style/treeview_style.css").toExternalForm());
 					xVBoxMAIN.getChildren().clear();
 					xVBoxMAIN.getChildren().add(root);
 

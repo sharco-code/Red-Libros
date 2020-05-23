@@ -202,6 +202,8 @@ public class EntregasController implements Initializable {
 					loader.setController(entregasDetalleController);
 					root = loader.load();
 					entregasDetalleController.setAlumno(newSelection);
+					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
+					root.getStylesheets().add(getClass().getResource("/style/treeview_style.css").toExternalForm());
 					xVBoxMAIN.getChildren().clear();
 					xVBoxMAIN.getChildren().add(root);
 

@@ -91,7 +91,7 @@ public class MainController implements Initializable {
     		loader.setController(this.devolucionesController);
     		VBox vbox = (VBox) loader.load();
     		
-    		
+    		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
     		VBox.setVgrow(vbox, Priority.ALWAYS);
 			
 			this.xVBoxCENTER.getChildren().add(vbox);
@@ -116,7 +116,7 @@ public class MainController implements Initializable {
     		
     		
     		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
+    		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
 			this.xVBoxCENTER.getChildren().add(vbox);
 			
 			this.entregasController.reload();
@@ -140,7 +140,7 @@ public class MainController implements Initializable {
     		
     		
     		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
+    		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
 			this.xVBoxCENTER.getChildren().add(vbox);
 			
 			this.historialController.reload();
@@ -222,7 +222,7 @@ public class MainController implements Initializable {
     		
     		
     		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
+    		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
 			this.xVBoxCENTER.getChildren().add(vbox);
 
 			this.librosController.reload();
@@ -258,7 +258,7 @@ public class MainController implements Initializable {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/stockComponent.fxml"));
     		loader.setController(this.stockController);
     		VBox vbox = (VBox) loader.load();
-    		
+    		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
     		
     		VBox.setVgrow(vbox, Priority.ALWAYS);
 			

@@ -50,7 +50,7 @@
             </HBox>
          </children>
       </HBox>
-      <TableView layoutY="1.0" stylesheets="@../style/table_style.css" VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
+      <TableView layoutY="1.0"  VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
       <VBox alignment="BOTTOM_CENTER">
          <children>
             <Separator>

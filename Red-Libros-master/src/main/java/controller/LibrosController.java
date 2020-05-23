@@ -94,6 +94,7 @@ public class LibrosController implements Initializable {
 					// root =
 					// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
 					root = loader.load();
+					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 					libroDetalleController.setLibro(newSelection);
 
 					this.xVBoxMAIN.getChildren().clear();
