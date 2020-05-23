@@ -11,8 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
@@ -56,7 +58,13 @@ public class DevolucionesDetalleController implements Initializable {
     private HBox xButtonDevolver;
 
     @FXML
-    private ComboBox<String> xComboBoxEstado;
+    private RadioButton xRadioButtonPerfecto;
+
+    @FXML
+    private RadioButton xRadioButtonRegular;
+
+    @FXML
+    private RadioButton xRadioButtonMal;
     
     private Alumno alumno;
     
@@ -77,24 +85,17 @@ public class DevolucionesDetalleController implements Initializable {
     		showToastRED("Selecciona un libro para devolver");
 			return;
 		}
-    	if(this.xComboBoxEstado.getSelectionModel().getSelectedItem() == null) {
-    		showToastRED("Debes seleccionar el estado del libro");
-			return;
-    	}
     	
 		try {
 			int estado = 0;
-			
-			switch (this.xComboBoxEstado.getSelectionModel().getSelectedItem()) {
-			case "Perfecto":
+			if(this.xRadioButtonPerfecto.isSelected()) {
 				estado = 0;
-				break;
-			case "Regular":
+				
+			} else if(this.xRadioButtonRegular.isSelected()) {
 				estado = 1;
-				break;
-			case "Mal":
+				
+			}else if(this.xRadioButtonMal.isSelected()) {
 				estado = 2;
-				break;
 			}
 			
 			this.devolucionesService.devolverLibro(this.selectedEjemplar,this.alumno, estado);
@@ -171,6 +172,15 @@ public class DevolucionesDetalleController implements Initializable {
 			// Body would go here
 			if(newValue != null && newValue.getValue() instanceof Ejemplare) {
 				this.selectedEjemplar = newValue.getValue();
+				if(this.selectedEjemplar.getEstado() == 0) {
+					this.xRadioButtonPerfecto.setSelected(true);
+					
+				} else if(this.selectedEjemplar.getEstado() == 1) {
+					this.xRadioButtonRegular.setSelected(true);
+					
+				}else if(this.selectedEjemplar.getEstado() == 2) {
+					this.xRadioButtonMal.setSelected(true);
+				}
 			}
 			
 
@@ -192,12 +202,12 @@ public class DevolucionesDetalleController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.xTreeViewLibros.setShowRoot(false);
-
-		this.xComboBoxEstado.getItems().addAll(
-			    "Perfecto",
-			    "Regular",
-			    "Mal"
-			);
+		
+		ToggleGroup toggleGroup = new ToggleGroup();
+		
+		this.xRadioButtonMal.setToggleGroup(toggleGroup);
+		this.xRadioButtonPerfecto.setToggleGroup(toggleGroup);
+		this.xRadioButtonRegular.setToggleGroup(toggleGroup);
 		
 	}
 	

@@ -3,8 +3,8 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.HBox?>
@@ -108,11 +108,26 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <ComboBox prefWidth="220.0" promptText="Estado del ejemplar al devolver" fx:id="xComboBoxEstado">
+            <Label text="Estado:">
                <HBox.margin>
-                  <Insets right="40.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
-            </ComboBox>
+            </Label>
+            <RadioButton mnemonicParsing="false" text="Perfecto" fx:id="xRadioButtonPerfecto">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Regular" fx:id="xRadioButtonRegular">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Mal" fx:id="xRadioButtonMal">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </RadioButton>
             <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#DevolverCLICKED" prefWidth="140.0" fx:id="xButtonDevolver">
                <children>
                   <FontAwesomeIcon fill="WHITE" iconName="ARROW_RIGHT" size="1.8em">
