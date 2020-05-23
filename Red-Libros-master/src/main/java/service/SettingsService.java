@@ -37,16 +37,16 @@ public class SettingsService {
 			user = (String) jo.get("user");
 			password = (String) jo.get("password");
 			
-			if(jo.get("columnas")!=null) {
+			if(jo.get("columnas")!=null && !jo.get("columnas").toString().isEmpty()) {
 				columnas = (String) jo.get("columnas");
 			}else {
-				columnas = null;
+				columnas = "2";
 			}
 			
-			if(jo.get("filas")!=null) {
+			if(jo.get("filas")!=null && !jo.get("filas").toString().isEmpty()) {
 				filas = (String) jo.get("filas");
 			}else {
-				filas = null;
+				filas = "5";
 			}
 			
 			options = new Options(ip,port,user,password,columnas,filas);

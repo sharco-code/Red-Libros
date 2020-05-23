@@ -21,7 +21,7 @@ public class PdfService {
 	private final int  PADDING_TOP = 60;
 	private final int  PADDING_BOTTOM = 60;
 	private final int DEFAULT_COLUMN_WIDTH = 200;
-	
+	private final float CELL_HEIGHT = 50f;
 	private int columns;
 	private int rows;
 	private float [] pointColumnWidths;
@@ -55,7 +55,7 @@ public class PdfService {
 		}
 	}
 
-	public void createPDF(List<Image> codigosBarra,String ruta) throws FileNotFoundException, DocumentException {
+	public void createPDF(List<Image> codigosBarra,String ruta,int columnaEmpieza,int filaEmpieza) throws FileNotFoundException, DocumentException {
 		setColumnRows();
 		Document document = new Document(PageSize.A4, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, PADDING_BOTTOM);
 		PdfWriter.getInstance(document, new FileOutputStream(ruta+"//barcodes.pdf"));
@@ -65,6 +65,8 @@ public class PdfService {
 		
 		
 		PdfPTable table = new PdfPTable(this.pointColumnWidths);
+		rellenarHastaEmpieza(columnaEmpieza, filaEmpieza, table);
+		
 		for (Image image : codigosBarra) {
 			if(table.getRows().size() >= this.rows) {
 				document.add(table);
@@ -83,20 +85,36 @@ public class PdfService {
 		
 	}
 
+	private void rellenarHastaEmpieza(int columnaEmpieza, int filaEmpieza, PdfPTable table) {
+		while(table.getRows().size() < (filaEmpieza-1)) {
+			rellenarVacio(table);
+		}
+		for (int i = 0; i < (columnaEmpieza-1); i++) {
+			rellenarVacio(table);
+		}
+	}
+
 	private void rellenarHuecos(PdfPTable table, int huecosLibres) {
 		PdfPCell cell = new PdfPCell();
 		for (int i = 0; i < huecosLibres; i++) {
 		    cell.setBorder(0);
-		    cell.setFixedHeight(50f);
+		    cell.setFixedHeight(CELL_HEIGHT);
 			table.addCell(cell);
 		}
+	}
+	
+	void rellenarVacio(PdfPTable table) {
+		PdfPCell cell = new PdfPCell();
+		cell.setBorder(0);
+	    cell.setFixedHeight(CELL_HEIGHT);
+		table.addCell(cell);
 	}
 	
 	private void addCell(PdfPTable table,Image codigo) {
 		
 		PdfPCell cell = new PdfPCell(codigo);
         cell.setBorder(0);
-        cell.setFixedHeight(50f);
+        cell.setFixedHeight(CELL_HEIGHT);
         
 	    table.addCell(cell);
 	    

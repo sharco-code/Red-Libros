@@ -293,61 +293,17 @@ public class LibroDetalleController implements Initializable {
 
 	
 
-	void imprimir(String ruta,String[] listaCodigos) {
-		if(listaCodigos.length <= 0) return;
-		PdfService pdfService = new PdfService();
-		BarcodeService barcodeService = new BarcodeService();
-
-		List<com.itextpdf.text.Image> codigos = new ArrayList<>();
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			for (int i = 0; i < listaCodigos.length; i++) {
-				ImageIO.write(barcodeService.generateImage(listaCodigos[i]), "png", baos);
-				codigos.add(com.itextpdf.text.Image.getInstance(baos.toByteArray()));
-				baos.reset();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			pdfService.createPDF(codigos, ruta);
-			showToast("PDF generado corectamente");
-			File pdfFile = new File(ruta + "\\barcodes.pdf");
-			if (pdfFile.exists()) {
-
-				if (Desktop.isDesktopSupported()) {
-					Desktop.getDesktop().open(pdfFile);
-				} else {
-					System.out.println("Awt Desktop is not supported!");
-				}
-
-			} else {
-				System.out.println("File is not exists!");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			showToast("No se ha podido generar el PDF");
-		}
-	}
+	
 
 	@FXML
 	void ImprimirCLICKED(MouseEvent event) {
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(new File("src"));
-
-		File selectedDirectory = directoryChooser.showDialog(Main.getStage());
-		if (selectedDirectory == null) {
-			return;
-		}
+		
 		String[] listaCodigos = new String[this.libro.getEjemplares().size()];
 		for (int i = 0; i < listaCodigos.length; i++) {
 			
 			listaCodigos[i] = this.libro.getEjemplares().get(i).getCodigo();
 		}
-		imprimir(selectedDirectory.getAbsolutePath(),listaCodigos);
+		imprimir(listaCodigos);
 
 	}
 
@@ -783,20 +739,33 @@ public class LibroDetalleController implements Initializable {
 			return;
 		}
 		
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(new File("src"));
-
-		File selectedDirectory = directoryChooser.showDialog(Main.getStage());
-		if (selectedDirectory == null) {
-			return;
-		}
+		
 		String[] listaCodigos = new String[listaEjemplares.size()];
 		for (int i = 0; i < listaCodigos.length; i++) {
 			listaCodigos[i] = listaEjemplares.get(i).getCodigo();
 		}
-		imprimir(selectedDirectory.getAbsolutePath(),listaCodigos);
+		imprimir(listaCodigos);
 		
     }
+	
+	void imprimir(String[] listaCodigos) {
+		this.xVBoxMAIN.getChildren().clear();
+		try {
+			ImpresionController impresionController = new ImpresionController();
+			impresionController.setLibro(this.libro);
+			impresionController.setListaCodigos(listaCodigos);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/impresionComponent.fxml"));
+			loader.setController(impresionController);
+			VBox vbox = (VBox) loader.load();
+
+			VBox.setVgrow(vbox, Priority.ALWAYS);
+
+			this.xVBoxMAIN.getChildren().add(vbox);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void showToastRED(String toastMsg) {
 		int toastMsgTime = 1000; // 3.5 seconds
