@@ -23,7 +23,6 @@ public class Main extends Application {
 	        primaryStage.setTitle("Red de Libros");
 	        primaryStage.setScene(scene);
 	        
-	        //primaryStage.getIcons().add(new Image(Init.class.getResourceAsStream(System.getProperty("user.dir") + "\\images\\icon.png"))) ;
 	        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
 	        
 	        

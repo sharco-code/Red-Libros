@@ -8,7 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -38,22 +44,16 @@ public class MainController implements Initializable {
     
     private HistorialController historialController;
     
+    private Background background;
+    
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.errorController = new ErrorController();
+		setBackgroundMain();
 		
-		try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainComponent.fxml"));
-    		VBox vbox = (VBox) loader.load();
-    		
-    		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
-			this.xVBoxCENTER.getChildren().add(vbox);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
+	
     @FXML
     void AjustesCLICKED(MouseEvent event) {
     	this.xVBoxCENTER.getChildren().clear();
@@ -202,16 +202,9 @@ public class MainController implements Initializable {
     @FXML
     void NameCLICKED(MouseEvent event) {
     	this.xVBoxCENTER.getChildren().clear();
-    	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainComponent.fxml"));
-    		VBox vbox = (VBox) loader.load();
-    		
-    		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
-			this.xVBoxCENTER.getChildren().add(vbox);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	
+		this.xVBoxCENTER.setBackground(this.background);
+		
     }
 
     @FXML
@@ -224,6 +217,8 @@ public class MainController implements Initializable {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/stockComponent.fxml"));
     		loader.setController(this.stockController);
     		VBox vbox = (VBox) loader.load();
+    		
+    		
     		vbox.getStylesheets().add(getClass().getResource("/style/table_style.css").toExternalForm());
     		
     		VBox.setVgrow(vbox, Priority.ALWAYS);
@@ -238,6 +233,16 @@ public class MainController implements Initializable {
 		}
 
     }
+    
+    private void setBackgroundMain() {
+		BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResourceAsStream("/images/main-background2.jpg")),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+		          BackgroundSize.DEFAULT);
+		this.background = new Background(backgroundImage);
+		
+		
+		this.xVBoxCENTER.setBackground(background);
+	}
 
 	
 	

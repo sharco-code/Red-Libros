@@ -172,7 +172,8 @@ public class LibroDetalleController implements Initializable {
 
 			setListenerComboBoxCurso();
 			setListenerComboBoxCursoEscolar();
-
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
