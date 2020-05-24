@@ -235,9 +235,10 @@ public class MainController implements Initializable {
     }
     
     private void setBackgroundMain() {
+    	BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
 		BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResourceAsStream("/images/main-background2.jpg")),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-		          BackgroundSize.DEFAULT);
+				backgroundSize);
 		this.background = new Background(backgroundImage);
 		
 		
