@@ -8,9 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.imageio.ImageIO;
-
 import app.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -55,36 +52,45 @@ public class ImpresionController implements Initializable {
 
     
     private Libro libro;
+    
     private String ruta;
+    
     private String[] listaCodigos;
+    
+    private int librosSeleccionados = 0;
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
     	Options options;
     	options = SettingsService.getOptions();
     	int columnas  = Integer.parseInt(options.getColumnas());
     	int filas = Integer.parseInt(options.getFilas());
     	
-    	xChoiceBoxColumna.setDisable(true);
-    	xChoiceBoxColumna.getItems().clear();
-    	for (int i = 1; i <= columnas; i++) {
-    		xChoiceBoxColumna.getItems().add(""+i);
-		}
-    	xChoiceBoxColumna.getSelectionModel().selectFirst();
+    	setYRellenarChoiceBoxColumna(columnas);
     	
-    	xChoiceBoxFila.setDisable(true);
+    	setYRellenarChoiceBoxFila(filas);
+    	
+    	xCheckBoxPagina.setOnAction(e ->cambiarEstado());
+		
+    	this.xTextLibrosSeleccionados.setText(Integer.toString(librosSeleccionados));
+	}
+
+	private void setYRellenarChoiceBoxFila(int filas) {
+		xChoiceBoxFila.setDisable(true);
     	xChoiceBoxFila.getItems().clear();
     	for (int i = 1; i <= filas; i++) {
     		xChoiceBoxFila.getItems().add(""+i);
 		}
     	xChoiceBoxFila.getSelectionModel().selectFirst();
-    	
-    	xCheckBoxPagina.setOnAction(e ->{
-    		cambiarEstado();
-    	});
-		
-    	this.xTextLibrosSeleccionados.setText(Integer.toString(librosSeleccionados));
+	}
+
+	private void setYRellenarChoiceBoxColumna(int columnas) {
+		xChoiceBoxColumna.setDisable(true);
+    	xChoiceBoxColumna.getItems().clear();
+    	for (int i = 1; i <= columnas; i++) {
+    		xChoiceBoxColumna.getItems().add(""+i);
+		}
+    	xChoiceBoxColumna.getSelectionModel().selectFirst();
 	}
     
     @FXML
@@ -100,7 +106,7 @@ public class ImpresionController implements Initializable {
 
 	private void seleccionarCarpeta() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		directoryChooser.setInitialDirectory(new File("src"));
+		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
 		File selectedDirectory = directoryChooser.showDialog(Main.getStage());
 		if (selectedDirectory == null) {
@@ -143,17 +149,9 @@ public class ImpresionController implements Initializable {
 			
 			showToast("PDF generado corectamente");
 			File pdfFile = new File(ruta + "\\barcodes.pdf");
-			if (pdfFile.exists()) {
-
-				if (Desktop.isDesktopSupported()) {
-					Desktop.getDesktop().open(pdfFile);
-				} else {
-					System.out.println("Awt Desktop is not supported!");
-				}
-
-			} else {
-				System.out.println("File is not exists!");
-			}
+			if (pdfFile.exists() && Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(pdfFile);
+			} 
 			volver();
 		} catch (Exception e) {
 			showToastRED("No se ha podido generar el PDF");
@@ -171,6 +169,7 @@ public class ImpresionController implements Initializable {
 			loader.setController(libroDetalleController);
 			
 			root = loader.load();
+			root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 			libroDetalleController.setLibro(this.libro);
 
 			this.xVBoxCENTER.getChildren().clear();
@@ -224,7 +223,7 @@ public class ImpresionController implements Initializable {
 		this.listaCodigos = listaCodigos;
 	}
 
-	private int librosSeleccionados = 0;
+	
 	
 	public void setxTextLibrosSeleccionados(int librosSeleccionados) {
 		this.librosSeleccionados = librosSeleccionados;

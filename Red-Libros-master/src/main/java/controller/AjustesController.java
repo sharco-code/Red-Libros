@@ -1,46 +1,24 @@
 package controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.persistence.Query;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import app.Main;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import model.Options;
-import pojo.Libro;
 import view.Toast;
-import utiles.hibernate.UtilesHibernate;
-import utiles.xml.ModifyXMLFile;
 import service.SettingsService;
 
 public class AjustesController implements Initializable {
@@ -99,8 +77,6 @@ public class AjustesController implements Initializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			options = null;
 		}
 
 	}
@@ -112,7 +88,6 @@ public class AjustesController implements Initializable {
 			writeSettings();
 			showToast("Cambios aplicados");
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 
@@ -125,7 +100,7 @@ public class AjustesController implements Initializable {
 		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 
-	private void writeSettings() throws FileNotFoundException, IOException, ParseException {
+	private void writeSettings() throws  IOException, ParseException {
 		SettingsService.writeSettings(new Options(this.xTextFieldIP.getText(), this.xTextFieldPuerto.getText(),
 				this.xTextFieldUser.getText(), this.xTextFieldPassword.getText(),
 				this.xChoiceBoxColumnas.getSelectionModel().getSelectedItem(),

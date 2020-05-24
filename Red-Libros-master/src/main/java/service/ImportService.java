@@ -1,18 +1,12 @@
 package service;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAttribute;
-
 import dao.AlumnoDAO;
 import dao.ContenidoDAO;
 import dao.CursoDAO;
@@ -59,12 +53,9 @@ public class ImportService {
 
 				cursoDAO.merge(curso);
 			}
-
-
 	}
 
 	public void importarContenido(String ruta) throws Exception {
-
 
 			CentroXML que = readXML(ruta);
 			
@@ -161,6 +152,7 @@ public class ImportService {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void importarMatricula(String ruta) throws Exception {
 
 			CentroXML que = readXML(ruta);

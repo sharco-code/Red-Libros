@@ -2,32 +2,16 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import app.Main;
-import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import utiles.hibernate.UtilesHibernate;
 import view.Toast;
 
 
@@ -41,14 +25,35 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox xVBoxCENTER;
-
+    
     private LibrosController librosController;
+    
     private EntregasController entregasController;
+    
     private DevolucionesController devolucionesController;
+    
     private ErrorController errorController;
+    
     private StockController stockController;
+    
     private HistorialController historialController;
     
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.errorController = new ErrorController();
+		
+		try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainComponent.fxml"));
+    		VBox vbox = (VBox) loader.load();
+    		
+    		VBox.setVgrow(vbox, Priority.ALWAYS);
+			
+			this.xVBoxCENTER.getChildren().add(vbox);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     @FXML
     void AjustesCLICKED(MouseEvent event) {
     	this.xVBoxCENTER.getChildren().clear();
@@ -172,45 +177,6 @@ public class MainController implements Initializable {
     @FXML
     void LibrosCLICKED(MouseEvent event) {
 
-    	/*
-    	Estaría guay que esto salier mientras carga
-    	showToast("Conectando a BBDD");
-    	 
-		------------------------------ intento 1
-    	ToastThread toastThread = new ToastThread("Conectando a BBDD");
-    	Thread a = toastThread;
-    	a.start();
-    	
- 
-    	----------------------------- intento 2
-    	Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {           
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work                       
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {                          
-                            @Override
-                            public void run() {
-                                try{
-                                	showToast("Conectando a BBDD");
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();                      
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-        */
-    	
     	try {
     		this.librosController = new LibrosController();
         	
@@ -273,25 +239,7 @@ public class MainController implements Initializable {
 
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		
-    	
-    	
-		this.errorController = new ErrorController();
-		
-		try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainComponent.fxml"));
-    		VBox vbox = (VBox) loader.load();
-    		
-    		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
-			this.xVBoxCENTER.getChildren().add(vbox);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	private void showToastRED(String toastMsg) {
 		int toastMsgTime = 1000; //3.5 seconds

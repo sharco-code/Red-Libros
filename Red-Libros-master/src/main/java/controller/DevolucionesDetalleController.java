@@ -78,6 +78,17 @@ public class DevolucionesDetalleController implements Initializable {
     	this.devolucionesService = new DevolucionesService();
     }
     
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.xTreeViewLibros.setShowRoot(false);
+		
+		ToggleGroup toggleGroup = new ToggleGroup();
+		
+		this.xRadioButtonMal.setToggleGroup(toggleGroup);
+		this.xRadioButtonPerfecto.setToggleGroup(toggleGroup);
+		this.xRadioButtonRegular.setToggleGroup(toggleGroup);
+		
+	}
 
     @FXML
     void DevolverCLICKED(MouseEvent event) {
@@ -85,7 +96,6 @@ public class DevolucionesDetalleController implements Initializable {
     		showToastRED("Selecciona un libro para devolver");
 			return;
 		}
-    	
 		try {
 			int estado = 0;
 			if(this.xRadioButtonPerfecto.isSelected()) {
@@ -103,7 +113,6 @@ public class DevolucionesDetalleController implements Initializable {
 			reload();
 			showToast("Libro devuelto correctamente");
 		} catch (Exception e) {
-			// TODO: handle exception
 			showToastRED(e.getMessage());
 		}
 		
@@ -124,10 +133,8 @@ public class DevolucionesDetalleController implements Initializable {
 			reload();
 			this.xTextFieldCodigoEjemplar.setText("");
 			showToast("Libro entregado correctamente");
-			return;
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			showToastRED(e.getMessage());
 		}
     }
@@ -146,21 +153,20 @@ public class DevolucionesDetalleController implements Initializable {
 		setTreeView();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setTreeView(){
 		TreeItem root = new TreeItem();
 		for(Historial historial: this.alumno.getHistorials()) {
 			if(historial.getFechaFinal() != null) continue;
+			
 			TreeItem ejemplares = new TreeItem<String>();
+			
 			ejemplares.setValue(historial.getEjemplare().getLibro().getContenido().getNombreCas());
+			
 			if(isInRoot(root,ejemplares)) continue;
-			for(Historial historialLibro: this.alumno.getHistorials()) {
-				if(historialLibro.getFechaFinal() != null) continue;
-				if(!historialLibro.getEjemplare().getLibro().getContenido().getCodigo().equals(historial.getEjemplare().getLibro().getContenido().getCodigo())) {
-					continue;
-				}
-				ejemplares.getChildren().add(new TreeItem<Ejemplare>(historialLibro.getEjemplare()));
-				
-			}
+			
+			rellenarTreeView(historial, ejemplares);
+			
 			ejemplares.setExpanded(true);
 			root.getChildren().add(ejemplares);
 		}
@@ -171,45 +177,48 @@ public class DevolucionesDetalleController implements Initializable {
 		xTreeViewLibros.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> { 
 			// Body would go here
 			if(newValue != null && newValue.getValue() instanceof Ejemplare) {
-				this.selectedEjemplar = newValue.getValue();
-				if(this.selectedEjemplar.getEstado() == 0) {
-					this.xRadioButtonPerfecto.setSelected(true);
-					
-				} else if(this.selectedEjemplar.getEstado() == 1) {
-					this.xRadioButtonRegular.setSelected(true);
-					
-				}else if(this.selectedEjemplar.getEstado() == 2) {
-					this.xRadioButtonMal.setSelected(true);
-				}
+				seleccionaRadioButton(newValue);
 			}
 			
 
 		});
 		
 	}
-	
+
+	private void seleccionaRadioButton(TreeItem<Ejemplare> newValue) {
+		this.selectedEjemplar = newValue.getValue();
+		if(this.selectedEjemplar.getEstado() == 0) {
+			this.xRadioButtonPerfecto.setSelected(true);
+			
+		} else if(this.selectedEjemplar.getEstado() == 1) {
+			this.xRadioButtonRegular.setSelected(true);
+			
+		}else if(this.selectedEjemplar.getEstado() == 2) {
+			this.xRadioButtonMal.setSelected(true);
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void rellenarTreeView(Historial historial, TreeItem ejemplares) {
+		for(Historial historialLibro: this.alumno.getHistorials()) {
+			if(historialLibro.getFechaFinal() != null || !historialLibro.getEjemplare().getLibro().getContenido().getCodigo().equals(historial.getEjemplare().getLibro().getContenido().getCodigo())) {
+				continue;
+			}
+			ejemplares.getChildren().add(new TreeItem<Ejemplare>(historialLibro.getEjemplare()));
+			
+		}
+	}
+	@SuppressWarnings({ "rawtypes" })
 	private boolean isInRoot(TreeItem root,TreeItem libros) {
 		for(Object item:root.getChildren()) {
 			if(((TreeItem)item).getValue().equals(libros.getValue())){
-				
 				return true;
-			};
+			}
 		}
-		
 		return false;
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.xTreeViewLibros.setShowRoot(false);
-		
-		ToggleGroup toggleGroup = new ToggleGroup();
-		
-		this.xRadioButtonMal.setToggleGroup(toggleGroup);
-		this.xRadioButtonPerfecto.setToggleGroup(toggleGroup);
-		this.xRadioButtonRegular.setToggleGroup(toggleGroup);
-		
-	}
+	
 	
 	private void showToastRED(String toastMsg) {
 		int toastMsgTime = 1000; //3.5 seconds

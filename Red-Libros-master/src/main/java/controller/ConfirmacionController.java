@@ -1,10 +1,6 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import org.json.simple.parser.ParseException;
-
 import app.Main;
 import dao.LibroDAO;
 import javafx.fxml.FXML;
@@ -52,9 +48,8 @@ public class ConfirmacionController {
 
 			LibroDetalleController libroDetalleController = new LibroDetalleController();
 			loader.setController(libroDetalleController);
-			// root =
-			// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
 			root = loader.load();
+			root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 			libroDetalleController.setLibro(this.libro);
 
 			this.xVBoxMAIN.getChildren().clear();
@@ -68,7 +63,6 @@ public class ConfirmacionController {
 
 	@FXML
 	void OkCLICKED(MouseEvent event) {
-		System.out.println(this.libro.getId());
 		libroDAO.delete(this.libro);
 
 		showToast("Libro borrado");

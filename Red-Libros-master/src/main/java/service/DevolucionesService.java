@@ -4,33 +4,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
 import dao.EjemplarDAO;
 import dao.HistorialDAO;
-import dao.LibroDAO;
 import pojo.Alumno;
 import pojo.Ejemplare;
 import pojo.Historial;
-import pojo.Libro;
 
 public class DevolucionesService {
 	private HistorialDAO historialDAO;
 	private EjemplarDAO ejemplarDAO;
-	private LibroDAO libroDAO;
 	private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private Calendar calendar = Calendar.getInstance();
 	
 	public DevolucionesService() {
 		historialDAO = new HistorialDAO();
 		ejemplarDAO = new EjemplarDAO();
-		libroDAO = new LibroDAO();
 	}
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	public void devolverLibro(Ejemplare ejemplar,Alumno alumno, int estado) throws Exception {
-		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		Historial historial = null;
@@ -57,29 +51,19 @@ public class DevolucionesService {
 			this.ejemplarDAO.merge(ejemplar);
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw new Exception("Error de conexion con el servidor");
 		}
-		
-		
-		
-		
 	}
 
-
-
 	public Ejemplare scanEjemplar(String text) throws Exception {
-		// TODO Auto-generated method stub
 		Ejemplare ejemplar = ejemplarDAO.findById(text);
 		if(ejemplar == null)throw new Exception("No se encontro el ejemplar");
 		if(ejemplar.getPrestado() == 0) throw new Exception("El ejemplar no esta prestado");
 		return ejemplar;
 	}
 
-
-
+	@SuppressWarnings("deprecation")
 	public void devolverLibroScaneado(Ejemplare ejemplar, Alumno alumno) throws Exception {
-		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		Historial historial = null;
@@ -100,7 +84,6 @@ public class DevolucionesService {
 			this.ejemplarDAO.merge(ejemplar);
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw e;
 		}
 		

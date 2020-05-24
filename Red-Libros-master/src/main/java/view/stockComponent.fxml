@@ -50,7 +50,7 @@
             </HBox>
          </children>
       </HBox>
-      <TableView layoutY="1.0"  VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
+      <TableView layoutY="1.0" VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
       <VBox alignment="BOTTOM_CENTER">
          <children>
             <Separator>
@@ -77,7 +77,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldEJE1">
+                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldUnidades">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
@@ -99,7 +99,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldEJE2">
+                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldNumeroMatriculas">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
@@ -121,7 +121,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldEJE3">
+                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldEntregados">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
@@ -143,7 +143,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldEJE4">
+                                          <TextField editable="false" prefWidth="50.0" promptText="0" style="-fx-background-color: transparent;" fx:id="xTextFieldNoEntregados">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
