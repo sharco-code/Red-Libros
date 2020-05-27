@@ -3,21 +3,14 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.persistence.Query;
-
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import app.Main;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
 import javafx.event.ActionEvent;
@@ -33,14 +26,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
 import pojo.Curso;
-import pojo.Libro;
-import utiles.hibernate.UtilesHibernate;
 
 
 public class EntregasController implements Initializable {
@@ -75,6 +64,7 @@ public class EntregasController implements Initializable {
 	private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
 
 	private CursoDAO cursoDAO = new CursoDAO();
+	
 	private AlumnoDAO alumnoDAO = new AlumnoDAO();
 
 	@FXML
@@ -104,7 +94,6 @@ public class EntregasController implements Initializable {
 			}
 		});
 		
-		SessionFactory factory;
 		try {
 			listaCursos = cursoDAO.getAll();
 
@@ -118,7 +107,6 @@ public class EntregasController implements Initializable {
 			setListenerComboBoxCursoEscolar();
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 
@@ -186,8 +174,8 @@ public class EntregasController implements Initializable {
 		
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void reload() throws SQLException, Exception {
+	
+	public void reload(){
 
 		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
@@ -216,6 +204,16 @@ public class EntregasController implements Initializable {
 
 		xTableMain.getItems().clear();
 
+		setTabla();
+
+		getAlumnos();
+
+		xTableMain.getItems().addAll(listaAlumnos);
+
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setTabla() {
 		TableColumn apellido1Column = new TableColumn("Primer apellido");
 		apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
 
@@ -238,11 +236,6 @@ public class EntregasController implements Initializable {
 
 		xTableMain.getColumns().addAll(apellido1Column, apellido2Column, nombreColumn, niaColumn, expedienteColumn);
 		xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		getAlumnos();
-
-		xTableMain.getItems().addAll(listaAlumnos);
-
 	}
 
 	private void getAlumnos() {
@@ -260,7 +253,6 @@ public class EntregasController implements Initializable {
 	}
 	
 	public void filtrarPorNia(String newValue) {
-		// TODO Auto-generated method stub
 		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getNia().contains(newValue))
 				.collect((Collectors.toList()));
 		
@@ -270,7 +262,6 @@ public class EntregasController implements Initializable {
 	}
 	
 	public void filtrarPorExpediente(String newValue) {
-		// TODO Auto-generated method stub
 		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getExpediente().contains(newValue))
 				.collect((Collectors.toList()));
 		

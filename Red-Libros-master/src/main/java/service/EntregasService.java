@@ -1,36 +1,24 @@
 package service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.json.simple.parser.ParseException;
-
-import dao.AlumnoDAO;
 import dao.EjemplarDAO;
 import dao.HistorialDAO;
-import dao.LibroDAO;
-import javafx.scene.control.TreeItem;
 import model.EntregaTabla;
 import pojo.Alumno;
 import pojo.Ejemplare;
 import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
-import utiles.hibernate.UtilesHibernate;
 
 
 public class EntregasService {
 	private HistorialDAO historialDAO;
 	private EjemplarDAO ejemplarDAO;
-	private LibroDAO libroDAO;
 	private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private Calendar calendar = Calendar.getInstance();
 	
@@ -38,19 +26,15 @@ public class EntregasService {
 	public EntregasService() {
 		historialDAO = new HistorialDAO();
 		ejemplarDAO = new EjemplarDAO();
-		libroDAO = new LibroDAO();
 	}
 	
 	public List<Libro> getLibros(Matricula matricula) {
 		List<Libro> listaLibros = new ArrayList<>();
 		List<Historial> listaHistorial = historialDAO.getAllByAlumno(matricula.getAlumno().getId());
 		for(Libro libro: matricula.getContenidoBean().getLibros()) {
-			if(libro.getObsoleto() == 1) {
+			if((libro.getObsoleto() == 1 || inHistorial(listaHistorial, libro))){
 				continue;
-			};
-			if((inHistorial(listaHistorial, libro))){
-				continue;
-			};
+			}
 			listaLibros.add(libro);
 		}
 		
@@ -69,7 +53,6 @@ public class EntregasService {
 	}
 
 	public List<EntregaTabla> getHistorialTabla(String id) {
-		// TODO Auto-generated method stub
 		List<Historial> listaHistorial = new ArrayList<>();
 		List<EntregaTabla> historialTabla = new ArrayList<>();
 		
@@ -106,8 +89,8 @@ public class EntregasService {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void entregarLibro(Libro selectedLibro,Alumno alumno) throws Exception {
-		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		Ejemplare ejemplar = null;
@@ -140,7 +123,6 @@ public class EntregasService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
@@ -150,15 +132,14 @@ public class EntregasService {
 	}
 
 	public Ejemplare scanEjemplar(String text) throws Exception {
-		// TODO Auto-generated method stub
 		Ejemplare ejemplar = ejemplarDAO.findById(text);
 		if(ejemplar == null)throw new Exception("No se encontro el ejemplar");
 		if(ejemplar.getPrestado() == 1) throw new Exception("El ejemplar esta prestado");
 		return ejemplar;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void entregarLibroScaneado(Ejemplare ejemplar, Alumno alumno) throws Exception {
-		// TODO Auto-generated method stub
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		
@@ -178,7 +159,6 @@ public class EntregasService {
 			this.ejemplarDAO.attachDirty(ejemplar);
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw e;
 		}
 		

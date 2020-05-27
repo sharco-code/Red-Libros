@@ -49,10 +49,10 @@
             </HBox>
          </children>
       </HBox>
-      <TableView layoutY="1.0"  VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
+      <TableView layoutY="1.0" VBox.vgrow="ALWAYS" fx:id="xTableLibros" />
       <HBox alignment="CENTER_LEFT">
          <children>
-            <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#AddCLICKED" onMouseEntered="#AddENTERED" onMouseExited="#AddEXITED" prefWidth="140.0" fx:id="xButtonADD">
+            <HBox alignment="CENTER" minHeight="30.0" minWidth="140.0" onMouseClicked="#AddCLICKED" prefWidth="140.0" fx:id="xButtonADD">
                <children>
                   <FontAwesomeIcon fill="WHITE" iconName="PLUS" size="1.8em">
                      <HBox.margin>

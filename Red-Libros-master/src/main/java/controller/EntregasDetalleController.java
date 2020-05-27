@@ -1,11 +1,10 @@
 package controller;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import app.Main;
-import dao.HistorialDAO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,22 +13,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.util.converter.DefaultStringConverter;
-import model.EjemplarTabla;
 import model.EntregaTabla;
 import pojo.Alumno;
 import pojo.Ejemplare;
-import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
-import service.BarcodeService;
 import service.EntregasService;
 import view.Toast;
+
 public class EntregasDetalleController implements Initializable {
+	
 	@FXML
     private TextField xTextFieldNIA;
 
@@ -41,10 +37,6 @@ public class EntregasDetalleController implements Initializable {
 
     @FXML
     private TreeView<Libro> xTreeViewLibros;
-
-    private EntregasService entregasService;
-    
-    private Alumno alumno;
     
     @FXML
     private HBox xButtonEntregar;
@@ -57,24 +49,31 @@ public class EntregasDetalleController implements Initializable {
     
     @FXML
     private TextField xTextFieldCodigoEjemplar;
+
+    private EntregasService entregasService;
     
-    @SuppressWarnings("unchecked")
+    private Alumno alumno;
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	private TableColumn<EntregaTabla, String> asignaturaColumn = new TableColumn("Asignatura");
-	@SuppressWarnings("unchecked")
+    
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private TableColumn<EntregaTabla,String> fechaInicialColumn = new TableColumn("Fecha Inicial");
-	@SuppressWarnings("unchecked")
-	private TableColumn<EntregaTabla, String> estadoInicialColumn = new TableColumn("Estado");
-	@SuppressWarnings("unchecked")
-	private TableColumn<EntregaTabla, String> cursoColumn = new TableColumn("Curso");
-	@SuppressWarnings("unchecked")
+		
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private TableColumn<EntregaTabla, String> ejemplarColumn = new TableColumn("Ejemplar");
     
 	private Libro selectedLibro;
+	
 	private List<Libro> listaLibros = new ArrayList<>();
 
 	public EntregasDetalleController() {
 		entregasService = new EntregasService();
-		
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.xTreeViewLibros.setShowRoot(false);
 	}
 
 
@@ -93,6 +92,7 @@ public class EntregasDetalleController implements Initializable {
 
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void setTreeView(){
 		TreeItem root = new TreeItem();
 		for(Matricula matricula: this.alumno.getMatriculas()) {
@@ -116,12 +116,11 @@ public class EntregasDetalleController implements Initializable {
 			}else {
 				this.selectedLibro = null;
 			}
-			
-
 		});
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setTable() {
 		xTableViewHistorial.getItems().clear();
 		xTableViewHistorial.getColumns().clear();
@@ -131,8 +130,6 @@ public class EntregasDetalleController implements Initializable {
 		ejemplarColumn = new TableColumn("Ejemplar");
 		ejemplarColumn.setCellValueFactory(new PropertyValueFactory<>("idEjemplar"));
 
-		//estadoInicialColumn = new TableColumn("Estado");
-		//estadoInicialColumn.setCellValueFactory(new PropertyValueFactory<>("estadoInicial"));
 		
 		fechaInicialColumn = new TableColumn("Fecha Inicial");
 		fechaInicialColumn.setCellValueFactory(new PropertyValueFactory("fecha_inicial"));
@@ -140,15 +137,11 @@ public class EntregasDetalleController implements Initializable {
 		asignaturaColumn = new TableColumn("Asignatura");
 		asignaturaColumn.setCellValueFactory(new PropertyValueFactory("asignatura"));
 		
-		//cursoColumn = new TableColumn("Curso");
-		//cursoColumn.setCellValueFactory(new PropertyValueFactory("curso"));
 		
 		xTableViewHistorial.getColumns().addAll(asignaturaColumn,ejemplarColumn,fechaInicialColumn);
 		xTableViewHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewHistorial.setEditable(true);
 
-	
-		
 
 		xTableViewHistorial.getItems().addAll(entregasService.getHistorialTabla(this.alumno.getId()));
 	}
@@ -166,7 +159,6 @@ public class EntregasDetalleController implements Initializable {
 			reload();
 			showToast("Libro entregado correctamente");
 		} catch (Exception e) {
-			// TODO: handle exception
 			showToastRED(e.getMessage());
 		}
 		
@@ -197,24 +189,19 @@ public class EntregasDetalleController implements Initializable {
 			
 			throw new Exception("El alumno no esta matriculado en la asignatura de este libro");
 		} catch (Exception e) {
-			// TODO: handle exception
 			showToastRED(e.getMessage());
 		}
-		
-		
-		
 		
 
     }
 	
+	@SuppressWarnings({  "rawtypes" })
 	private boolean isInRoot(TreeItem root,TreeItem libros) {
 		for(Object item:root.getChildren()) {
 			if(((TreeItem)item).getValue().equals(libros.getValue())){
-				
 				return true;
-			};
+			}
 		}
-		
 		return false;
 	}
 	
@@ -233,11 +220,7 @@ public class EntregasDetalleController implements Initializable {
 	}
 
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.xTreeViewLibros.setShowRoot(false);
-		
-	}
+	
 		
     
     

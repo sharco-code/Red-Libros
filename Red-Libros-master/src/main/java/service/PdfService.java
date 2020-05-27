@@ -3,7 +3,6 @@ package service;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import com.itextpdf.text.Document;

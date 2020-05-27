@@ -1,8 +1,6 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,9 +8,7 @@ import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,7 +18,6 @@ import javafx.scene.text.Text;
 import model.EjemplarHistorial;
 import model.HistorialTabla;
 import pojo.Ejemplare;
-import pojo.Libro;
 import service.HistorialService;
 
 public class HistorialController implements Initializable{
@@ -48,11 +43,12 @@ public class HistorialController implements Initializable{
 	@FXML
 	private TableView<HistorialTabla> xTableHistorial;
 
-	private int radioButton_Selected = 1; // 1: ejemplar, 2: libro
+	private int radioButtonSelected = 1; // 1: ejemplar, 2: libro
 
 	private HistorialService historialService;
 	
 	private List<EjemplarHistorial> listaEjemplares;
+	
 	private List<EjemplarHistorial> listaEjemplaresFiltrados;
 	
 	
@@ -78,7 +74,7 @@ public class HistorialController implements Initializable{
 		this.xTextFieldSearch.setText("");
 		
 		this.xTextFieldSearch.setPromptText("Buscar por ejemplar");
-		radioButton_Selected = 1;
+		radioButtonSelected = 1;
 	}
 
 	@FXML
@@ -87,11 +83,11 @@ public class HistorialController implements Initializable{
 		this.xTextFieldSearch.setText("");
 		
 		this.xTextFieldSearch.setPromptText("Buscar por libro");
-		radioButton_Selected = 2;
+		radioButtonSelected = 2;
 		
 	}
 	
-	public void reload() throws SQLException, Exception {
+	public void reload(){
 		xTableEjemplare.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				this.setHistorialTable(newSelection.getEjemplar());
@@ -102,6 +98,16 @@ public class HistorialController implements Initializable{
 
 		xTableEjemplare.getItems().clear();
 		
+		setTablaEjemplar();
+
+		this.listaEjemplares = this.historialService.getEjemplares();
+
+		xTableEjemplare.getItems().addAll(listaEjemplares);
+
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setTablaEjemplar() {
 		TableColumn ejemplarColumn = new TableColumn("Ejemplar");
 		ejemplarColumn.setCellValueFactory(new PropertyValueFactory<>("codigoEjemplar"));
 
@@ -114,23 +120,14 @@ public class HistorialController implements Initializable{
 
 		xTableEjemplare.getColumns().addAll(ejemplarColumn, libroColumn,estadoColumn);
 		xTableEjemplare.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		this.listaEjemplares = this.historialService.getEjemplares();
-
-		xTableEjemplare.getItems().addAll(listaEjemplares);
-
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void setHistorialTable(Ejemplare ejemplar) {
 		
 		List<HistorialTabla> listaHistorialTabla = new ArrayList<>();
 		xTableHistorial.getItems().clear();
 		
-		/*
-		TableColumn cursoColumn = new TableColumn("Curso");
-		cursoColumn.setCellValueFactory(new PropertyValueFactory<>("curso"));
-		cursoColumn.setMaxWidth(1000);
-		*/
 		TableColumn niaColumn = new TableColumn("NIA");
 		niaColumn.setCellValueFactory(new PropertyValueFactory("nia"));
 		niaColumn.setMaxWidth(2000);
@@ -157,13 +154,12 @@ public class HistorialController implements Initializable{
 	
 	
 	private void filtrar(String newValue) {
-		if(radioButton_Selected==1) filtrarPorEjemplar(newValue);
+		if(radioButtonSelected==1) filtrarPorEjemplar(newValue);
 		else filtrarPorLibro(newValue);
 	}
 	
 	
 	private void filtrarPorEjemplar(String newValue) {
-		// TODO Auto-generated method stub
 		listaEjemplaresFiltrados = listaEjemplares.stream().filter(ejemplar -> ejemplar.getCodigoEjemplar().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableEjemplare.getItems().clear();
@@ -172,7 +168,6 @@ public class HistorialController implements Initializable{
 	}
 
 	private void filtrarPorLibro(String newValue) {
-		// TODO Auto-generated method stub
 		listaEjemplaresFiltrados = listaEjemplares.stream().filter(ejemplar -> ejemplar.getNombreLibro().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableEjemplare.getItems().clear();

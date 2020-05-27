@@ -1,9 +1,6 @@
 package model;
 
-import java.util.List;
 
-import pojo.Contenido;
-import pojo.Ejemplare;
 
 public class StockTabla {
 

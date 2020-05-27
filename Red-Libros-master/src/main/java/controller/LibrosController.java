@@ -1,16 +1,11 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
-import org.json.simple.parser.ParseException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,30 +35,12 @@ public class LibrosController implements Initializable {
 
 	@FXML
 	private TextField xTextFieldSearch;
-
-	private int radioButton_Selected = 1; // 1: NOMBRE, 2: CODIGO
-
-	@FXML
-	void xRadioButtonCODIGO_Action(ActionEvent event) {
-		this.xRadioButtonNOMBRE.setSelected(false);
-		this.xTextFieldSearch.setText("");
-		
-		this.xTextFieldSearch.setPromptText("Buscar por codigo");
-		radioButton_Selected = 2;
-	}
-
-	@FXML
-	void xRadioButtonNOMBRE_Action(ActionEvent event) {
-		this.xRadioButtonCODIGO.setSelected(false);
-		this.xTextFieldSearch.setText("");
-		
-		this.xTextFieldSearch.setPromptText("Buscar por nombre");
-		radioButton_Selected = 1;
-	}
-
+	
 	@FXML
 	private VBox xVBoxMAIN;
 
+	private int radioButtonSelected = 1; // 1: NOMBRE, 2: CODIGO
+	
 	private List<Libro> listaLibros = new ArrayList<>();
 
 	private List<Libro> librosFiltrados = new ArrayList<>();
@@ -78,9 +55,27 @@ public class LibrosController implements Initializable {
 		});
 
 	}
+	
+	@FXML
+	void xRadioButtonCODIGO_Action(ActionEvent event) {
+		this.xRadioButtonNOMBRE.setSelected(false);
+		this.xTextFieldSearch.setText("");
+		
+		this.xTextFieldSearch.setPromptText("Buscar por codigo");
+		radioButtonSelected = 2;
+	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void reload() throws SQLException, Exception {
+	@FXML
+	void xRadioButtonNOMBRE_Action(ActionEvent event) {
+		this.xRadioButtonCODIGO.setSelected(false);
+		this.xTextFieldSearch.setText("");
+		
+		this.xTextFieldSearch.setPromptText("Buscar por nombre");
+		radioButtonSelected = 1;
+	}
+
+	
+	public void reload(){
 
 		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
@@ -91,8 +86,7 @@ public class LibrosController implements Initializable {
 
 					LibroDetalleController libroDetalleController = new LibroDetalleController();
 					loader.setController(libroDetalleController);
-					// root =
-					// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
+					
 					root = loader.load();
 					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 					libroDetalleController.setLibro(newSelection);
@@ -110,6 +104,16 @@ public class LibrosController implements Initializable {
 
 		xTableLibros.getItems().clear();
 		
+		setTablaLibros();
+
+		getLibros();
+
+		xTableLibros.getItems().addAll(listaLibros);
+
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setTablaLibros() {
 		TableColumn codigoColumn = new TableColumn("Codigo");
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<>("codigo"));
 		codigoColumn.setMaxWidth(450);
@@ -123,29 +127,20 @@ public class LibrosController implements Initializable {
 
 		xTableLibros.getColumns().addAll(codigoColumn, nombreColumn, precioColumn);
 		xTableLibros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		getLibros();
-
-		xTableLibros.getItems().addAll(listaLibros);
-
 	}
 
 	private LibroDAO libroDAO = new LibroDAO();
 	
 	private void getLibros() {
-			
-		
 		listaLibros = libroDAO.getAll();
-			
 	}
 
 	private void filtrar(String newValue) {
-		if(radioButton_Selected==1) filtrarPorNombre(newValue);
+		if(radioButtonSelected==1) filtrarPorNombre(newValue);
 		else filtrarPorCodigo(newValue);
 	}
 	
 	private void filtrarPorNombre(String newValue) {
-		// TODO Auto-generated method stub
 		librosFiltrados = listaLibros.stream().filter(libro -> libro.getNombre().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableLibros.getItems().clear();
@@ -154,7 +149,6 @@ public class LibrosController implements Initializable {
 	}
 
 	private void filtrarPorCodigo(String newValue) {
-		// TODO Auto-generated method stub
 		librosFiltrados = listaLibros.stream().filter(libro -> libro.getCodigo().contains(newValue))
 				.collect((Collectors.toList()));
 		xTableLibros.getItems().clear();
@@ -174,9 +168,8 @@ public class LibrosController implements Initializable {
 
 			LibroDetalleController libroDetalleController = new LibroDetalleController();
 			loader.setController(libroDetalleController);
-			// root =
-			// FXMLLoader.load(getClass().getResource("/view/libroDetalleComponent.fxml"));
 			root = loader.load();
+			root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 			libroDetalleController.setNuevoLibro();
 			libroDetalleController.setLibrosController(this);
 			
@@ -189,13 +182,5 @@ public class LibrosController implements Initializable {
 		}
     }
 
-    @FXML
-    void AddENTERED(MouseEvent event) {
-
-    }
-
-    @FXML
-    void AddEXITED(MouseEvent event) {
-
-    }
+    
 }

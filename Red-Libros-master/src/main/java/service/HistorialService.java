@@ -2,9 +2,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.EjemplarDAO;
-import dao.HistorialDAO;
 import model.EjemplarHistorial;
 import model.HistorialTabla;
 import pojo.Ejemplare;
@@ -19,7 +17,6 @@ public class HistorialService {
 	}
 
 	public List<EjemplarHistorial> getEjemplares() {
-		// TODO Auto-generated method stub
 		List<EjemplarHistorial> listaEjemplarHistorial = new ArrayList<>();
 		EjemplarHistorial ejemplarHistorial;
 		for(Ejemplare ejemplar:this.ejemplarDAO.getAllWithLibros()) {
@@ -71,7 +68,6 @@ public class HistorialService {
 	}
 
 	public List<HistorialTabla> getHistorial(Ejemplare ejemplar) {
-		// TODO Auto-generated method stub
 		List<HistorialTabla> listaHistorialTabla = new ArrayList<>();
 		for(Historial historial:ejemplar.getHistorials()) {
 			HistorialTabla historialTabla = new HistorialTabla();

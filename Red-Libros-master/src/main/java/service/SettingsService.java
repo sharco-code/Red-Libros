@@ -59,19 +59,8 @@ public class SettingsService {
 				e1.printStackTrace();
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-		} finally {
-			object = null;
-			jo = null;
-			
-			ip = null;
-			port = null;
-			user = null;
-			password = null;
-			columnas = null;
-			filas = null;
-		}
+		} 
 		
 	}
 	
@@ -83,38 +72,36 @@ public class SettingsService {
 	}
 	
 	private static void createFile() throws IOException {
-		FileWriter w = new FileWriter(JSON_URL);
-		w.write("{}");
-		w.close();
+		FileWriter writer = new FileWriter(JSON_URL);
+		try(writer){
+			writer.write("{}");
+		}
+		
 	}
 	
 	
-	public static void writeSettings(Options options) throws IOException, ParseException, FileNotFoundException {
+	@SuppressWarnings("unchecked")
+	public static void writeSettings(Options options) throws IOException, ParseException {
 		Object object;
 		JSONObject jo;
 		PrintWriter pw;
-		try {
-			object = new JSONParser().parse(new FileReader(new File(JSON_URL)));
-			jo = (JSONObject) object;
+		
+		object = new JSONParser().parse(new FileReader(new File(JSON_URL)));
+		jo = (JSONObject) object;
 
-			jo.put("ip", options.getIp());
-			jo.put("port", options.getPort());
-			jo.put("user", options.getUser());
-			jo.put("password", options.getPassword());
-			jo.put("columnas", options.getColumnas());
-			jo.put("filas", options.getFilas());
-			
-			pw = new PrintWriter(JSON_URL);
-			pw.write(jo.toJSONString());
-			pw.flush();
-			pw.close();
-			SettingsService.options = options;
-		}finally {
-			object = null;
-			jo = null;
-			pw = null;
-			
-		}
+		jo.put("ip", options.getIp());
+		jo.put("port", options.getPort());
+		jo.put("user", options.getUser());
+		jo.put("password", options.getPassword());
+		jo.put("columnas", options.getColumnas());
+		jo.put("filas", options.getFilas());
+		
+		pw = new PrintWriter(JSON_URL);
+		pw.write(jo.toJSONString());
+		pw.flush();
+		pw.close();
+		SettingsService.options = options;
+		
 		
 	}
 

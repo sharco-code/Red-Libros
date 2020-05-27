@@ -1,29 +1,16 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.persistence.Query;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.json.simple.parser.ParseException;
-
-import app.Main;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,19 +20,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
 import pojo.Curso;
-import utiles.hibernate.UtilesHibernate;
 
 public class DevolucionesController implements Initializable {
 
@@ -76,28 +58,12 @@ public class DevolucionesController implements Initializable {
 	@FXML
 	private TextField xTextFieldSearch;
 
-	private int radioButton_Selected = 1; // 1: NIA, 2: Expediente
+	private int radioButtonSelected = 1; // 1: NIA, 2: Expediente
 
 	private CursoDAO cursoDAO = new CursoDAO();
 	private AlumnoDAO alumnoDAO = new AlumnoDAO();
 
-	@FXML
-	void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
-		this.xRadioButtonNIA.setSelected(false);
-		this.xTextFieldSearch.setText("");
-
-		this.xTextFieldSearch.setPromptText("Buscar por Expediente");
-		radioButton_Selected = 2;
-	}
-
-	@FXML
-	void xRadioButtonNIA_Action(ActionEvent event) {
-		this.xRadioButtonEXPEDIENTE.setSelected(false);
-		this.xTextFieldSearch.setText("");
-
-		this.xTextFieldSearch.setPromptText("Buscar por NIA");
-		radioButton_Selected = 1;
-	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -108,7 +74,6 @@ public class DevolucionesController implements Initializable {
 			}
 		});
 		
-		SessionFactory factory;
 		try {
 			listaCursos = cursoDAO.getAll();
 
@@ -122,10 +87,27 @@ public class DevolucionesController implements Initializable {
 			setListenerComboBoxCursoEscolar();
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 
+	}
+	
+	@FXML
+	void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
+		this.xRadioButtonNIA.setSelected(false);
+		this.xTextFieldSearch.setText("");
+
+		this.xTextFieldSearch.setPromptText("Buscar por Expediente");
+		radioButtonSelected = 2;
+	}
+
+	@FXML
+	void xRadioButtonNIA_Action(ActionEvent event) {
+		this.xRadioButtonEXPEDIENTE.setSelected(false);
+		this.xTextFieldSearch.setText("");
+
+		this.xTextFieldSearch.setPromptText("Buscar por NIA");
+		radioButtonSelected = 1;
 	}
 
 	private void setListenerComboBoxCursoEscolar() {
@@ -191,8 +173,7 @@ public class DevolucionesController implements Initializable {
 		
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void reload() throws SQLException, Exception {
+	public void reload() {
 
 		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
@@ -220,6 +201,16 @@ public class DevolucionesController implements Initializable {
 
 		xTableMain.getItems().clear();
 
+		setTabla();
+
+		getAlumnos();
+
+		xTableMain.getItems().addAll(listaAlumnos);
+
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setTabla() {
 		TableColumn apellido1Column = new TableColumn("Primer apellido");
 		apellido1Column.setCellValueFactory(new PropertyValueFactory("apellido1"));
 
@@ -242,11 +233,6 @@ public class DevolucionesController implements Initializable {
 
 		xTableMain.getColumns().addAll(apellido1Column, apellido2Column, nombreColumn, niaColumn, expedienteColumn);
 		xTableMain.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		getAlumnos();
-
-		xTableMain.getItems().addAll(listaAlumnos);
-
 	}
 
 	private void getAlumnos() {
@@ -254,7 +240,7 @@ public class DevolucionesController implements Initializable {
 	}
 
 	public void filtrar(String newValue) {
-		if(radioButton_Selected==1) {
+		if(radioButtonSelected==1) {
 			filtrarPorNia(newValue);
 		}
 		else {
@@ -263,7 +249,6 @@ public class DevolucionesController implements Initializable {
 	}
 	
 	public void filtrarPorNia(String newValue) {
-		// TODO Auto-generated method stub
 		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getNia().contains(newValue))
 				.collect((Collectors.toList()));
 		
@@ -273,7 +258,6 @@ public class DevolucionesController implements Initializable {
 	}
 	
 	public void filtrarPorExpediente(String newValue) {
-		// TODO Auto-generated method stub
 		alumnosFiltrados = listaAlumnos.stream().filter(alumno -> alumno.getExpediente().contains(newValue))
 				.collect((Collectors.toList()));
 		
