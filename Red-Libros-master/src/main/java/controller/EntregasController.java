@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
@@ -37,6 +38,8 @@ public class EntregasController implements Initializable {
 	@FXML
     private VBox xVBoxMAIN;
 
+	
+	
 	@FXML
 	private TableView<Alumno> xTableMain;
 
@@ -192,6 +195,7 @@ public class EntregasController implements Initializable {
 					entregasDetalleController.setAlumno(newSelection);
 					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
 					root.getStylesheets().add(getClass().getResource("/style/treeview_style.css").toExternalForm());
+
 					xVBoxMAIN.getChildren().clear();
 					xVBoxMAIN.getChildren().add(root);
 

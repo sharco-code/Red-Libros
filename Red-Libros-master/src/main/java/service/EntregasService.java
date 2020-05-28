@@ -134,7 +134,7 @@ public class EntregasService {
 	public Ejemplare scanEjemplar(String text) throws Exception {
 		Ejemplare ejemplar = ejemplarDAO.findById(text);
 		if(ejemplar == null)throw new Exception("No se encontro el ejemplar");
-		if(ejemplar.getPrestado() == 1) throw new Exception("El ejemplar esta prestado");
+		if(ejemplar.getPrestado() == 1) throw new Exception("El ejemplar ya está prestado");
 		return ejemplar;
 	}
 

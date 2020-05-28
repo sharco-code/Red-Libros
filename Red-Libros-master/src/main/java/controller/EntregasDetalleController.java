@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import app.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -45,7 +46,7 @@ public class EntregasDetalleController implements Initializable {
     private TableView<EntregaTabla> xTableViewHistorial;
     
     @FXML
-    private FontAwesomeIcon xButtonScan;
+	private HBox xButtonScan;
     
     @FXML
     private TextField xTextFieldCodigoEjemplar;
@@ -81,7 +82,11 @@ public class EntregasDetalleController implements Initializable {
 		this.alumno = alumno;
 		reload();
 	}
-    
+
+	@FXML
+    public void onEnter(ActionEvent ae){
+       ScanCLICKED(null);
+    }
 	
 	private void reload(){
 		this.xTextFieldExpediente.setText(this.alumno.getExpediente());

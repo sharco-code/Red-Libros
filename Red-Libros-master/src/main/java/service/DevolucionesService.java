@@ -58,7 +58,7 @@ public class DevolucionesService {
 	public Ejemplare scanEjemplar(String text) throws Exception {
 		Ejemplare ejemplar = ejemplarDAO.findById(text);
 		if(ejemplar == null)throw new Exception("No se encontro el ejemplar");
-		if(ejemplar.getPrestado() == 0) throw new Exception("El ejemplar no esta prestado");
+		if(ejemplar.getPrestado() == 0) throw new Exception("Ese ejemplar no está prestado");
 		return ejemplar;
 	}
 

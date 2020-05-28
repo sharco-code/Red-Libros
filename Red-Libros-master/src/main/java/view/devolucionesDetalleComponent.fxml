@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxMAIN">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="xVBoxMAIN">
    <children>
       <VBox>
          <children>
@@ -78,13 +78,24 @@
                                  <children>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="185.0" promptText="Escane el código del ejemplar" style="-fx-background-color: #ededed;" fx:id="xTextFieldCodigoEjemplar" />
-                                          <FontAwesomeIcon iconName="SEARCH" onMouseClicked="#ScanCLICKED" size="1.5em" fx:id="xButtonScan">
+                                          <TextField alignment="TOP_LEFT" onAction="#onEnter" prefHeight="25.0" prefWidth="185.0" promptText="Escane el código del ejemplar" style="-fx-background-color: #dbdbdb;" fx:id="xTextFieldCodigoEjemplar" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" onMouseClicked="#ScanCLICKED" prefWidth="30.0" fx:id="xButtonScan">
+                                       <children>
+                                          <FontAwesomeIcon fill="WHITE" iconName="SEARCH" size="1.5em">
                                              <HBox.margin>
-                                                <Insets left="10.0" right="5.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </FontAwesomeIcon>
                                        </children>
+                                       <styleClass>
+                                          <String fx:value="hover_main" />
+                                          <String fx:value="normal_button" />
+                                       </styleClass>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
                                     </HBox>
                                  </children>
                               </HBox>

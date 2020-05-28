@@ -7,6 +7,7 @@ import dao.AlumnoDAO;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,7 +50,7 @@ public class DevolucionesDetalleController implements Initializable {
     private TextField xTextFieldCodigoEjemplar;
 
     @FXML
-    private FontAwesomeIcon xButtonScan;
+    private HBox xButtonScan;
 
     @FXML
     private TreeView<Ejemplare> xTreeViewLibros;
@@ -87,9 +88,13 @@ public class DevolucionesDetalleController implements Initializable {
 		this.xRadioButtonMal.setToggleGroup(toggleGroup);
 		this.xRadioButtonPerfecto.setToggleGroup(toggleGroup);
 		this.xRadioButtonRegular.setToggleGroup(toggleGroup);
-		
 	}
 
+    @FXML
+    public void onEnter(ActionEvent ae){
+       ScanCLICKED(null);
+    }
+    
     @FXML
     void DevolverCLICKED(MouseEvent event) {
     	if(this.selectedEjemplar == null) {
@@ -171,7 +176,7 @@ public class DevolucionesDetalleController implements Initializable {
 			root.getChildren().add(ejemplares);
 		}
 		if(root.getChildren().isEmpty()) {
-			root.getChildren().add(new TreeItem<String>("Alumno no tiene libros prestados"));
+			root.getChildren().add(new TreeItem<String>("El alumno no tiene libros prestados"));
 		}
 		xTreeViewLibros.setRoot(root);
 		xTreeViewLibros.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> { 

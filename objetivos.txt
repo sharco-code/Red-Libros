@@ -1,32 +1,12 @@
-Cosas que he solucionado y he añadido:
--Ya esta la comprobacion de errores al crear o modificar libro
--Ya se puede borrar ejemplares
--Cuando devuelves ejemplar, poner el estado (devolucionesService actualizado para que tambien se guarde en la tabla historial)
--Ya se muestra un mensaje de error cuando no seleccionas nada en entregas
--Ya se muestra un mensaje de error cuando no seleccionas nada en devolciones
--Mensaje en la confirmacion de elimiar libro para mas claridad
+Documentacion:
 
-Bugs y problemas por solucionar:
--Eliminar libro no funciona
--Quitar el poder editar la columna "prestado" de los ejemplares en LibroDetalle (Y estado tambien?)
-
-Cosas por hacer:
--Historial
--Importacion
-
-Cosas (Opcionales) por hacer:
--En Devoluciones, si el treeview esta vacio, mostrar un mensaje de "Este alumno no tiene libros a devolver"
--En Devoluciones, cambiar el nombre que se muestra del ejemplar (actualmente sale el nombre del libro) por el codigo de ejemplar
--Ajustar columnas de tablas para mejor visualización
-
-Otras cosas por hacer:
--Ordenar y estructurar codigo
--Diagrama de casos de uso, con plantilla
--Diagrama de clases
--Diagrama E/R
--DIagrama temporal
--Manual de instalacion
--Manual de usuario
--Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
--Power pont para la presentacion
+-	Ordenar y estructurar codigo
+X	Diagrama de casos de uso
+-	Diagrama de clases
+-	Diagrama E/R
+-	DIagrama temporal
+-	Manual de instalacion
+-	Manual de usuario
+-	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
+-	Power pont para la presentacion
 
