@@ -81,6 +81,8 @@ public class DevolucionesService {
 			historial.setFechaFinal(new Date(this.df.format(dateobj)));
 			historial.setEstadoFinal(estado);
 			this.historialDAO.merge(historial);
+			
+			ejemplar.setEstado(estado);
 			ejemplar.setPrestado(new Integer(0).byteValue());
 			this.ejemplarDAO.merge(ejemplar);
 			
