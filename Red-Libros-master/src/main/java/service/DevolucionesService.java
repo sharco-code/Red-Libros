@@ -63,11 +63,12 @@ public class DevolucionesService {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void devolverLibroScaneado(Ejemplare ejemplar, Alumno alumno) throws Exception {
+	public void devolverLibroScaneado(Ejemplare ejemplar, Alumno alumno, int estado) throws Exception {
 		Date dateobj = new Date();
 		calendar.setTime(dateobj);
 		Historial historial = null;
 		for(Historial historialAlumno:alumno.getHistorials()) {
+			if(historialAlumno.getFechaFinal() != null) continue;
 			if(historialAlumno.getEjemplare().getLibro().getCodigo().equals(ejemplar.getLibro().getCodigo())) {
 				historial = historialAlumno;
 				break;
@@ -78,7 +79,7 @@ public class DevolucionesService {
 		
 		try {
 			historial.setFechaFinal(new Date(this.df.format(dateobj)));
-			
+			historial.setEstadoFinal(estado);
 			this.historialDAO.merge(historial);
 			ejemplar.setPrestado(new Integer(0).byteValue());
 			this.ejemplarDAO.merge(ejemplar);

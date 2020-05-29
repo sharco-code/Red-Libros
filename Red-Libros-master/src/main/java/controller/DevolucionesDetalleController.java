@@ -133,7 +133,19 @@ public class DevolucionesDetalleController implements Initializable {
 			if(ejemplar == null) {
 				throw new Exception("No se encontro el ejemplar");
 			}
-			this.devolucionesService.devolverLibroScaneado(ejemplar,this.alumno);
+			int estado = 0;
+			if(this.xRadioButtonPerfecto.isSelected()) {
+				estado = 0;
+				
+			} else if(this.xRadioButtonRegular.isSelected()) {
+				estado = 1;
+				
+			}else if(this.xRadioButtonMal.isSelected()) {
+				estado = 2;
+			}
+			
+			
+			this.devolucionesService.devolverLibroScaneado(ejemplar,this.alumno,estado);
 			
 			reload();
 			this.xTextFieldCodigoEjemplar.setText("");
