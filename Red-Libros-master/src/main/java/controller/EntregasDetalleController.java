@@ -101,6 +101,10 @@ public class EntregasDetalleController implements Initializable {
 	private void setTreeView(){
 		TreeItem root = new TreeItem();
 		for(Matricula matricula: this.alumno.getMatriculas()) {
+			if(!this.entregasService.currentMatricula(matricula)) {
+				continue;
+			}
+			
 			TreeItem libros = new TreeItem<String>();
 			libros.setValue(matricula.getContenidoBean().getNombreCas());
 			if(isInRoot(root,libros)) continue;

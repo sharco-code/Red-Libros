@@ -163,6 +163,14 @@ public class EntregasService {
 		}
 		
 	}
+
+	@SuppressWarnings("deprecation")
+	public boolean currentMatricula(Matricula matricula) {
+		Date currentDate = new Date();
+		Date principioCurso = new Date("09/01/"+matricula.getCursoEscolar());
+		Date finalCurso = new Date("08/31/"+(matricula.getCursoEscolar()+1));
+		return (currentDate.after(principioCurso) && currentDate.before(finalCurso));
+	}
 	
 
 
