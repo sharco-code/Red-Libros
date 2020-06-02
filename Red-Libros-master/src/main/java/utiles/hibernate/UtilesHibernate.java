@@ -43,7 +43,7 @@ public class UtilesHibernate {
     			String user = (String) jo.get("user");
     			String password = (String) jo.get("password");
                 settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://"+ip+":"+port+"/instituto?useSSL=false");
+                settings.put(Environment.URL, "jdbc:mysql://"+ip+":"+port+"/institut?useSSL=false");
                 settings.put(Environment.USER, user);
                 settings.put(Environment.PASS, password);
                 
