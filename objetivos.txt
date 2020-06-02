@@ -2,9 +2,9 @@ Documentacion:
 
 -	Ordenar y estructurar codigo
 X	Diagrama de casos de uso
--	Diagrama de clases
--	Diagrama E/R
--	DIagrama temporal
+X	Diagrama de clases
+X	Diagrama E/R
+X	DIagrama temporal
 -	Manual de instalacion
 -	Manual de usuario
 -	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)

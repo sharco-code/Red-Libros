@@ -142,6 +142,8 @@ public class DevolucionesDetalleController implements Initializable {
 				
 			}else if(this.xRadioButtonMal.isSelected()) {
 				estado = 2;
+			} else {
+				
 			}
 			
 			
