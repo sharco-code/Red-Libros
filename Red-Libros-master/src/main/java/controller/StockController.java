@@ -120,8 +120,6 @@ public class StockController implements Initializable {
 		
 		this.xTextFieldNumeroMatriculas.setText(libroSeleccionado.getContenido().getMatriculas().size()+"");
 		
-		
-		
 		int ejemplaresEntregados = 0;
 		int ejemplaresNoEntregados = 0;
 		
@@ -132,6 +130,7 @@ public class StockController implements Initializable {
 			ejemplaresNoEntregados++;
 		}
 		ejemplaresNoEntregados = ejemplaresNoEntregados - ejemplaresEntregados;
+		
 		this.xTextFieldEntregados.setText(ejemplaresEntregados + "");
 		this.xTextFieldNoEntregados.setText(ejemplaresNoEntregados + "");
 	}
