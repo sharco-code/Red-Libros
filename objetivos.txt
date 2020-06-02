@@ -7,6 +7,6 @@ X	Diagrama E/R
 X	DIagrama temporal
 -	Manual de instalacion
 -	Manual de usuario
--	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
+X	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
 -	Power pont para la presentacion
 

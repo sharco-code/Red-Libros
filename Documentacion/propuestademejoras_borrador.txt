@@ -1,0 +1,28 @@
+6. Propuesta de mejoras
+
+Durante el desarrollo de la aplicación hemos tenido que cambiar varias cosas y estos cambios han sido mejoras respecto a las versiones anteriores. A continuación se listan mejoras implementadas a la aplicación:
+
+    1. Página de error cuando no hay conexión.
+           Para mejorar esta página que surge cuando no se puede conectar con la base de datos, decidimos añadir un link que te redirige a la página ajustes.
+
+    2. Página de importación de la base de datos
+           La importación de datos tiene que seguir un orden especifico debido a las relaciones internas de la base de dato. Por eso decidimos crear una página para hacer que la importación fuese correcta de forma fácil e intuitiva, adamás añadimos un mensaje informando al usuario como hacerlo.
+
+    3. Eliminar la funcionalidad de ejemplares al crear un libro
+           Al reutilizar la página de detalle en la creación de un libro, no tenía sentido poner la gestión de ejemplares ni los botones de imprimir.
+
+    4. Página para imprimir códigos de barras
+           En un principio cuando querías imprimir los códigos de barras simplemente le dabas a imprimir y con la configuración de ajustes te mostraba el documento para imprimir. Pero decidimos mejorar esto e implementar una página de ajustes antes de la impresión, ahora puedes seleccionar si usar toda la página o empezar por una determinada posición, de esta forma puedes ahorrar hojas reutilizando las que ya tienes usadas por una parte
+
+
+
+
+Además de estas mejoras, hubo otros cambios menores que también mejoraron la aplicación, por ejemplo:
+    • Cambios de diseño del CSS
+    • Cambios en las columnas mostradas en las tablas
+    • Agregación de campos informativos para mejorar la visualización de datos al usuario final.
+    • Cambio de ComboBox a RadioButton en el Detalle de devoluciones.
+    • Muchos cambios en la disposición de los campos en la interfaz.
+    • Funcionalidad del teclado al pulsar la tecla Enter cuando escaneas un código en Entregas o Devoluciones.
+
+
