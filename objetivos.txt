@@ -8,5 +8,5 @@ X	DIagrama temporal
 -	Manual de instalacion
 -	Manual de usuario
 X	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
--	Power pont para la presentacion
+X	Power pont para la presentacion
 
