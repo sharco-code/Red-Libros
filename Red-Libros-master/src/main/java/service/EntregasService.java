@@ -108,7 +108,7 @@ public class EntregasService {
 			historial.setAlumno(alumno);
 			historial.setFechaInicial(new Date(this.df.format(dateobj)));
 			historial.setEjemplare(ejemplar);
-			historial.setCursoEscolar(calendar.get(Calendar.YEAR));
+			historial.setCursoEscolar(alumno.getCursoBean().getCursoEscolar());
 			historial.setEstadoInicial(ejemplar.getEstado());
 			historial.setObservaciones("");
 			Integer lastId = this.historialDAO.getLastId();

@@ -23,6 +23,7 @@ import pojo.Ejemplare;
 import pojo.Libro;
 import pojo.Matricula;
 import service.EntregasService;
+import service.LoaderService;
 import view.Toast;
 
 public class EntregasDetalleController implements Initializable {
@@ -67,9 +68,12 @@ public class EntregasDetalleController implements Initializable {
 	private Libro selectedLibro;
 	
 	private List<Libro> listaLibros = new ArrayList<>();
+	
+	private LoaderService loaderService;
 
-	public EntregasDetalleController() {
+	public EntregasDetalleController(LoaderService loaderService) {
 		entregasService = new EntregasService();
+		this.loaderService = loaderService;
 	}
 	
 	@Override
@@ -132,11 +136,13 @@ public class EntregasDetalleController implements Initializable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setTable() {
 		xTableViewHistorial.getItems().clear();
+		
 		xTableViewHistorial.getColumns().clear();
 
 
 
 		ejemplarColumn = new TableColumn("Ejemplar");
+		
 		ejemplarColumn.setCellValueFactory(new PropertyValueFactory<>("idEjemplar"));
 
 		
@@ -148,7 +154,9 @@ public class EntregasDetalleController implements Initializable {
 		
 		
 		xTableViewHistorial.getColumns().addAll(asignaturaColumn,ejemplarColumn,fechaInicialColumn);
+		
 		xTableViewHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
 		xTableViewHistorial.setEditable(true);
 
 
@@ -158,7 +166,7 @@ public class EntregasDetalleController implements Initializable {
 	@FXML
     void EntregarCLICKED(MouseEvent event) {
 		if(this.selectedLibro == null) {
-			showToastRED("Debes seleccionar un libro para entregar");
+			this.loaderService.loadToastRED("Debes seleccionar un libro para entregar");
 			return;
 		}
 		try {
@@ -166,9 +174,9 @@ public class EntregasDetalleController implements Initializable {
 			this.listaLibros.remove(this.selectedLibro);
 			
 			reload();
-			showToast("Libro entregado correctamente");
+			this.loaderService.loadToast("Libro entregado correctamente");
 		} catch (Exception e) {
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage());
 		}
 		
 
@@ -191,14 +199,14 @@ public class EntregasDetalleController implements Initializable {
 					this.listaLibros.remove(libro);
 					reload();
 					this.xTextFieldCodigoEjemplar.setText("");
-					showToast("Libro entregado correctamente");
+					this.loaderService.loadToast("Libro entregado correctamente");
 					return;
 				}
 			}
 			
 			throw new Exception("El alumno no esta matriculado en la asignatura de este libro");
 		} catch (Exception e) {
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage());
 		}
 		
 
@@ -214,19 +222,7 @@ public class EntregasDetalleController implements Initializable {
 		return false;
 	}
 	
-	private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
 	
-	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
 
 
 	

@@ -24,6 +24,7 @@ import javafx.stage.DirectoryChooser;
 import model.Options;
 import pojo.Libro;
 import service.BarcodeService;
+import service.LoaderService;
 import service.PdfService;
 import service.SettingsService;
 import view.Toast;
@@ -49,7 +50,6 @@ public class ImpresionController implements Initializable {
     
     @FXML
     private HBox xButtonCancelar;
-
     
     private Libro libro;
     
@@ -59,7 +59,16 @@ public class ImpresionController implements Initializable {
     
     private int librosSeleccionados = 0;
     
-    @Override
+    private LoaderService loaderService;
+    
+    
+    
+    public ImpresionController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+	}
+
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
     	Options options;
     	options = SettingsService.getOptions();
@@ -147,57 +156,24 @@ public class ImpresionController implements Initializable {
 			}
 			
 			
-			showToast("PDF generado corectamente");
+			this.loaderService.loadToast("PDF generado corectamente");
 			File pdfFile = new File(ruta + "\\barcodes.pdf");
 			if (pdfFile.exists() && Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(pdfFile);
 			} 
 			volver();
 		} catch (Exception e) {
-			showToastRED("No se ha podido generar el PDF");
+			this.loaderService.loadToastRED("No se ha podido generar el PDF");
 		}
 		
 	}
     
     void  volver() {
-    	Parent root = null;
-
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
-
-			LibroDetalleController libroDetalleController = new LibroDetalleController();
-			loader.setController(libroDetalleController);
-			
-			root = loader.load();
-			root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
-			libroDetalleController.setLibro(this.libro);
-
-			this.xVBoxCENTER.getChildren().clear();
-			this.xVBoxCENTER.getChildren().add(root);
-
-			libroDetalleController.disableComboBoxes();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	this.loaderService.loadLibroDetalle(this.libro);
     }
     
     
     
-    
-
-	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; // 3.5 seconds
-		int fadeInTime = 150; // 0.5 seconds
-		int fadeOutTime = 300; // 0.5 seconds
-		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
-    
-    private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; // 3.5 seconds
-		int fadeInTime = 150; // 0.5 seconds
-		int fadeOutTime = 300; // 0.5 seconds
-		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
     
     public Libro getLibro() {
 		return libro;
