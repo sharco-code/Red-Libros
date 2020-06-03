@@ -48,6 +48,10 @@ public class SettingsService {
 			}else {
 				filas = "5";
 			}
+			if(ip == null) ip = "";
+			if(port == null) port = "";
+			if(user == null) user = "";
+			if(password == null) password = "";
 			
 			options = new Options(ip,port,user,password,columnas,filas);
 		} catch (FileNotFoundException e) {

@@ -1,7 +1,6 @@
 package controller;
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,15 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javax.persistence.Query;
-import org.hibernate.SessionFactory;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -26,11 +21,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
 import pojo.Curso;
+import service.LoaderService;
 
 
 public class EntregasController implements Initializable {
@@ -38,22 +33,14 @@ public class EntregasController implements Initializable {
 	@FXML
     private VBox xVBoxMAIN;
 
-	
-	
 	@FXML
 	private TableView<Alumno> xTableMain;
-
-	private List<Alumno> listaAlumnos = new ArrayList<>();
-
-	private List<Alumno> alumnosFiltrados = new ArrayList<>();
 
 	@FXML
 	private ComboBox<Curso> xComboBoxCurso;
 
 	@FXML
 	private ComboBox<Integer> xComboBoxCursoEscolar;
-
-	private List<Curso> listaCursos = new ArrayList<>();
 
 	@FXML
 	private RadioButton xRadioButtonNIA;
@@ -69,6 +56,20 @@ public class EntregasController implements Initializable {
 	private CursoDAO cursoDAO = new CursoDAO();
 	
 	private AlumnoDAO alumnoDAO = new AlumnoDAO();
+
+	private List<Curso> listaCursos = new ArrayList<>();
+
+	private List<Alumno> listaAlumnos = new ArrayList<>();
+
+	private List<Alumno> alumnosFiltrados = new ArrayList<>();
+	
+	private LoaderService loaderService;
+	
+
+	public EntregasController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+	}
 
 	@FXML
 	void xRadioButtonEXPEDIENTE_Action(ActionEvent event) {
@@ -180,29 +181,9 @@ public class EntregasController implements Initializable {
 	
 	public void reload(){
 
-		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if (newSelection != null) {
-
-				Parent root = null;
-				try {
-
-					FXMLLoader loader = new FXMLLoader(
-							getClass().getResource("/view/entregasDetalleComponent.fxml"));
-
-					EntregasDetalleController entregasDetalleController = new EntregasDetalleController();
-					loader.setController(entregasDetalleController);
-					root = loader.load();
-					entregasDetalleController.setAlumno(newSelection);
-					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
-					root.getStylesheets().add(getClass().getResource("/style/treeview_style.css").toExternalForm());
-
-					xVBoxMAIN.getChildren().clear();
-					xVBoxMAIN.getChildren().add(root);
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
+		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldAlumno, newAlumno) -> {
+			if (newAlumno != null) {
+				this.loaderService.loadEntregaDetalles(newAlumno);
 			}
 		});
 

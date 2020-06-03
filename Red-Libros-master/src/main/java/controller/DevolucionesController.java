@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,14 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javax.persistence.Query;
 import dao.AlumnoDAO;
 import dao.CursoDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -28,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import pojo.Alumno;
 import pojo.Curso;
+import service.LoaderService;
 
 public class DevolucionesController implements Initializable {
 
@@ -36,10 +33,6 @@ public class DevolucionesController implements Initializable {
 
 	@FXML
 	private TableView<Alumno> xTableMain;
-
-	private List<Alumno> listaAlumnos = new ArrayList<>();
-
-	private List<Alumno> alumnosFiltrados = new ArrayList<>();
 
 	@FXML
 	private ComboBox<Curso> xComboBoxCurso;
@@ -61,9 +54,21 @@ public class DevolucionesController implements Initializable {
 	private int radioButtonSelected = 1; // 1: NIA, 2: Expediente
 
 	private CursoDAO cursoDAO = new CursoDAO();
-	private AlumnoDAO alumnoDAO = new AlumnoDAO();
-
 	
+	private AlumnoDAO alumnoDAO = new AlumnoDAO();
+	
+	private List<Alumno> listaAlumnos = new ArrayList<>();
+
+	private List<Alumno> alumnosFiltrados = new ArrayList<>();
+
+	private LoaderService loaderService;
+	
+	
+
+	public DevolucionesController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +89,9 @@ public class DevolucionesController implements Initializable {
 			setMostrarComboBoxCurso();
 
 			setListenerComboBoxCurso();
+			
 			setListenerComboBoxCursoEscolar();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,27 +182,9 @@ public class DevolucionesController implements Initializable {
 
 	public void reload() {
 
-		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if (newSelection != null) {
-
-				Parent root = null;
-				try {
-
-					FXMLLoader loader = new FXMLLoader(
-							getClass().getResource("/view/devolucionesDetalleComponent.fxml"));
-
-					DevolucionesDetalleController devolucionesDetalleController = new DevolucionesDetalleController();
-					loader.setController(devolucionesDetalleController);
-					root = loader.load();
-					devolucionesDetalleController.setAlumno(newSelection);
-					root.getStylesheets().add(getClass().getResource("/style/treeview_style.css").toExternalForm());
-					xVBoxMAIN.getChildren().clear();
-					xVBoxMAIN.getChildren().add(root);
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
+		xTableMain.getSelectionModel().selectedItemProperty().addListener((obs, oldAlumno, newAlumno) -> {
+			if (newAlumno != null) {
+				this.loaderService.loadDevolucionDetalle(newAlumno);
 			}
 		});
 

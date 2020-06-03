@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import service.ImportService;
+import service.LoaderService;
 import view.Toast;
 
 public class ImportacionController {
@@ -24,7 +25,16 @@ public class ImportacionController {
 
     ImportService importService = new ImportService();
     
-    @FXML
+    private LoaderService loaderService;
+    
+    
+    
+    public ImportacionController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+	}
+
+	@FXML
     void ImportAlumnosCLICKED(MouseEvent event) {
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Selecciona xml a importar");
@@ -36,10 +46,10 @@ public class ImportacionController {
 		
 		try {
 			importService.importarAlumno(selectedDirectory.getAbsolutePath());
-			showToast("Alumnos importados correctamente");
+			this.loaderService.loadToast("Alumnos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage(),4500);
 		}
 		
 		
@@ -56,10 +66,10 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarContenido(selectedDirectory.getAbsolutePath());
-			showToast("Contenido importado correctamente");
+			this.loaderService.loadToast("Contenido importado correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage(),4500);
 		}
     }
 
@@ -74,10 +84,10 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarCurso(selectedDirectory.getAbsolutePath());
-			showToast("Cursos importados correctamente");
+			this.loaderService.loadToast("Cursos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage(),4500);
 		}
     }
 
@@ -92,10 +102,10 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarGrupo(selectedDirectory.getAbsolutePath());
-			showToast("Grupos importados correctamente");
+			this.loaderService.loadToast("Grupos importados correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage(),4500);
 		}
     }
 
@@ -112,41 +122,18 @@ public class ImportacionController {
 		}
 		try {
 			importService.importarMatricula(selectedDirectory.getAbsolutePath());
-			showToast("Matriculas importadas correctamente");
+			this.loaderService.loadToast("Matriculas importadas correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage(),4500);
 		}
     }
 
     @FXML
     void VolverCLICKED(MouseEvent event) {
-    	this.xVBoxCENTER.getChildren().clear();
-    	this.xVBoxCENTER.setPadding(new Insets(0, 0, 0, 0));
-    	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ajustesComponent.fxml"));
-    		VBox vbox = (VBox) loader.load();
-    		
-    		VBox.setVgrow(vbox, Priority.ALWAYS);
-			
-			this.xVBoxCENTER.getChildren().add(vbox);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	this.loaderService.loadAjustes();
     }
     
-    private void showToastRED(String toastMsg) {
-		int toastMsgTime = 4500; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
-	
-	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
+    
 	
 }

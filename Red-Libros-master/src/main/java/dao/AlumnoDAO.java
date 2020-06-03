@@ -1,26 +1,16 @@
 package dao;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
-
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.json.simple.parser.ParseException;
-
 import pojo.Alumno;
-import pojo.Curso;
 import utiles.hibernate.UtilesHibernate;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 /**

@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pojo.Libro;
+import service.LoaderService;
 import dao.LibroDAO;
 
 public class LibrosController implements Initializable {
@@ -44,6 +45,15 @@ public class LibrosController implements Initializable {
 	private List<Libro> listaLibros = new ArrayList<>();
 
 	private List<Libro> librosFiltrados = new ArrayList<>();
+	
+	private LoaderService loaderService;
+	
+	
+
+	public LibrosController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -77,27 +87,9 @@ public class LibrosController implements Initializable {
 	
 	public void reload(){
 
-		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if (newSelection != null) {
-				Parent root = null;
-
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
-
-					LibroDetalleController libroDetalleController = new LibroDetalleController();
-					loader.setController(libroDetalleController);
-					
-					root = loader.load();
-					root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
-					libroDetalleController.setLibro(newSelection);
-
-					this.xVBoxMAIN.getChildren().clear();
-					this.xVBoxMAIN.getChildren().add(root);
-
-					libroDetalleController.disableComboBoxes();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		xTableLibros.getSelectionModel().selectedItemProperty().addListener((obs, oldLibro, newLibro) -> {
+			if (newLibro != null) {
+				this.loaderService.loadLibroDetalle(newLibro);
 
 			}
 		});
@@ -161,25 +153,7 @@ public class LibrosController implements Initializable {
 
     @FXML
     void AddCLICKED(MouseEvent event) {
-    	Parent root = null;
-
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/libroDetalleComponent.fxml"));
-
-			LibroDetalleController libroDetalleController = new LibroDetalleController();
-			loader.setController(libroDetalleController);
-			root = loader.load();
-			root.getStylesheets().add(getClass().getResource("/style/table_style_small.css").toExternalForm());
-			libroDetalleController.setNuevoLibro();
-			libroDetalleController.setLibrosController(this);
-			
-			this.xVBoxMAIN.getChildren().clear();
-			this.xVBoxMAIN.getChildren().add(root);
-
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	this.loaderService.loadNewLibroDetalle();
     }
 
     

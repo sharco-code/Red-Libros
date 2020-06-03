@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.persistence.Query;
-import app.Main;
 import dao.ContenidoDAO;
 import dao.CursoDAO;
 import dao.EjemplarDAO;
@@ -17,7 +15,6 @@ import dao.LibroDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -29,10 +26,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -44,7 +41,7 @@ import pojo.Ejemplare;
 import pojo.Libro;
 import service.BarcodeService;
 import service.EjemplarTablaService;
-import view.Toast;
+import service.LoaderService;
 
 public class LibroDetalleController implements Initializable {
 
@@ -127,8 +124,6 @@ public class LibroDetalleController implements Initializable {
 
 	private boolean isNuevoLibro = false;
 
-	private LibrosController librosController;
-
 	private EjemplarTablaService ejemplarTablaService = new EjemplarTablaService();
 
 	private LibroDAO libroDAO = new LibroDAO();
@@ -142,15 +137,22 @@ public class LibroDetalleController implements Initializable {
 	private ObservableList<String> listaEstados = FXCollections.observableArrayList();
 	
 	private ObservableList<String> listaPrestado = FXCollections.observableArrayList();
-
-	public void setLibrosController(LibrosController librosController) {
-		this.librosController = librosController;
-	}
 	
+	private LoaderService loaderService;
+	
+	
+	
+	public LibroDetalleController(LoaderService loaderService) {
+		super();
+		this.loaderService = loaderService;
+		
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewEjemplar.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE	);
+		this.xTableViewEjemplar.setPlaceholder(new Label("No hay ejemplares"));
 		try {
 			this.listaEstados.add("Perfecto");
 			this.listaEstados.add("Regular");
@@ -256,7 +258,7 @@ public class LibroDetalleController implements Initializable {
 
 		this.libroDAO.merge(this.libro);
 
-		showToast("Ejemplar añadido");
+		this.loaderService.loadToast("Ejemplar añadido");
 
 		reloadEjemplares();
 	}
@@ -264,7 +266,7 @@ public class LibroDetalleController implements Initializable {
 	@FXML
 	void xButtonDeleteEjemplarCLICKED(MouseEvent event) {
 		if (this.xTableViewEjemplar.getSelectionModel().getSelectedItem() == null) {
-			showToast("Debes seleccionar un\nejemplar para borrarlo");
+			this.loaderService.loadToast("Debes seleccionar un\nejemplar para borrarlo");
 			return;
 		}
 		Ejemplare ejemplar = this.ejemplarDAO.findById(this.xTableViewEjemplar.getSelectionModel().getSelectedItem().getId());
@@ -274,7 +276,7 @@ public class LibroDetalleController implements Initializable {
 		this.xTextFieldUnidadesTotales.setText(this.libro.getUnidades() + "");
 
 		this.ejemplarDAO.delete(ejemplar);
-		showToast("Ejemplar borrado");
+		this.loaderService.loadToast("Ejemplar borrado");
 
 		reloadEjemplares();
 
@@ -360,38 +362,11 @@ public class LibroDetalleController implements Initializable {
 	void BorrarCLICKED(MouseEvent event) {
 
 		if (isNuevoLibro) {
-			this.xVBoxMAIN.getChildren().clear();
-			try {
-
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/librosComponent.fxml"));
-				loader.setController(this.librosController);
-				VBox vbox = (VBox) loader.load();
-
-				VBox.setVgrow(vbox, Priority.ALWAYS);
-
-				this.xVBoxMAIN.getChildren().add(vbox);
-
-				this.librosController.reload();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			this.loaderService.loadListaLibros();
 
 		} else {
-			this.xVBoxMAIN.getChildren().clear();
-			try {
-				ConfirmacionController confirmacionController = new ConfirmacionController();
-				confirmacionController.setLibro(this.libro);
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/confirmacionComponent.fxml"));
-				loader.setController(confirmacionController);
-				VBox vbox = (VBox) loader.load();
-
-				VBox.setVgrow(vbox, Priority.ALWAYS);
-
-				this.xVBoxMAIN.getChildren().add(vbox);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			
+			this.loaderService.loadConfirmacion(this.libro);
 		}
 	}
 
@@ -453,19 +428,19 @@ public class LibroDetalleController implements Initializable {
 	@FXML
 	void GuardarCLICKED(MouseEvent event) {
 		if (xTextFieldNombre.getText().isBlank() || xTextFieldNombre.getText().isEmpty()) {
-			showToastRED("El nombre del libro no puede estar vacio");
+			this.loaderService.loadToastRED("El nombre del libro no puede estar vacio");
 			return;
 		}
 		if (xTextFieldCodigo.getText().isBlank() || xTextFieldCodigo.getText().isEmpty()) {
-			showToastRED("El codigo del libro no puede estar vacio");
+			this.loaderService.loadToastRED("El codigo del libro no puede estar vacio");
 			return;
 		}
 		if (!isNumberOrEmpty(xTextFieldPrecio.getText())) {
-			showToastRED("El precio del libro tiene que ser numerico");
+			this.loaderService.loadToastRED("El precio del libro tiene que ser numerico");
 			return;
 		}
 		if (this.xComboBoxAsignatura.getSelectionModel().getSelectedItem() == null) {
-			showToastRED("Debes seleccionar una asignatura");
+			this.loaderService.loadToastRED("Debes seleccionar una asignatura");
 			return;
 		}
 
@@ -476,11 +451,12 @@ public class LibroDetalleController implements Initializable {
 			try {
 				libroDAO.persist(this.libro);
 			} catch (RuntimeException e) {
-				showToastRED("No puedes usar un código ya registrado");
+				this.loaderService.loadToastRED("No puedes usar un código ya registrado");
 				return;
 			}
 
-			showToast("Libro creado con éxito");
+			this.loaderService.loadToast("Libro creado con éxito");
+			this.loaderService.loadLibroDetalle(this.libro);
 
 		} else {
 			estadoColumn.setEditable(false);
@@ -729,7 +705,7 @@ public class LibroDetalleController implements Initializable {
     void ImprimirSeleccionCLICKED(MouseEvent event) {
 		List<EjemplarTabla> listaEjemplares = xTableViewEjemplar.getSelectionModel().getSelectedItems();
 		if(listaEjemplares == null || listaEjemplares.isEmpty()) {
-			showToastRED("No hay ejemplares seleccionados");
+			this.loaderService.loadToastRED("No hay ejemplares seleccionados");
 			return;
 		}
 		
@@ -750,41 +726,16 @@ public class LibroDetalleController implements Initializable {
 	
 	void imprimir(String[] listaCodigos) {
 		if(listaCodigos.length < 1) {
-			showToastRED("Este libro no tiene ningun ejemplar");
+			this.loaderService.loadToastRED("Este libro no tiene ningun ejemplar");
 			return;
 		}
-		this.xVBoxMAIN.getChildren().clear();
-		try {
-			ImpresionController impresionController = new ImpresionController();
-			impresionController.setLibro(this.libro);
-			impresionController.setListaCodigos(listaCodigos);
-			impresionController.setxTextLibrosSeleccionados(listaCodigos.length);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/impresionComponent.fxml"));
-			loader.setController(impresionController);
-			VBox vbox = (VBox) loader.load();
-			
-			VBox.setVgrow(vbox, Priority.ALWAYS);
-
-			this.xVBoxMAIN.getChildren().add(vbox);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		this.loaderService.loadImpresion(libro, listaCodigos);
 	}
 
 	
-	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; // 3.5 seconds
-		int fadeInTime = 150; // 0.5 seconds
-		int fadeOutTime = 300; // 0.5 seconds
-		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
 	
-	private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; // 3.5 seconds
-		int fadeInTime = 150; // 0.5 seconds
-		int fadeOutTime = 300; // 0.5 seconds
-		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
+	
+	
 
 }

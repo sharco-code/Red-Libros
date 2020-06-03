@@ -28,6 +28,7 @@ import pojo.Historial;
 import pojo.Libro;
 import pojo.Matricula;
 import service.DevolucionesService;
+import service.LoaderService;
 import view.Toast;
 public class DevolucionesDetalleController implements Initializable {
 	
@@ -75,8 +76,11 @@ public class DevolucionesDetalleController implements Initializable {
     
     private DevolucionesService devolucionesService;
     
-    public DevolucionesDetalleController(){
+    private LoaderService loaderService;
+    
+    public DevolucionesDetalleController(LoaderService loaderService){
     	this.devolucionesService = new DevolucionesService();
+    	this.loaderService = loaderService;
     }
     
     @Override
@@ -98,7 +102,7 @@ public class DevolucionesDetalleController implements Initializable {
     @FXML
     void DevolverCLICKED(MouseEvent event) {
     	if(this.selectedEjemplar == null) {
-    		showToastRED("Selecciona un libro para devolver");
+    		this.loaderService.loadToastRED("Selecciona un libro para devolver");
 			return;
 		}
 		try {
@@ -116,9 +120,9 @@ public class DevolucionesDetalleController implements Initializable {
 			this.devolucionesService.devolverLibro(this.selectedEjemplar,this.alumno, estado);
 			
 			reload();
-			showToast("Libro devuelto correctamente");
+			this.loaderService.loadToast("Libro devuelto correctamente");
 		} catch (Exception e) {
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage());
 		}
 		
     }
@@ -151,10 +155,10 @@ public class DevolucionesDetalleController implements Initializable {
 			
 			reload();
 			this.xTextFieldCodigoEjemplar.setText("");
-			showToast("Libro entregado correctamente");
+			this.loaderService.loadToast("Libro entregado correctamente");
 			
 		} catch (Exception e) {
-			showToastRED(e.getMessage());
+			this.loaderService.loadToastRED(e.getMessage());
 		}
     }
     
@@ -239,19 +243,7 @@ public class DevolucionesDetalleController implements Initializable {
 
 	
 	
-	private void showToastRED(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeTextRED(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
-	
-	private void showToast(String toastMsg) {
-		int toastMsgTime = 1000; //3.5 seconds
-		int fadeInTime = 150; //0.5 seconds
-		int fadeOutTime= 300; //0.5 seconds
-		Toast.makeText(Main.getStage(), toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-	}
+
 	
 		
     

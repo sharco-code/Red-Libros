@@ -91,6 +91,9 @@ public class HistorialService {
 			}else {
 				historialTabla.setFechaDevolucion(historial.getFechaFinal().toString());
 			}
+			if(historial.getFechaInicial() != null) {
+				historialTabla.setFechaEntrega(historial.getFechaInicial().toString());
+			}
 			listaHistorialTabla.add(historialTabla);
 		}
 		
