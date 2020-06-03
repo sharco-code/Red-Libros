@@ -456,6 +456,7 @@ public class LibroDetalleController implements Initializable {
 			}
 
 			this.loaderService.loadToast("Libro creado con éxito");
+			this.loaderService.loadLibroDetalle(this.libro);
 
 		} else {
 			estadoColumn.setEditable(false);
