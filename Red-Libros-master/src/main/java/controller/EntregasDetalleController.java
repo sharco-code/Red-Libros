@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import app.Main;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import model.EntregaTabla;
@@ -79,6 +78,7 @@ public class EntregasDetalleController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.xTreeViewLibros.setShowRoot(false);
+		this.xTableViewHistorial.setPlaceholder(new Label("No hay entregas"));
 	}
 
 

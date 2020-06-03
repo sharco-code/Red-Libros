@@ -1,6 +1,5 @@
 package service;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import app.Main;
@@ -17,10 +16,7 @@ import controller.ImpresionController;
 import controller.LibroDetalleController;
 import controller.LibrosController;
 import controller.StockController;
-import dao.AlumnoDAO;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import pojo.Alumno;

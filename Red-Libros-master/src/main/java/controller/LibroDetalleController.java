@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.persistence.Query;
-import app.Main;
 import dao.ContenidoDAO;
 import dao.CursoDAO;
 import dao.EjemplarDAO;
@@ -17,7 +15,6 @@ import dao.LibroDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -29,10 +26,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -45,7 +42,6 @@ import pojo.Libro;
 import service.BarcodeService;
 import service.EjemplarTablaService;
 import service.LoaderService;
-import view.Toast;
 
 public class LibroDetalleController implements Initializable {
 
@@ -149,12 +145,14 @@ public class LibroDetalleController implements Initializable {
 	public LibroDetalleController(LoaderService loaderService) {
 		super();
 		this.loaderService = loaderService;
+		
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		xTableViewEjemplar.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		xTableViewEjemplar.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE	);
+		this.xTableViewEjemplar.setPlaceholder(new Label("No hay ejemplares"));
 		try {
 			this.listaEstados.add("Perfecto");
 			this.listaEstados.add("Regular");

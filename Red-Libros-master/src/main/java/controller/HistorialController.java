@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import model.EjemplarHistorial;
 import model.HistorialTabla;
@@ -64,6 +65,8 @@ public class HistorialController implements Initializable{
 				filtrar(newValue);
 			}
 		});
+		this.xTableEjemplare.setPlaceholder(new Label("No hay ejemplares"));
+		this.xTableHistorial.setPlaceholder(new Label("No hay historial"));;
 
 	}
 	
@@ -126,7 +129,6 @@ public class HistorialController implements Initializable{
 	private void setHistorialTable(Ejemplare ejemplar) {
 		
 		List<HistorialTabla> listaHistorialTabla = new ArrayList<>();
-		xTableHistorial.getItems().clear();
 		
 		TableColumn niaColumn = new TableColumn("NIA");
 		niaColumn.setCellValueFactory(new PropertyValueFactory("nia"));
@@ -141,14 +143,19 @@ public class HistorialController implements Initializable{
 		TableColumn nombreColumn = new TableColumn("Se entregó a");
 		nombreColumn.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
 		
+		TableColumn fechaEntregaColumn = new TableColumn("Fecha de entrega");
+		fechaEntregaColumn.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
+		
 		TableColumn fechaDevolucionColumn = new TableColumn("Fecha de devolucion");
 		fechaDevolucionColumn.setCellValueFactory(new PropertyValueFactory("fechaDevolucion"));
+		
 		xTableHistorial.getColumns().clear();
-		xTableHistorial.getColumns().addAll(nombreColumn,niaColumn,inicialColumn,finalColumn,fechaDevolucionColumn);
+		xTableHistorial.getColumns().addAll(nombreColumn,niaColumn,inicialColumn,finalColumn,fechaEntregaColumn,fechaDevolucionColumn);
 		xTableHistorial.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+			
 		listaHistorialTabla = this.historialService.getHistorial(ejemplar);
-
+		
+		xTableHistorial.getItems().clear();
 		xTableHistorial.getItems().addAll(listaHistorialTabla);
 	}
 	

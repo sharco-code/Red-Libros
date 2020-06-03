@@ -4,6 +4,7 @@ public class HistorialTabla {
 	private String curso;
 	private String nia;
 	private String nombreCompleto;
+	private String fechaEntrega;
 	private String fechaDevolucion;
 	private String estado_inicial;
 	private String estado_final;
@@ -46,6 +47,12 @@ public class HistorialTabla {
 	}
 	public void setFechaDevolucion(String fechaDevolucion) {
 		this.fechaDevolucion = fechaDevolucion;
+	}
+	public String getFechaEntrega() {
+		return fechaEntrega;
+	}
+	public void setFechaEntrega(String fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
 	}
 	
 	
