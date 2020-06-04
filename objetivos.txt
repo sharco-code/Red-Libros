@@ -1,11 +1,11 @@
 Documentacion:
 
--	Ordenar y estructurar codigo
+X	Ordenar y estructurar codigo
 X	Diagrama de casos de uso
 X	Diagrama de clases
 X	Diagrama E/R
 X	DIagrama temporal
--	Manual de instalacion
+X	Manual de instalacion
 -	Manual de usuario
 X	Documento PDF con: (descripcion del proyecto, diagramas, dificultades del proyecto, soluciones aplicadas, tecnologias usadas, etc...)
 X	Power pont para la presentacion
